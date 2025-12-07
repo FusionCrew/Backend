@@ -152,4 +152,4 @@ sudo java -jar build/libs/aikiosk-0.0.1-SNAPSHOT.jar
 
 ## 👥 팀 정보
 
-**FusionCrew** © 2024
+**FusionCrew** © 2025~2026
