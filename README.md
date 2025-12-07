@@ -3,7 +3,7 @@
 Spring Boot 기반 백엔드 서버
 
 ## 기술 스택
-- Java 17
+- Java 21
 - Spring Boot 3.2.0
 - Gradle
 
