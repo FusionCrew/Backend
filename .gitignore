@@ -21,3 +21,10 @@ logs/
 # Environment
 .env
 *.local
+application-local.properties
+application-prod.properties
+
+# Compiled
+bin/
+target/
+
