@@ -34,9 +34,7 @@ public class SecurityConfig {
                 .authorizeHttpRequests(auth -> auth
                         // Public endpoints - 인증 불필요
                         .requestMatchers("/api/v1/admin/auth/**").permitAll()
-                        .requestMatchers("/api/v1/health", "/api/v1/test", "/api/v1/feedback/**",
-                                "/api/v1/staff/call/**")
-                        .permitAll()
+                        .requestMatchers("/api/v1/health", "/api/v1/test").permitAll()
                         .requestMatchers("/h2-console/**").permitAll()
                         .requestMatchers("/actuator/health").permitAll()
 
