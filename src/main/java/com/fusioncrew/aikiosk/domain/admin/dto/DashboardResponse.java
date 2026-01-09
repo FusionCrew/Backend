@@ -1,4 +1,4 @@
-package com.fusioncrew.aikiosk.domain.dashboard.dto;
+package com.fusioncrew.aikiosk.domain.admin.dto;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;

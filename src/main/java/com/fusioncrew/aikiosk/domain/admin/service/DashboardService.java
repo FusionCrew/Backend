@@ -1,6 +1,6 @@
-package com.fusioncrew.aikiosk.domain.dashboard.service;
+package com.fusioncrew.aikiosk.domain.admin.service;
 
-import com.fusioncrew.aikiosk.domain.dashboard.dto.DashboardSummaryDto;
+import com.fusioncrew.aikiosk.domain.admin.dto.DashboardSummaryDto;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
