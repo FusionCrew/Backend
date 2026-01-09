@@ -18,7 +18,7 @@ import java.time.format.DateTimeFormatter;
 import java.util.UUID;
 
 @RestController
-@RequestMapping("/api/v1/staff/call")
+@RequestMapping("/api/v1/kiosk/staff-calls")
 @RequiredArgsConstructor
 public class StaffController {
 
