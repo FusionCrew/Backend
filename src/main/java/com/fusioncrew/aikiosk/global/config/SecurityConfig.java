@@ -17,7 +17,6 @@ import org.springframework.web.cors.CorsConfigurationSource;
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 
 import java.util.Arrays;
-import java.util.List;
 
 @Configuration
 @EnableWebSecurity
@@ -35,7 +34,9 @@ public class SecurityConfig {
                 .authorizeHttpRequests(auth -> auth
                         // Public endpoints - 인증 불필요
                         .requestMatchers("/api/v1/admin/auth/**").permitAll()
-                        .requestMatchers("/api/v1/health", "/api/v1/test").permitAll()
+                        .requestMatchers("/api/v1/health", "/api/v1/test", "/api/v1/feedback/**",
+                                "/api/v1/staff/call/**")
+                        .permitAll()
                         .requestMatchers("/h2-console/**").permitAll()
                         .requestMatchers("/actuator/health").permitAll()
 
