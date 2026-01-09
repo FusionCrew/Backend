@@ -9,7 +9,7 @@ import lombok.NoArgsConstructor;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class StaffCallResponse {
+public class StaffResponse {
     private boolean success;
     private CallData data;
     private String timestamp;

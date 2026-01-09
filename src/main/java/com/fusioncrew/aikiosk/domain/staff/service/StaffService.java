@@ -1,8 +1,8 @@
 package com.fusioncrew.aikiosk.domain.staff.service;
 
-import com.fusioncrew.aikiosk.domain.staff.dto.StaffCallRequest;
-import com.fusioncrew.aikiosk.domain.staff.entity.StaffCall;
-import com.fusioncrew.aikiosk.domain.staff.repository.StaffCallRepository;
+import com.fusioncrew.aikiosk.domain.staff.dto.StaffRequest;
+import com.fusioncrew.aikiosk.domain.staff.entity.Staff;
+import com.fusioncrew.aikiosk.domain.staff.repository.StaffRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -10,12 +10,12 @@ import org.springframework.transaction.annotation.Transactional;
 @Service
 @RequiredArgsConstructor
 @Transactional
-public class StaffCallService {
+public class StaffService {
 
-    private final StaffCallRepository staffCallRepository;
+    private final StaffRepository staffRepository;
 
-    public StaffCall submitCall(StaffCallRequest request) {
-        StaffCall.StaffCallBuilder builder = StaffCall.builder()
+    public Staff submitCall(StaffRequest request) {
+        Staff.StaffBuilder builder = Staff.builder()
                 .sessionId(request.getSessionId())
                 .reason(request.getReason())
                 .message(request.getMessage());
@@ -25,6 +25,6 @@ public class StaffCallService {
                     .orderId(request.getContext().getOrderId());
         }
 
-        return staffCallRepository.save(builder.build());
+        return staffRepository.save(builder.build());
     }
 }

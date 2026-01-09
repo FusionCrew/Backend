@@ -1,9 +1,9 @@
 package com.fusioncrew.aikiosk.domain.staff.controller;
 
-import com.fusioncrew.aikiosk.domain.staff.dto.StaffCallRequest;
-import com.fusioncrew.aikiosk.domain.staff.dto.StaffCallResponse;
-import com.fusioncrew.aikiosk.domain.staff.entity.StaffCall;
-import com.fusioncrew.aikiosk.domain.staff.service.StaffCallService;
+import com.fusioncrew.aikiosk.domain.staff.dto.StaffRequest;
+import com.fusioncrew.aikiosk.domain.staff.dto.StaffResponse;
+import com.fusioncrew.aikiosk.domain.staff.entity.Staff;
+import com.fusioncrew.aikiosk.domain.staff.service.StaffService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -20,17 +20,17 @@ import java.util.UUID;
 @RestController
 @RequestMapping("/api/v1/staff/call")
 @RequiredArgsConstructor
-public class StaffCallController {
+public class StaffController {
 
-    private final StaffCallService staffCallService;
+    private final StaffService staffService;
 
     @PostMapping
-    public ResponseEntity<StaffCallResponse> submitCall(@Valid @RequestBody StaffCallRequest request) {
-        StaffCall savedCall = staffCallService.submitCall(request);
+    public ResponseEntity<StaffResponse> submitCall(@Valid @RequestBody StaffRequest request) {
+        Staff savedCall = staffService.submitCall(request);
 
-        StaffCallResponse response = StaffCallResponse.builder()
+        StaffResponse response = StaffResponse.builder()
                 .success(true)
-                .data(StaffCallResponse.CallData.builder()
+                .data(StaffResponse.CallData.builder()
                         .callId(savedCall.getFormattedCallId())
                         .status(savedCall.getStatus())
                         .build())

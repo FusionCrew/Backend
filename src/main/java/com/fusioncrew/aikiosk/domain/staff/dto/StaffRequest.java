@@ -14,7 +14,7 @@ import lombok.NoArgsConstructor;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class StaffCallRequest {
+public class StaffRequest {
 
     @NotBlank(message = "Session ID is required")
     private String sessionId;
