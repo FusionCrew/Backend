@@ -1,0 +1,93 @@
+﻿> Task :compileJava FAILED
+./gradlew : 
+위치 줄:1 문자:1
++ ./gradlew compileJava 2>&1 | Tee-Object
+ build_log.txt
++ ~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : NotSpecifi 
+   ed: (:String) [], RemoteException
+    + FullyQualifiedErrorId : NativeComm 
+   andError
+ 
+FAILURE: Build failed with an exception.
+
+* What went wrong:
+Execution failed for task ':compileJava'.
+> java.io.IOException: Unable to delete d
+irectory 'C:\Users\USER\OneDrive\Antigrav
+ity\AI_Kiosk\Backend\build\classes\java\m
+ain'
+    Failed to delete some children. This 
+might happen because a process has files 
+open or has its working directory set in 
+the target directory.
+    - C:\Users\USER\OneDrive\Antigravity\
+AI_Kiosk\Backend\build\classes\java\main\
+com\fusioncrew\aikiosk\controller
+    - C:\Users\USER\OneDrive\Antigravity\
+AI_Kiosk\Backend\build\classes\java\main\
+com\fusioncrew\aikiosk\domain\ingredient\
+controller
+    - C:\Users\USER\OneDrive\Antigravity\
+AI_Kiosk\Backend\build\classes\java\main\
+com\fusioncrew\aikiosk\domain\ingredient\
+dto
+    - C:\Users\USER\OneDrive\Antigravity\
+AI_Kiosk\Backend\build\classes\java\main\
+com\fusioncrew\aikiosk\domain\ingredient\
+entity
+    - C:\Users\USER\OneDrive\Antigravity\
+AI_Kiosk\Backend\build\classes\java\main\
+com\fusioncrew\aikiosk\domain\ingredient\
+repository
+    - C:\Users\USER\OneDrive\Antigravity\
+AI_Kiosk\Backend\build\classes\java\main\
+com\fusioncrew\aikiosk\domain\ingredient\
+service
+    - C:\Users\USER\OneDrive\Antigravity\
+AI_Kiosk\Backend\build\classes\java\main\
+com\fusioncrew\aikiosk\domain\ingredient
+    - C:\Users\USER\OneDrive\Antigravity\
+AI_Kiosk\Backend\build\classes\java\main\
+com\fusioncrew\aikiosk\domain\kiosk\contr
+oller
+    - C:\Users\USER\OneDrive\Antigravity\
+AI_Kiosk\Backend\build\classes\java\main\
+com\fusioncrew\aikiosk\domain\kiosk
+    - C:\Users\USER\OneDrive\Antigravity\
+AI_Kiosk\Backend\build\classes\java\main\
+com\fusioncrew\aikiosk\domain\menu\contro
+ller
+    - C:\Users\USER\OneDrive\Antigravity\
+AI_Kiosk\Backend\build\classes\java\main\
+com\fusioncrew\aikiosk\domain\menu\dto
+    - C:\Users\USER\OneDrive\Antigravity\
+AI_Kiosk\Backend\build\classes\java\main\
+com\fusioncrew\aikiosk\domain\menu\entity
+    - C:\Users\USER\OneDrive\Antigravity\
+AI_Kiosk\Backend\build\classes\java\main\
+com\fusioncrew\aikiosk\domain\menu\reposi
+tory
+    - C:\Users\USER\OneDrive\Antigravity\
+AI_Kiosk\Backend\build\classes\java\main\
+com\fusioncrew\aikiosk\domain\menu\servic
+e
+    - C:\Users\USER\OneDrive\Antigravity\
+AI_Kiosk\Backend\build\classes\java\main\
+com\fusioncrew\aikiosk\domain\menu
+    - C:\Users\USER\OneDrive\Antigravity\
+AI_Kiosk\Backend\build\classes\java\main\
+com\fusioncrew\aikiosk\domain
+    - and more ...
+
+* Try:
+> Run with --stacktrace option to get the
+ stack trace.
+> Run with --info or --debug option to ge
+t more log output.
+> Run with --scan to get full insights.
+> Get more help at https://help.gradle.or
+g.
+
+BUILD FAILED in 3s
+1 actionable task: 1 executed
