@@ -12,67 +12,71 @@ import org.springframework.stereotype.Component;
 @RequiredArgsConstructor
 public class OrderDataInitializer implements CommandLineRunner {
 
-        private final OrderRepository orderRepository;
+    private final OrderRepository orderRepository;
 
-        @Override
-        public void run(String... args) throws Exception {
-                if (orderRepository.count() == 0) {
-                        // 주문 1: 불고기버거 2개
-                        Order order1 = new Order("ord_001", 7000, "sess_001");
-                        order1.updateStatus(OrderStatus.CONFIRMED);
-                        order1.addOrderItem(OrderItem.builder()
-                                        .menuItemId("menu_001")
-                                        .name("불고기버거")
-                                        .price(3500)
-                                        .quantity(2)
-                                        .order(order1)
-                                        .build());
-                        orderRepository.save(order1);
+    @Override
+    public void run(String... args) {
+        if (orderRepository.count() == 0) {
 
-                        // 주문 2: 새우버거 1개 + 콜라 1개
-                        Order order2 = new Order("ord_002", 6000, "sess_002");
-                        order2.updateStatus(OrderStatus.CONFIRMED);
-                        order2.addOrderItem(OrderItem.builder()
-                                        .menuItemId("menu_002")
-                                        .name("새우버거")
-                                        .price(4500)
-                                        .quantity(1)
-                                        .order(order2)
-                                        .build());
-                        order2.addOrderItem(OrderItem.builder()
-                                        .menuItemId("menu_003")
-                                        .name("콜라")
-                                        .price(1500)
-                                        .quantity(1)
-                                        .order(order2)
-                                        .build());
-                        orderRepository.save(order2);
+            // 주문 1
+            Order order1 = new Order();
+            order1.setSessionId("sess_001");
+            order1.setStatus(OrderStatus.CONFIRMED);
 
-                        // 주문 3: 치즈버거 세트 (조리 중)
-                        Order order3 = new Order("ord_003", 8500, "sess_003");
-                        order3.updateStatus(OrderStatus.MAKING);
-                        order3.addOrderItem(OrderItem.builder()
-                                        .menuItemId("menu_004")
-                                        .name("치즈버거 세트")
-                                        .price(8500)
-                                        .quantity(1)
-                                        .order(order3)
-                                        .build());
-                        orderRepository.save(order3);
+            OrderItem oi11 = new OrderItem();
+            oi11.setMenuItemId(1L);
+            oi11.setQuantity(2);
+            oi11.setOptionsJson("{\"name\":\"불고기버거\"}");
 
-                        // 주문 4: 빅맥 (준비 완료)
-                        Order order4 = new Order("ord_004", 6500, "sess_004");
-                        order4.updateStatus(OrderStatus.READY);
-                        order4.addOrderItem(OrderItem.builder()
-                                        .menuItemId("menu_005")
-                                        .name("빅맥")
-                                        .price(6500)
-                                        .quantity(1)
-                                        .order(order4)
-                                        .build());
-                        orderRepository.save(order4);
+            order1.addItem(oi11);
+            orderRepository.save(order1);
 
-                        System.out.println("✅ 초기 주문 상세 데이터가 생성되었습니다.");
-                }
+            // 주문 2
+            Order order2 = new Order();
+            order2.setSessionId("sess_002");
+            order2.setStatus(OrderStatus.CONFIRMED);
+
+            OrderItem oi21 = new OrderItem();
+            oi21.setMenuItemId(2L);
+            oi21.setQuantity(1);
+            oi21.setOptionsJson("{\"name\":\"새우버거\"}");
+
+            OrderItem oi22 = new OrderItem();
+            oi22.setMenuItemId(3L);
+            oi22.setQuantity(1);
+            oi22.setOptionsJson("{\"name\":\"콜라\"}");
+
+            order2.addItem(oi21);
+            order2.addItem(oi22);
+            orderRepository.save(order2);
+
+            // 주문 3 (조리 중)
+            Order order3 = new Order();
+            order3.setSessionId("sess_003");
+            order3.setStatus(OrderStatus.MAKING);
+
+            OrderItem oi31 = new OrderItem();
+            oi31.setMenuItemId(4L);
+            oi31.setQuantity(1);
+            oi31.setOptionsJson("{\"name\":\"치즈버거 세트\"}");
+
+            order3.addItem(oi31);
+            orderRepository.save(order3);
+
+            // 주문 4 (준비 완료)
+            Order order4 = new Order();
+            order4.setSessionId("sess_004");
+            order4.setStatus(OrderStatus.READY);
+
+            OrderItem oi41 = new OrderItem();
+            oi41.setMenuItemId(5L);
+            oi41.setQuantity(1);
+            oi41.setOptionsJson("{\"name\":\"빅맥\"}");
+
+            order4.addItem(oi41);
+            orderRepository.save(order4);
+
+            System.out.println("✅ 초기 주문 데이터가 생성되었습니다.");
         }
+    }
 }

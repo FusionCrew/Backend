@@ -2,24 +2,23 @@ package com.fusioncrew.aikiosk.domain.order.dto;
 
 import com.fusioncrew.aikiosk.domain.order.entity.Order;
 import com.fusioncrew.aikiosk.domain.order.entity.OrderStatus;
-import lombok.Builder;
-import lombok.Getter;
-import java.time.LocalDateTime;
 
-@Getter
-@Builder
-public class OrderResponseDto {
-    private String orderId;
-    private OrderStatus status;
-    private int totalPrice;
-    private LocalDateTime createdAt;
+import java.time.OffsetDateTime;
 
+public record OrderResponseDto(
+        Long orderId,
+        String sessionId,
+        OrderStatus status,
+        int totalPrice,
+        OffsetDateTime createdAt
+) {
     public static OrderResponseDto from(Order order) {
-        return OrderResponseDto.builder()
-                .orderId(order.getOrderId())
-                .status(order.getStatus())
-                .totalPrice(order.getTotalPrice())
-                .createdAt(order.getCreatedAt())
-                .build();
+        return new OrderResponseDto(
+                order.getId(),
+                order.getSessionId(),
+                order.getStatus(),
+                0, // 현재 Order에 totalPrice가 없으므로 일단 0 (추후 계산 로직 추가 가능)
+                order.getCreatedAt()
+        );
     }
 }
