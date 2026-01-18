@@ -1,34 +1,42 @@
 package com.fusioncrew.aikiosk.domain.order.entity;
 
 import jakarta.persistence.*;
+import lombok.AccessLevel;
+import lombok.Builder;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
 
 @Entity
-@Table(name = "order_items")
+@Getter
+@NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class OrderItem {
 
-    @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @ManyToOne(fetch = FetchType.LAZY) @JoinColumn(name = "order_id", nullable = false)
-    private Order order;
+    @Column(nullable = false)
+    private String menuItemId;
 
     @Column(nullable = false)
-    private Long menuItemId;
+    private String name;
+
+    @Column(nullable = false)
+    private int price;
 
     @Column(nullable = false)
     private int quantity;
 
-    @Lob
-    private String optionsJson;
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "id_order")
+    private Order order;
 
-    public Long getId() { return id; }
-    public Order getOrder() { return order; }
-    public Long getMenuItemId() { return menuItemId; }
-    public int getQuantity() { return quantity; }
-    public String getOptionsJson() { return optionsJson; }
-
-    public void setOrder(Order order) { this.order = order; }
-    public void setMenuItemId(Long menuItemId) { this.menuItemId = menuItemId; }
-    public void setQuantity(int quantity) { this.quantity = quantity; }
-    public void setOptionsJson(String optionsJson) { this.optionsJson = optionsJson; }
+    @Builder
+    public OrderItem(String menuItemId, String name, int price, int quantity, Order order) {
+        this.menuItemId = menuItemId;
+        this.name = name;
+        this.price = price;
+        this.quantity = quantity;
+        this.order = order;
+    }
 }
