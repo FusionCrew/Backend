@@ -1,58 +1,76 @@
 package com.fusioncrew.aikiosk.domain.order.service;
 
-import com.fusioncrew.aikiosk.domain.order.dto.OrderDetailResponseDto;
-import com.fusioncrew.aikiosk.domain.order.dto.OrderResponseDto;
-import com.fusioncrew.aikiosk.domain.order.dto.OrderStatusUpdateRequestDto;
-import com.fusioncrew.aikiosk.domain.order.dto.OrderStatusUpdateResponseDto;
+import com.fusioncrew.aikiosk.domain.cart.entity.Cart;
+import com.fusioncrew.aikiosk.domain.cart.entity.CartItem;
+import com.fusioncrew.aikiosk.domain.cart.repository.CartRepository;
+import com.fusioncrew.aikiosk.domain.order.dto.OrderDtos;
 import com.fusioncrew.aikiosk.domain.order.entity.Order;
+import com.fusioncrew.aikiosk.domain.order.entity.OrderItem;
 import com.fusioncrew.aikiosk.domain.order.entity.OrderStatus;
 import com.fusioncrew.aikiosk.domain.order.repository.OrderRepository;
-import com.fusioncrew.aikiosk.global.exception.OrderNotFoundException;
-import lombok.RequiredArgsConstructor;
+import jakarta.transaction.Transactional;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
-
-import java.time.LocalDateTime;
-import java.util.List;
-import java.util.stream.Collectors;
 
 @Service
-@RequiredArgsConstructor
 public class OrderService {
 
     private final OrderRepository orderRepository;
+    private final CartRepository cartRepository;
 
-    @Transactional(readOnly = true)
-    public List<OrderResponseDto> getOrderList() {
-        return orderRepository.findAll().stream()
-                .map(OrderResponseDto::from)
-                .collect(Collectors.toList());
-    }
-
-    @Transactional(readOnly = true)
-    public OrderDetailResponseDto getOrderDetail(String orderId) {
-        Order order = orderRepository.findByOrderId(orderId)
-                .orElseThrow(() -> new OrderNotFoundException("주문을 찾을 수 없습니다."));
-        return OrderDetailResponseDto.from(order);
+    public OrderService(OrderRepository orderRepository, CartRepository cartRepository) {
+        this.orderRepository = orderRepository;
+        this.cartRepository = cartRepository;
     }
 
     @Transactional
-    public OrderStatusUpdateResponseDto updateOrderStatus(String orderId, OrderStatusUpdateRequestDto requestDto) {
-        Order order = orderRepository.findByOrderId(orderId)
-                .orElseThrow(() -> new OrderNotFoundException("주문을 찾을 수 없습니다."));
+    public Order createFromCart(OrderDtos.CreateOrderRequest req) {
+        if (req.cartId() == null) throw new IllegalArgumentException("cartId is required");
+        if (req.sessionId() == null || req.sessionId().isBlank()) throw new IllegalArgumentException("sessionId is required");
 
-        OrderStatus previousStatus = order.updateStatusWithValidation(requestDto.getStatus(), requestDto.getNote());
+        Cart cart = cartRepository.findById(req.cartId())
+                .orElseThrow(() -> new IllegalArgumentException("cart not found"));
 
-        return OrderStatusUpdateResponseDto.builder()
-                .orderId(orderId)
-                .previousStatus(previousStatus.name())
-                .currentStatus(order.getStatus().name())
-                .note(requestDto.getNote())
-                .updatedBy(OrderStatusUpdateResponseDto.UpdatedByDto.builder()
-                        .adminUserId("adm_0001") // TODO: 실제 인증된 관리자 정보로 교체
-                        .username("admin01")
-                        .build())
-                .updatedAt(LocalDateTime.now())
-                .build();
+        if (cart.getItems().isEmpty()) throw new IllegalArgumentException("cart is empty");
+
+        Order order = new Order();
+        order.setSessionId(req.sessionId());
+        order.setStatus(OrderStatus.PENDING);
+
+        for (CartItem ci : cart.getItems()) {
+            OrderItem oi = new OrderItem();
+            oi.setMenuItemId(ci.getMenuItemId());
+            oi.setQuantity(ci.getQuantity());
+            oi.setOptionsJson(ci.getOptionsJson());
+            order.addItem(oi);
+        }
+
+        Order saved = orderRepository.save(order);
+
+        // 주문 생성 후 카트 비우기
+        cart.getItems().clear();
+        cartRepository.save(cart);
+
+        return saved;
+    }
+
+    public Order get(Long orderId) {
+        return orderRepository.findById(orderId)
+                .orElseThrow(() -> new IllegalArgumentException("order not found"));
+    }
+
+    @Transactional
+    public Order confirm(Long orderId) {
+        Order order = get(orderId);
+        if (order.getStatus() == OrderStatus.CANCELLED) throw new IllegalArgumentException("cannot confirm cancelled order");
+        order.setStatus(OrderStatus.CONFIRMED);
+        return orderRepository.save(order);
+    }
+
+    @Transactional
+    public Order cancel(Long orderId) {
+        Order order = get(orderId);
+        if (order.getStatus() == OrderStatus.CONFIRMED) throw new IllegalArgumentException("cannot cancel confirmed order");
+        order.setStatus(OrderStatus.CANCELLED);
+        return orderRepository.save(order);
     }
 }
