@@ -38,8 +38,8 @@ public class SecurityConfig {
                         .requestMatchers("/h2-console/**").permitAll()
                         .requestMatchers("/actuator/health").permitAll()
 
-                        // Admin endpoints - 인증 필요
-                        .requestMatchers("/api/v1/admin/**").authenticated()
+                        // Admin endpoints - ADMIN 권한 필요
+                        .requestMatchers("/api/v1/admin/**").hasRole("ADMIN")
 
                         // 나머지는 모두 인증 필요
                         .anyRequest().authenticated())
