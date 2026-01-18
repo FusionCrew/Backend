@@ -28,3 +28,4 @@ application-prod.properties
 bin/
 target/
 
+gradle.properties
