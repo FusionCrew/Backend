@@ -1,0 +1,342 @@
+﻿
+> Task :compileJava FAILED
+./gradlew : C:\Users\USER\OneDrive\An
+tigravity\AI_Kiosk\Backend\src\main\j
+ava\com\fusioncrew\aikiosk\domain\ing
+redient\dto\IngredientCreateRequestDt
+o.java:3: error: cannot find symbol
+위치 줄:1 문자:1
++ ./gradlew compileJava 2>&1 | Out-Fi
+le -FilePath error_log.txt -Encodi ..
+.
++ ~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : NotSpe 
+   cified: (C:\Users\USER\O...not f  
+  ind symbol:String) [], RemoteExc   
+ eption
+    + FullyQualifiedErrorId : Native 
+   CommandError
+ 
+import com.fusioncrew.aikiosk.domain.
+ingredient.entity.AllergyTag;
+                                     
+                 ^
+  symbol:   class AllergyTag
+  location: package com.fusioncrew.ai
+kiosk.domain.ingredient.entity
+C:\Users\USER\OneDrive\Antigravity\AI
+_Kiosk\Backend\src\main\java\com\fusi
+oncrew\aikiosk\domain\ingredient\dto\
+IngredientCreateRequestDto.java:17: e
+rror: cannot find symbol
+    private AllergyTag allergyTag; //
+ 선택: EGG (없으면 null)
+            ^
+  symbol:   class AllergyTag
+  location: class IngredientCreateReq
+uestDto
+C:\Users\USER\OneDrive\Antigravity\AI
+_Kiosk\Backend\src\main\java\com\fusi
+oncrew\aikiosk\domain\ingredient\dto\
+IngredientCreateRequestDto.java:17: e
+rror: cannot find symbol
+    private AllergyTag allergyTag; //
+ 선택: EGG (없으면 null)
+                       ^
+  symbol:   class AllergyTag
+  location: class IngredientCreateReq
+uestDto
+C:\Users\USER\OneDrive\Antigravity\AI
+_Kiosk\Backend\src\main\java\com\fusi
+oncrew\aikiosk\domain\ingredient\enti
+ty\Ingredient.java:27: error: cannot 
+find symbol
+    private AllergyTag allergyTag;
+            ^
+  symbol:   class AllergyTag
+  location: class Ingredient
+C:\Users\USER\OneDrive\Antigravity\AI
+_Kiosk\Backend\src\main\java\com\fusi
+oncrew\aikiosk\domain\ingredient\enti
+ty\Ingredient.java:38: error: cannot 
+find symbol
+    public Ingredient(String ingredie
+ntId, String name, AllergyTag allergy
+Tag, int calories, int extraPrice) {
+                                     
+                   ^
+  symbol:   class AllergyTag
+  location: class Ingredient
+C:\Users\USER\OneDrive\Antigravity\AI
+_Kiosk\Backend\src\main\java\com\fusi
+oncrew\aikiosk\domain\ingredient\enti
+ty\Ingredient.java:27: error: cannot 
+find symbol
+    private AllergyTag allergyTag;
+                       ^
+  symbol:   class AllergyTag
+  location: class Ingredient
+C:\Users\USER\OneDrive\Antigravity\AI
+_Kiosk\Backend\src\main\java\com\fusi
+oncrew\aikiosk\domain\ingredient\enti
+ty\Ingredient.java:37: error: cannot 
+find symbol
+    @Builder
+    ^
+  symbol:   class AllergyTag
+  location: class IngredientBuilder
+C:\Users\USER\OneDrive\Antigravity\AI
+_Kiosk\Backend\src\main\java\com\fusi
+oncrew\aikiosk\domain\ingredient\dto\
+IngredientResponseDto.java:3: error: 
+cannot find symbol
+import com.fusioncrew.aikiosk.domain.
+ingredient.entity.AllergyTag;
+                                     
+                 ^
+  symbol:   class AllergyTag
+  location: package com.fusioncrew.ai
+kiosk.domain.ingredient.entity
+C:\Users\USER\OneDrive\Antigravity\AI
+_Kiosk\Backend\src\main\java\com\fusi
+oncrew\aikiosk\domain\ingredient\dto\
+IngredientResponseDto.java:11: error:
+ cannot find symbol
+    private final AllergyTag allergyT
+ag; // JSON으로 나갈 땐 "MILK" 문자열로 자동 변환됨
+                  ^
+  symbol:   class AllergyTag
+  location: class IngredientResponseD
+to
+C:\Users\USER\OneDrive\Antigravity\AI
+_Kiosk\Backend\src\main\java\com\fusi
+oncrew\aikiosk\domain\ingredient\dto\
+IngredientResponseDto.java:11: error:
+ cannot find symbol
+    private final AllergyTag allergyT
+ag; // JSON으로 나갈 땐 "MILK" 문자열로 자동 변환됨
+                             ^
+  symbol:   class AllergyTag
+  location: class IngredientResponseD
+to
+C:\Users\USER\OneDrive\Antigravity\AI
+_Kiosk\Backend\src\main\java\com\fusi
+oncrew\aikiosk\domain\ingredient\serv
+ice\IngredientService.java:6: error: 
+package com.fusioncrew.aikiosk.domain
+.ingredient.repository does not exist
+import com.fusioncrew.aikiosk.domain.
+ingredient.repository.IngredientRepos
+itory;
+                                     
+                     ^
+C:\Users\USER\OneDrive\Antigravity\AI
+_Kiosk\Backend\src\main\java\com\fusi
+oncrew\aikiosk\domain\ingredient\serv
+ice\IngredientService.java:20: error:
+ cannot find symbol
+    private final IngredientRepositor
+y ingredientRepository;
+                  ^
+  symbol:   class IngredientRepositor
+y
+  location: class IngredientService
+C:\Users\USER\OneDrive\Antigravity\AI
+_Kiosk\Backend\src\main\java\com\fusi
+oncrew\aikiosk\domain\ingredient\serv
+ice\IngredientService.java:16: error:
+ cannot find symbol
+@RequiredArgsConstructor
+^
+  symbol:   class IngredientRepositor
+y
+  location: class IngredientService
+C:\Users\USER\OneDrive\Antigravity\AI
+_Kiosk\Backend\src\main\java\com\fusi
+oncrew\aikiosk\domain\menu\controller
+\MenuAdminController.java:3: error: p
+ackage com.fusioncrew.aikiosk.domain.
+menu.dto does not exist
+import com.fusioncrew.aikiosk.domain.
+menu.dto.MenuItemResponseDto;
+                                     
+        ^
+C:\Users\USER\OneDrive\Antigravity\AI
+_Kiosk\Backend\src\main\java\com\fusi
+oncrew\aikiosk\domain\menu\service\Me
+nuService.java:3: error: package com.
+fusioncrew.aikiosk.domain.menu.dto do
+es not exist
+import com.fusioncrew.aikiosk.domain.
+menu.dto.MenuCreateRequestDto;
+                                     
+        ^
+C:\Users\USER\OneDrive\Antigravity\AI
+_Kiosk\Backend\src\main\java\com\fusi
+oncrew\aikiosk\domain\menu\service\Me
+nuService.java:4: error: package com.
+fusioncrew.aikiosk.domain.menu.dto do
+es not exist
+import com.fusioncrew.aikiosk.domain.
+menu.dto.MenuItemResponseDto;
+                                     
+        ^
+C:\Users\USER\OneDrive\Antigravity\AI
+_Kiosk\Backend\src\main\java\com\fusi
+oncrew\aikiosk\domain\menu\service\Me
+nuService.java:5: error: package com.
+fusioncrew.aikiosk.domain.menu.entity
+ does not exist
+import com.fusioncrew.aikiosk.domain.
+menu.entity.MenuItem;
+                                     
+           ^
+C:\Users\USER\OneDrive\Antigravity\AI
+_Kiosk\Backend\src\main\java\com\fusi
+oncrew\aikiosk\domain\menu\service\Me
+nuService.java:6: error: package com.
+fusioncrew.aikiosk.domain.menu.reposi
+tory does not exist
+import com.fusioncrew.aikiosk.domain.
+menu.repository.MenuItemRepository;
+                                     
+               ^
+C:\Users\USER\OneDrive\Antigravity\AI
+_Kiosk\Backend\src\main\java\com\fusi
+oncrew\aikiosk\domain\menu\service\Me
+nuService.java:14: error: package com
+.fusioncrew.aikiosk.domain.menu.dto d
+oes not exist
+import com.fusioncrew.aikiosk.domain.
+menu.dto.MenuIngredientLinkRequestDto
+;
+                                     
+        ^
+C:\Users\USER\OneDrive\Antigravity\AI
+_Kiosk\Backend\src\main\java\com\fusi
+oncrew\aikiosk\domain\menu\service\Me
+nuService.java:16: error: package com
+.fusioncrew.aikiosk.domain.ingredient
+.repository does not exist
+import com.fusioncrew.aikiosk.domain.
+ingredient.repository.IngredientRepos
+itory;
+                                     
+                     ^
+C:\Users\USER\OneDrive\Antigravity\AI
+_Kiosk\Backend\src\main\java\com\fusi
+oncrew\aikiosk\domain\menu\service\Me
+nuService.java:23: error: package com
+.fusioncrew.aikiosk.domain.menu.dto d
+oes not exist
+import com.fusioncrew.aikiosk.domain.
+menu.dto.MenuDetailKioskResponseDto;
+                                     
+        ^
+C:\Users\USER\OneDrive\Antigravity\AI
+_Kiosk\Backend\src\main\java\com\fusi
+oncrew\aikiosk\domain\menu\service\Me
+nuService.java:24: error: package com
+.fusioncrew.aikiosk.domain.menu.dto.M
+enuDetailKioskResponseDto does not ex
+ist
+import com.fusioncrew.aikiosk.domain.
+menu.dto.MenuDetailKioskResponseDto.O
+ptionGroup;
+                                     
+                                   ^
+C:\Users\USER\OneDrive\Antigravity\AI
+_Kiosk\Backend\src\main\java\com\fusi
+oncrew\aikiosk\domain\menu\service\Me
+nuService.java:31: error: cannot find
+ symbol
+    private final MenuItemRepository 
+menuRepository;
+                  ^
+  symbol:   class MenuItemRepository
+  location: class MenuService
+C:\Users\USER\OneDrive\Antigravity\AI
+_Kiosk\Backend\src\main\java\com\fusi
+oncrew\aikiosk\domain\menu\service\Me
+nuService.java:34: error: cannot find
+ symbol
+    public List<MenuItemResponseDto> 
+getAdminMenuList() {
+                ^
+  symbol:   class MenuItemResponseDto
+  location: class MenuService
+C:\Users\USER\OneDrive\Antigravity\AI
+_Kiosk\Backend\src\main\java\com\fusi
+oncrew\aikiosk\domain\menu\service\Me
+nuService.java:42: error: cannot find
+ symbol
+    public String createMenu(MenuCrea
+teRequestDto requestDto) {
+                             ^
+  symbol:   class MenuCreateRequestDt
+o
+  location: class MenuService
+C:\Users\USER\OneDrive\Antigravity\AI
+_Kiosk\Backend\src\main\java\com\fusi
+oncrew\aikiosk\domain\menu\service\Me
+nuService.java:59: error: cannot find
+ symbol
+    private final IngredientRepositor
+y ingredientRepository; // 주입 필요
+                  ^
+  symbol:   class IngredientRepositor
+y
+  location: class MenuService
+C:\Users\USER\OneDrive\Antigravity\AI
+_Kiosk\Backend\src\main\java\com\fusi
+oncrew\aikiosk\domain\menu\service\Me
+nuService.java:63: error: cannot find
+ symbol
+    public List<String> updateMenuIng
+redients(String menuItemId, MenuIngre
+dientLinkRequestDto requestDto) {
+                                     
+                            ^
+  symbol:   class MenuIngredientLinkR
+equestDto
+  location: class MenuService
+C:\Users\USER\OneDrive\Antigravity\AI
+_Kiosk\Backend\src\main\java\com\fusi
+oncrew\aikiosk\domain\menu\service\Me
+nuService.java:97: error: cannot find
+ symbol
+    public MenuDetailKioskResponseDto
+ getKioskMenuDetail(String menuItemId
+) {
+           ^
+  symbol:   class MenuDetailKioskResp
+onseDto
+  location: class MenuService
+C:\Users\USER\OneDrive\Antigravity\AI
+_Kiosk\Backend\src\main\java\com\fusi
+oncrew\aikiosk\domain\menu\service\Me
+nuService.java:27: error: cannot find
+ symbol
+@RequiredArgsConstructor
+^
+  symbol:   class MenuItemRepository
+  location: class MenuService
+29 errors
+
+FAILURE: Build failed with an excepti
+on.
+
+* What went wrong:
+1 actionable task: 1 executed
+Execution failed for task ':compileJa
+va'.
+> Compilation failed; see the compile
+r error output for details.
+
+* Try:
+> Run with --info option to get more 
+log output.
+> Run with --scan to get full insight
+s.
+
+BUILD FAILED in 1s

@@ -17,7 +17,6 @@ import org.springframework.web.cors.CorsConfigurationSource;
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 
 import java.util.Arrays;
-import java.util.List;
 
 @Configuration
 @EnableWebSecurity
@@ -36,8 +35,15 @@ public class SecurityConfig {
                         // Public endpoints - 인증 불필요
                         .requestMatchers("/api/v1/admin/auth/**").permitAll()
                         .requestMatchers("/api/v1/health", "/api/v1/test").permitAll()
+                        .requestMatchers("/api/v1/meta/health").permitAll()
                         .requestMatchers("/h2-console/**").permitAll()
                         .requestMatchers("/actuator/health").permitAll()
+
+                        // [개발용] 메뉴/재료/주문 API 임시 허용 (TODO: 운영 시 제거)
+                        .requestMatchers("/api/v1/admin/menu-items/**").permitAll()
+                        .requestMatchers("/api/v1/admin/ingredients/**").permitAll()
+                        .requestMatchers("/api/v1/admin/orders", "/api/v1/admin/orders/**").permitAll()
+                        .requestMatchers("/api/v1/kiosk/**").permitAll()
 
                         // Admin endpoints - 인증 필요
                         .requestMatchers("/api/v1/admin/**").authenticated()
@@ -56,7 +62,8 @@ public class SecurityConfig {
     @Bean
     public CorsConfigurationSource corsConfigurationSource() {
         CorsConfiguration configuration = new CorsConfiguration();
-        configuration.setAllowedOrigins(Arrays.asList("http://localhost:3000", "http://localhost:5173"));
+        configuration.setAllowedOrigins(
+                Arrays.asList("http://localhost:3000", "http://localhost:5173", "http://localhost:5500"));
         configuration.setAllowedMethods(Arrays.asList("GET", "POST", "PUT", "PATCH", "DELETE", "OPTIONS"));
         configuration.setAllowedHeaders(Arrays.asList("*"));
         configuration.setAllowCredentials(true);
