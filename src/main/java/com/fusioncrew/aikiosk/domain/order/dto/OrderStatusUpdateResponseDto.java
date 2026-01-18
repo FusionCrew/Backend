@@ -1,24 +1,16 @@
 package com.fusioncrew.aikiosk.domain.order.dto;
 
-import lombok.Builder;
-import lombok.Getter;
+import com.fusioncrew.aikiosk.domain.order.entity.Order;
+import com.fusioncrew.aikiosk.domain.order.entity.OrderStatus;
 
-import java.time.LocalDateTime;
+import java.time.OffsetDateTime;
 
-@Getter
-@Builder
-public class OrderStatusUpdateResponseDto {
-    private String orderId;
-    private String previousStatus;
-    private String currentStatus;
-    private String note;
-    private UpdatedByDto updatedBy;
-    private LocalDateTime updatedAt;
-
-    @Getter
-    @Builder
-    public static class UpdatedByDto {
-        private String adminUserId;
-        private String username;
+public record OrderStatusUpdateResponseDto(
+        Long orderId,
+        OrderStatus status,
+        OffsetDateTime updatedAt
+) {
+    public static OrderStatusUpdateResponseDto from(Order order) {
+        return new OrderStatusUpdateResponseDto(order.getId(), order.getStatus(), order.getUpdatedAt());
     }
 }

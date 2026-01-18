@@ -5,6 +5,7 @@ import com.fusioncrew.aikiosk.global.security.JwtTokenProvider;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.http.HttpMethod;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.http.SessionCreationPolicy;
@@ -32,8 +33,10 @@ public class SecurityConfig {
                 .cors(cors -> cors.configurationSource(corsConfigurationSource()))
                 .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .authorizeHttpRequests(auth -> auth
-                        // Public endpoints - 인증 불필요
-                        .requestMatchers("/api/v1/admin/auth/**").permitAll()
+                        // ✅ Public endpoints - 인증 불필요 (README 요구사항 기준)
+                        .requestMatchers(HttpMethod.POST, "/api/v1/admin/auth/login").permitAll()
+                        .requestMatchers(HttpMethod.POST, "/api/v1/admin/auth/refresh").permitAll()
+
                         .requestMatchers("/api/v1/health", "/api/v1/test").permitAll()
                         .requestMatchers("/api/v1/meta/health").permitAll()
                         .requestMatchers("/h2-console/**").permitAll()
@@ -44,11 +47,9 @@ public class SecurityConfig {
                         .requestMatchers("/api/v1/admin/ingredients/**").permitAll()
                         .requestMatchers("/api/v1/admin/orders", "/api/v1/admin/orders/**").permitAll()
                         .requestMatchers("/api/v1/kiosk/**").permitAll()
-
-                        // Admin endpoints - 인증 필요
                         .requestMatchers("/api/v1/admin/**").authenticated()
 
-                        // 나머지는 모두 인증 필요
+                        // 나머지도 모두 인증 필요
                         .anyRequest().authenticated())
                 .addFilterBefore(new JwtAuthenticationFilter(jwtTokenProvider),
                         UsernamePasswordAuthenticationFilter.class);
