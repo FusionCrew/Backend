@@ -1,5 +1,7 @@
 package com.fusioncrew.aikiosk.domain.ticket.service;
 
+import com.fusioncrew.aikiosk.domain.order.entity.Order;
+import com.fusioncrew.aikiosk.domain.order.repository.OrderRepository;
 import com.fusioncrew.aikiosk.domain.payment.entity.Payment;
 import com.fusioncrew.aikiosk.domain.payment.entity.PaymentStatus;
 import com.fusioncrew.aikiosk.domain.payment.repository.PaymentRepository;
@@ -24,6 +26,7 @@ public class TicketService {
 
     private final TicketRepository ticketRepository;
     private final PaymentRepository paymentRepository;
+    private final OrderRepository orderRepository;
 
     @Transactional
     public TicketResponse createTicket(TicketCreateRequest request) {
@@ -77,5 +80,27 @@ public class TicketService {
     public Ticket get(Long ticketId) {
         return ticketRepository.findById(ticketId)
                 .orElseThrow(() -> new CustomException(HttpStatus.NOT_FOUND, "티켓을 찾을 수 없습니다."));
+    }
+
+    @Transactional
+    public Ticket issue(Long orderId) {
+        // Simple implementation for backward compatibility
+        Order order = orderRepository.findById(orderId)
+                .orElseThrow(() -> new CustomException(HttpStatus.NOT_FOUND, "주문을 찾을 수 없습니다."));
+
+        // 오늘 생성된 티켓 수 조회하여 번호 생성
+        LocalDateTime startOfDay = LocalDateTime.of(LocalDate.now(), LocalTime.MIN);
+        LocalDateTime endOfDay = LocalDateTime.of(LocalDate.now(), LocalTime.MAX);
+        long countToday = ticketRepository.countByCreatedAtBetween(startOfDay, endOfDay);
+        int nextNumber = (int) countToday + 1;
+
+        Ticket ticket = Ticket.builder()
+                .orderId(order.getOrderId())
+                .paymentId("ISSUED_WITHOUT_PAYMENT_" + orderId)
+                .number(nextNumber)
+                .status(TicketStatus.WAITING)
+                .build();
+
+        return ticketRepository.save(ticket);
     }
 }

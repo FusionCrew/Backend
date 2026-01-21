@@ -30,21 +30,21 @@ public class KioskCartController {
 
     @PostMapping("/carts/{cartId}/items")
     public ResponseEntity<CartDtos.CartResponse> add(@PathVariable Long cartId,
-                                                    @RequestBody CartDtos.AddItemRequest req) {
+            @RequestBody CartDtos.AddItemRequest req) {
         return ResponseEntity.ok(toRes(cartService.addItem(cartId, req)));
     }
 
     @PatchMapping("/carts/{cartId}/items/{itemId}")
     public ResponseEntity<CartDtos.CartResponse> updateQty(@PathVariable Long cartId,
-                                                          @PathVariable Long itemId,
-                                                          @RequestBody CartDtos.UpdateQtyRequest req) {
+            @PathVariable Long itemId,
+            @RequestBody CartDtos.UpdateQtyRequest req) {
         int qty = (req.quantity() == null ? 1 : req.quantity());
         return ResponseEntity.ok(toRes(cartService.updateQty(cartId, itemId, qty)));
     }
 
     @DeleteMapping("/carts/{cartId}/items/{itemId}")
     public ResponseEntity<CartDtos.CartResponse> deleteItem(@PathVariable Long cartId,
-                                                           @PathVariable Long itemId) {
+            @PathVariable Long itemId) {
         return ResponseEntity.ok(toRes(cartService.deleteItem(cartId, itemId)));
     }
 
@@ -58,10 +58,10 @@ public class KioskCartController {
                 cart.getId(),
                 cart.getSessionId(),
                 cart.getItems().stream()
-                        .map(i -> new CartDtos.CartItemResponse(i.getId(), i.getMenuItemId(), i.getQuantity(), i.getOptionsJson()))
+                        .map(i -> new CartDtos.CartItemResponse(i.getId(), i.getMenuItemId(), i.getQuantity(),
+                                i.getOptionsJson()))
                         .collect(Collectors.toList()),
                 cart.getCreatedAt(),
-                cart.getUpdatedAt()
-        );
+                cart.getUpdatedAt());
     }
 }

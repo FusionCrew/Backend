@@ -11,7 +11,7 @@ import java.util.List;
 @Getter
 @Setter
 @Builder
-@NoArgsConstructor(access = AccessLevel.PROTECTED)
+@NoArgsConstructor(access = AccessLevel.PUBLIC)
 @AllArgsConstructor
 public class Order extends BaseEntity {
 
@@ -34,8 +34,22 @@ public class Order extends BaseEntity {
     @Builder.Default
     private List<OrderItem> items = new ArrayList<>();
 
+    @PrePersist
+    public void prePersist() {
+        if (this.orderId == null) {
+            this.orderId = "ord_" + java.util.UUID.randomUUID().toString().substring(0, 8);
+        }
+        if (this.sessionId == null) {
+            this.sessionId = "sess_unknown";
+        }
+    }
+
     public void addOrderItem(OrderItem item) {
         item.setOrder(this);
         this.items.add(item);
+    }
+
+    public void addItem(OrderItem item) {
+        addOrderItem(item);
     }
 }

@@ -3,6 +3,7 @@ package com.fusioncrew.aikiosk.domain.ticket.entity;
 import com.fusioncrew.aikiosk.global.entity.BaseEntity;
 import jakarta.persistence.*;
 import lombok.*;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 
 @Entity
@@ -50,5 +51,13 @@ public class Ticket extends BaseEntity {
     public void complete() {
         this.status = TicketStatus.COMPLETED;
         this.completedAt = LocalDateTime.now();
+    }
+
+    public LocalDate getIssuedDate() {
+        return getCreatedAt() != null ? getCreatedAt().toLocalDate() : LocalDate.now();
+    }
+
+    public Integer getDailyNumber() {
+        return getNumber();
     }
 }

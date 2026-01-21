@@ -4,7 +4,7 @@ import com.fusioncrew.aikiosk.domain.order.entity.Order;
 import com.fusioncrew.aikiosk.domain.order.entity.OrderItem;
 import com.fusioncrew.aikiosk.domain.order.entity.OrderStatus;
 
-import java.time.OffsetDateTime;
+import java.time.LocalDateTime;
 import java.util.List;
 
 public record OrderDetailResponseDto(
@@ -12,9 +12,8 @@ public record OrderDetailResponseDto(
         String sessionId,
         OrderStatus status,
         int totalPrice,
-        OffsetDateTime createdAt,
-        List<Item> items
-) {
+        LocalDateTime createdAt,
+        List<Item> items) {
     public record Item(Long menuItemId, int quantity, String optionsJson) {
         public static Item from(OrderItem oi) {
             return new Item(oi.getMenuItemId(), oi.getQuantity(), oi.getOptionsJson());
@@ -28,7 +27,6 @@ public record OrderDetailResponseDto(
                 order.getStatus(),
                 0, // ✅ totalPrice 아직 없으니 0
                 order.getCreatedAt(),
-                order.getItems().stream().map(Item::from).toList()
-        );
+                order.getItems().stream().map(Item::from).toList());
     }
 }

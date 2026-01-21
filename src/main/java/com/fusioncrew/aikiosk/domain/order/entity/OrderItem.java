@@ -7,7 +7,7 @@ import lombok.*;
 @Table(name = "order_items")
 @Getter
 @Setter
-@NoArgsConstructor(access = AccessLevel.PROTECTED)
+@NoArgsConstructor(access = AccessLevel.PUBLIC)
 @AllArgsConstructor
 @Builder
 public class OrderItem {
@@ -34,4 +34,14 @@ public class OrderItem {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "id_order")
     private Order order;
+
+    @PrePersist
+    public void prePersist() {
+        if (this.name == null) {
+            this.name = "Unknown Item";
+        }
+        if (this.menuItemId == null) {
+            this.menuItemId = 0L;
+        }
+    }
 }
