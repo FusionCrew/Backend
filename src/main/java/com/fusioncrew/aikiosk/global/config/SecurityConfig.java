@@ -42,6 +42,9 @@ public class SecurityConfig {
                         .requestMatchers("/h2-console/**").permitAll()
                         .requestMatchers("/actuator/health").permitAll()
 
+                        // AI endpoints
+                        .requestMatchers("/api/v1/ai/**").permitAll()
+
                         // [개발용] 메뉴/재료/주문 API 임시 허용 (TODO: 운영 시 제거)
                         .requestMatchers("/api/v1/admin/menu-items/**").permitAll()
                         .requestMatchers("/api/v1/admin/ingredients/**").permitAll()
