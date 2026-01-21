@@ -17,7 +17,7 @@ import java.time.format.DateTimeFormatter;
 import java.util.UUID;
 
 @RestController
-@RequestMapping("/api/v1/feedback")
+@RequestMapping("/api/v1/kiosk/feedback")
 @RequiredArgsConstructor
 public class FeedbackController {
 

@@ -50,7 +50,9 @@ public class SecurityConfig {
                         .requestMatchers("/api/v1/admin/ingredients/**").permitAll()
                         .requestMatchers("/api/v1/admin/orders", "/api/v1/admin/orders/**").permitAll()
                         .requestMatchers("/api/v1/kiosk/**").permitAll()
-                        .requestMatchers("/api/v1/admin/**").authenticated()
+
+                        // Admin endpoints - ADMIN 권한 필요
+                        .requestMatchers("/api/v1/admin/**").hasRole("ADMIN")
 
                         // 나머지도 모두 인증 필요
                         .anyRequest().authenticated())

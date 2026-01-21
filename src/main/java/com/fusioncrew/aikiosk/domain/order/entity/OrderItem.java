@@ -1,15 +1,15 @@
 package com.fusioncrew.aikiosk.domain.order.entity;
 
 import jakarta.persistence.*;
-import lombok.AccessLevel;
-import lombok.Builder;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 @Entity
-@Getter
-@NoArgsConstructor(access = AccessLevel.PUBLIC)
 @Table(name = "order_items")
+@Getter
+@Setter
+@NoArgsConstructor(access = AccessLevel.PROTECTED)
+@AllArgsConstructor
+@Builder
 public class OrderItem {
 
     @Id
@@ -19,10 +19,11 @@ public class OrderItem {
     @Column(nullable = false)
     private Long menuItemId;
 
+    @Column(nullable = false)
     private String name;
 
-    @Column(nullable = true)
-    private Integer price;
+    @Column(nullable = false)
+    private int price;
 
     @Column(nullable = false)
     private int quantity;
@@ -33,39 +34,4 @@ public class OrderItem {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "id_order")
     private Order order;
-
-    @Builder
-    public OrderItem(Long menuItemId, String name, Integer price, int quantity, String optionsJson, Order order) {
-        this.menuItemId = menuItemId;
-        this.name = name;
-        this.price = price;
-        this.quantity = quantity;
-        this.optionsJson = optionsJson;
-        this.order = order;
-    }
-
-    public void setOrder(Order order) {
-        this.order = order;
-    }
-
-    public void setMenuItemId(Long menuItemId) {
-        this.menuItemId = menuItemId;
-    }
-
-    public void setQuantity(int quantity) {
-        this.quantity = quantity;
-    }
-
-    public void setOptionsJson(String optionsJson) {
-        this.optionsJson = optionsJson;
-    }
-
-    // 관리자용으로 필요하면 세팅 가능
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public void setPrice(Integer price) {
-        this.price = price;
-    }
 }

@@ -1,8 +1,8 @@
-package com.fusioncrew.aikiosk.domain.dashboard.controller;
+package com.fusioncrew.aikiosk.domain.admin.controller;
 
-import com.fusioncrew.aikiosk.domain.dashboard.dto.DashboardResponse;
-import com.fusioncrew.aikiosk.domain.dashboard.dto.DashboardSummaryDto;
-import com.fusioncrew.aikiosk.domain.dashboard.service.DashboardService;
+import com.fusioncrew.aikiosk.domain.admin.dto.DashboardResponse;
+import com.fusioncrew.aikiosk.domain.admin.dto.DashboardSummaryDto;
+import com.fusioncrew.aikiosk.domain.admin.service.DashboardService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -19,7 +19,7 @@ public class DashboardController {
 
     private final DashboardService dashboardService;
 
-    @GetMapping("/summary")
+    @GetMapping
     public ResponseEntity<DashboardResponse> getDashboardSummary() {
         DashboardSummaryDto data = dashboardService.getDashboardSummary();
 

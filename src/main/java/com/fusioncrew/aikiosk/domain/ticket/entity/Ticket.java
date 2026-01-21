@@ -1,43 +1,54 @@
 package com.fusioncrew.aikiosk.domain.ticket.entity;
 
+import com.fusioncrew.aikiosk.global.entity.BaseEntity;
 import jakarta.persistence.*;
-import java.time.LocalDate;
-import java.time.OffsetDateTime;
+import lombok.*;
+import java.time.LocalDateTime;
 
 @Entity
-@Table(name = "tickets", uniqueConstraints = {
-        @UniqueConstraint(name = "uk_ticket_order", columnNames = {"orderId"})
-})
-public class Ticket {
+@Table(name = "tickets")
+@Getter
+@Builder
+@NoArgsConstructor(access = AccessLevel.PROTECTED)
+@AllArgsConstructor
+public class Ticket extends BaseEntity {
 
-    @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     @Column(nullable = false)
-    private Long orderId;
+    private String orderId;
 
     @Column(nullable = false)
-    private LocalDate issuedDate;
+    private String paymentId;
 
     @Column(nullable = false)
-    private Integer dailyNumber; // 오늘 대기번호
+    private Integer number;
 
     @Enumerated(EnumType.STRING)
-    @Column(nullable = false, length = 20)
-    private TicketStatus status = TicketStatus.ISSUED;
+    @Column(nullable = false)
+    @Builder.Default
+    private TicketStatus status = TicketStatus.WAITING;
 
     @Column(nullable = false)
-    private OffsetDateTime createdAt = OffsetDateTime.now();
+    @Builder.Default
+    private String priority = "NORMAL";
 
-    public Long getId() { return id; }
-    public Long getOrderId() { return orderId; }
-    public LocalDate getIssuedDate() { return issuedDate; }
-    public Integer getDailyNumber() { return dailyNumber; }
-    public TicketStatus getStatus() { return status; }
-    public OffsetDateTime getCreatedAt() { return createdAt; }
+    private LocalDateTime calledAt;
+    private LocalDateTime completedAt;
 
-    public void setOrderId(Long orderId) { this.orderId = orderId; }
-    public void setIssuedDate(LocalDate issuedDate) { this.issuedDate = issuedDate; }
-    public void setDailyNumber(Integer dailyNumber) { this.dailyNumber = dailyNumber; }
-    public void setStatus(TicketStatus status) { this.status = status; }
+    public String getTicketId() {
+        return String.format("tkt_%04d", this.id);
+    }
+
+    public void call() {
+        this.status = TicketStatus.CALLED;
+        this.calledAt = LocalDateTime.now();
+    }
+
+    public void complete() {
+        this.status = TicketStatus.COMPLETED;
+        this.completedAt = LocalDateTime.now();
+    }
 }
