@@ -72,6 +72,7 @@ public class MenuService {
                 requestDto.getHidden(),
                 requestDto.getDescription(),
                 requestDto.getName(),
+                requestDto.getNameEn(),
                 requestDto.getCategoryId());
 
         // 3. 수정된 엔티티 반환 (Controller에서 응답 구성용)
@@ -165,5 +166,19 @@ public class MenuService {
 
         // 재료 제거 시도 (성공 시 true 반환)
         return menu.removeIngredientById(ingredientId);
+    }
+
+    // [New] 전체 메뉴-재료 매핑 요약 조회
+    public List<java.util.Map<String, Object>> getMappingSummary() {
+        return menuRepository.findAllByOrderByMenuItemIdAsc().stream()
+                .map(menu -> {
+                    java.util.Map<String, Object> summary = new java.util.HashMap<>();
+                    summary.put("menuItemId", menu.getMenuItemId());
+                    summary.put("name", menu.getName());
+                    summary.put("ingredientCount", menu.getIngredients().size());
+                    summary.put("isMapped", !menu.getIngredients().isEmpty());
+                    return summary;
+                })
+                .collect(Collectors.toList());
     }
 }

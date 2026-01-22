@@ -18,6 +18,7 @@ import java.util.stream.Collectors;
 public class IngredientService {
 
     private final IngredientRepository ingredientRepository;
+    private final com.fusioncrew.aikiosk.domain.menu.repository.MenuItemRepository menuItemRepository;
 
     // --- 기존 조회 메서드 유지 ---
     public List<IngredientResponseDto> getIngredientList() {
@@ -73,5 +74,17 @@ public class IngredientService {
         // 여기서 MenuItemRepository를 주입받아 체크할 수 있음
         // 현재는 간단한 물리 삭제로 구현 (과제용)
         ingredientRepository.delete(ingredient);
+    }
+
+    // [New] 특정 재료를 사용하는 메뉴 목록 조회 (역방향 조회)
+    public List<com.fusioncrew.aikiosk.domain.menu.dto.MenuItemResponseDto> getMenusByIngredient(String ingredientId) {
+        // 재료 존재 여부 먼저 확인
+        if (!ingredientRepository.existsByIngredientId(ingredientId)) {
+            throw new jakarta.persistence.EntityNotFoundException("재료를 찾을 수 없습니다: " + ingredientId);
+        }
+
+        return menuItemRepository.findByIngredientsIngredientId(ingredientId).stream()
+                .map(com.fusioncrew.aikiosk.domain.menu.dto.MenuItemResponseDto::new)
+                .collect(Collectors.toList());
     }
 }

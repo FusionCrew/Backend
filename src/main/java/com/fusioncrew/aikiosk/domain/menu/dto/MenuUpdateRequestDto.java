@@ -13,5 +13,6 @@ public class MenuUpdateRequestDto {
     private Boolean hidden;
     private String description;
     private String name;
+    private String nameEn;
     private String categoryId;
 }

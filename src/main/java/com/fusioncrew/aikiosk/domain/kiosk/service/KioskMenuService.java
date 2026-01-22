@@ -27,6 +27,7 @@ public class KioskMenuService {
 
         private final MenuItemRepository menuItemRepository;
         private final IngredientRepository ingredientRepository;
+        private final com.fusioncrew.aikiosk.domain.stock.repository.StockRepository stockRepository;
 
         public KioskMenuListResponse getKioskMenuItems(String categoryId, String keyword, String cursor, int size) {
                 log.debug("Fetching kiosk menu items: categoryId={}, keyword={}, cursor={}, size={}",
@@ -44,15 +45,41 @@ public class KioskMenuService {
                         nextCursor = items.get(items.size() - 1).getMenuItemId();
                 }
 
+                // Collect all unique ingredient IDs from all menu items
+                java.util.Set<String> allIngredientIds = items.stream()
+                                .flatMap(item -> item.getIngredients().stream())
+                                .map(ing -> ing.getIngredientId())
+                                .collect(Collectors.toSet());
+
+                // Fetch stocks for all ingredients in one go
+                java.util.Map<String, Boolean> outOfStockMap = new java.util.HashMap<>();
+                if (!allIngredientIds.isEmpty()) {
+                        stockRepository.findAll().stream()
+                                        .filter(stock -> allIngredientIds.contains(stock.getIngredientId()))
+                                        .forEach(stock -> outOfStockMap.put(stock.getIngredientId(),
+                                                        stock.isOutOfStock()));
+                }
+
                 List<KioskMenuListResponse.KioskMenuItemDto> dtos = items.stream()
-                                .map(item -> KioskMenuListResponse.KioskMenuItemDto.builder()
-                                                .menuItemId(item.getMenuItemId())
-                                                .name(item.getName())
-                                                .price(item.getPrice())
-                                                .thumbnailUrl(item.getImageUrl())
-                                                .isAvailable(true) // TODO: Implement availability logic if needed
-                                                .categoryId(item.getCategoryId())
-                                                .build())
+                                .map(item -> {
+                                        // A menu is available if ALL its ingredients are NOT out of stock
+                                        // If search results returned it, it's not hidden.
+                                        // If it has no ingredients, it's assumed available unless manually set
+                                        // otherwise.
+                                        boolean isAvailable = item.getIngredients().isEmpty() ||
+                                                        item.getIngredients().stream()
+                                                                        .noneMatch(ing -> outOfStockMap.getOrDefault(
+                                                                                        ing.getIngredientId(), false));
+
+                                        return KioskMenuListResponse.KioskMenuItemDto.builder()
+                                                        .menuItemId(item.getMenuItemId())
+                                                        .name(item.getName())
+                                                        .price(item.getPrice())
+                                                        .thumbnailUrl(item.getImageUrl())
+                                                        .isAvailable(isAvailable)
+                                                        .categoryId(item.getCategoryId())
+                                                        .build();
+                                })
                                 .collect(Collectors.toList());
 
                 return KioskMenuListResponse.builder()

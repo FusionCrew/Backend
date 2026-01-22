@@ -25,6 +25,9 @@ public class MenuItem {
     @Column(nullable = false)
     private String name;
 
+    @Column(name = "name_en")
+    private String nameEn;
+
     @Column(nullable = false)
     private int price;
 
@@ -44,10 +47,12 @@ public class MenuItem {
     private String description;
 
     @Builder
-    public MenuItem(String menuItemId, String name, int price, boolean hidden, String categoryId, String imageUrl,
+    public MenuItem(String menuItemId, String name, String nameEn, int price, boolean hidden, String categoryId,
+            String imageUrl,
             String description) {
         this.menuItemId = menuItemId;
         this.name = name;
+        this.nameEn = nameEn;
         this.price = price;
         this.hidden = hidden;
         this.categoryId = categoryId;
@@ -72,9 +77,8 @@ public class MenuItem {
         return ingredients;
     }
 
-    // [New] 부분 업데이트 메서드 (PATCH용)
-    // 들어온 값(null이 아닌 값)만 변경합니다.
     public void updateDetails(Integer price, String imageUrl, Boolean hidden, String description, String name,
+            String nameEn,
             String categoryId) {
         if (price != null) {
             this.price = price;
@@ -90,6 +94,9 @@ public class MenuItem {
         }
         if (name != null) {
             this.name = name;
+        }
+        if (nameEn != null) {
+            this.nameEn = nameEn;
         }
         if (categoryId != null) {
             this.categoryId = categoryId;
