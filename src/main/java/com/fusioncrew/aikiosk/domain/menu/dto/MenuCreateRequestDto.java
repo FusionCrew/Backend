@@ -9,6 +9,7 @@ import lombok.NoArgsConstructor;
 public class MenuCreateRequestDto {
 
     private String name; // 필수: 불고기버거_세트
+    private String nameEn; // 선택: Bulgogi Burger Set
     private int price; // 필수: 8500
     private String categoryId; // 필수: cat_set
     private boolean hidden; // 필수: false
@@ -20,6 +21,7 @@ public class MenuCreateRequestDto {
         return MenuItem.builder()
                 .menuItemId(generatedId)
                 .name(this.name)
+                .nameEn(this.nameEn)
                 .price(this.price)
                 .categoryId(this.categoryId)
                 .hidden(this.hidden)

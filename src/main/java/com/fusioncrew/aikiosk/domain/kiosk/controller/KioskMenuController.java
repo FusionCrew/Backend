@@ -64,7 +64,18 @@ public class KioskMenuController {
     }
 
     @GetMapping("/recommendations")
-    public ResponseEntity<KioskRecommendationResponse> getRecommendations(@RequestParam String sessionId) {
+    public ResponseEntity<?> getRecommendations(@RequestParam(required = false) String sessionId) {
+        // sessionId 검증: null, 빈 문자열, 공백만 있는 경우 400 에러
+        if (sessionId == null || sessionId.trim().isEmpty()) {
+            return ResponseEntity.badRequest().body(java.util.Map.of(
+                    "success", false,
+                    "error", java.util.Map.of(
+                            "code", "INVALID_SESSION_ID",
+                            "message", "sessionId는 필수 파라미터입니다."),
+                    "timestamp", ZonedDateTime.now().format(DateTimeFormatter.ISO_OFFSET_DATE_TIME),
+                    "requestId", "req_" + UUID.randomUUID().toString().substring(0, 8)));
+        }
+
         KioskRecommendationResponse response = kioskMenuService.getRecommendations(sessionId);
 
         response.setTimestamp(ZonedDateTime.now().format(DateTimeFormatter.ISO_OFFSET_DATE_TIME));

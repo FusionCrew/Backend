@@ -7,6 +7,7 @@ import lombok.Getter;
 public class MenuItemResponseDto {
     private final String menuItemId;
     private final String name;
+    private final String nameEn;
     private final int price;
     private final boolean hidden;
 
@@ -14,6 +15,7 @@ public class MenuItemResponseDto {
     public MenuItemResponseDto(MenuItem menuItem) {
         this.menuItemId = menuItem.getMenuItemId();
         this.name = menuItem.getName();
+        this.nameEn = menuItem.getNameEn();
         this.price = menuItem.getPrice();
         this.hidden = menuItem.isHidden();
     }

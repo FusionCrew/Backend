@@ -30,6 +30,9 @@ public class Order extends BaseEntity {
     @Builder.Default
     private OrderStatus status = OrderStatus.CREATED;
 
+    @Column(length = 255)
+    private String statusUpdateNote; // 관리자 상태 변경 메모
+
     @OneToMany(mappedBy = "order", cascade = CascadeType.ALL, orphanRemoval = true)
     @Builder.Default
     private List<OrderItem> items = new ArrayList<>();

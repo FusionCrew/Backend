@@ -6,10 +6,23 @@ import com.fusioncrew.aikiosk.domain.order.entity.OrderStatus;
 import java.time.LocalDateTime;
 
 public record OrderStatusUpdateResponseDto(
-        Long orderId,
-        OrderStatus status,
+        String orderId,
+        OrderStatus previousStatus,
+        OrderStatus currentStatus,
+        String note,
+        UpdatedByDto updatedBy,
         LocalDateTime updatedAt) {
-    public static OrderStatusUpdateResponseDto from(Order order) {
-        return new OrderStatusUpdateResponseDto(order.getId(), order.getStatus(), order.getUpdatedAt());
+
+    public record UpdatedByDto(String adminUserId, String username) {
+    }
+
+    public static OrderStatusUpdateResponseDto from(Order order, OrderStatus previousStatus) {
+        return new OrderStatusUpdateResponseDto(
+                order.getOrderId(),
+                previousStatus,
+                order.getStatus(),
+                order.getStatusUpdateNote(),
+                new UpdatedByDto("adm_0001", "admin01"), // Mock
+                order.getUpdatedAt());
     }
 }

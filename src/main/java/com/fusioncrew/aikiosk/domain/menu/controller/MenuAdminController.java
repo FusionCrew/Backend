@@ -28,7 +28,7 @@ public class MenuAdminController {
         // 1. 서비스 로직 수행
         List<MenuItemResponseDto> items = menuService.getAdminMenuList();
 
-        // 2. 응답 데이터 구조 조립 
+        // 2. 응답 데이터 구조 조립
         Map<String, Object> data = new HashMap<>();
         data.put("items", items);
 
@@ -44,7 +44,8 @@ public class MenuAdminController {
 
     // [New] 메뉴 등록 API
     @PostMapping
-    public Map<String, Object> createMenu(@RequestBody MenuCreateRequestDto request) {
+    public org.springframework.http.ResponseEntity<Map<String, Object>> createMenu(
+            @RequestBody MenuCreateRequestDto request) {
         // 1. 서비스 호출
         String createdMenuId = menuService.createMenu(request);
 
@@ -52,14 +53,15 @@ public class MenuAdminController {
         Map<String, Object> data = new HashMap<>();
         data.put("menuItemId", createdMenuId);
 
-        // 3. 응답 생성
+        // 3. 201 Created 응답 생성
         Map<String, Object> response = new HashMap<>();
         response.put("success", true);
         response.put("data", data);
         response.put("timestamp", LocalDateTime.now());
         response.put("requestId", "req_" + UUID.randomUUID().toString().substring(0, 8));
 
-        return response;
+        return org.springframework.http.ResponseEntity.status(org.springframework.http.HttpStatus.CREATED)
+                .body(response);
     }
 
     // [New] 메뉴-재료 매핑 API
@@ -106,6 +108,52 @@ public class MenuAdminController {
         data.put("description", updatedMenu.getDescription());
 
         // 3. 최종 응답 생성
+        Map<String, Object> response = new HashMap<>();
+        response.put("success", true);
+        response.put("data", data);
+        response.put("timestamp", LocalDateTime.now());
+        response.put("requestId", "req_" + UUID.randomUUID().toString().substring(0, 8));
+
+        return response;
+    }
+
+    // [New] 특정 메뉴의 재료 목록 조회 API (GET)
+    @GetMapping("/{menuItemId}/ingredients")
+    public Map<String, Object> getMenuIngredients(@PathVariable String menuItemId) {
+        MenuItem menu = menuService.getMenuEntity(menuItemId);
+        List<Map<String, Object>> ingredients = menu.getIngredients().stream()
+                .map(ing -> {
+                    Map<String, Object> ingMap = new HashMap<>();
+                    ingMap.put("ingredientId", ing.getIngredientId());
+                    ingMap.put("name", ing.getName());
+                    ingMap.put("allergyTag", ing.getAllergyTag());
+                    ingMap.put("calories", ing.getCalories());
+                    ingMap.put("extraPrice", ing.getExtraPrice());
+                    return ingMap;
+                })
+                .collect(java.util.stream.Collectors.toList());
+
+        Map<String, Object> data = new HashMap<>();
+        data.put("menuItemId", menuItemId);
+        data.put("ingredients", ingredients);
+
+        Map<String, Object> response = new HashMap<>();
+        response.put("success", true);
+        response.put("data", data);
+        response.put("timestamp", LocalDateTime.now());
+        response.put("requestId", "req_" + UUID.randomUUID().toString().substring(0, 8));
+
+        return response;
+    }
+
+    // [New] 전체 메뉴-재료 매핑 요약 조회 API (GET)
+    @GetMapping("/mapping-summary")
+    public Map<String, Object> getMappingSummary() {
+        List<Map<String, Object>> items = menuService.getMappingSummary();
+
+        Map<String, Object> data = new HashMap<>();
+        data.put("items", items);
+
         Map<String, Object> response = new HashMap<>();
         response.put("success", true);
         response.put("data", data);

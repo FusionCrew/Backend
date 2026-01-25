@@ -32,7 +32,8 @@ public class IngredientAdminController {
 
     // [New] 등록 (POST)
     @PostMapping
-    public Map<String, Object> createIngredient(@RequestBody IngredientCreateRequestDto request) {
+    public org.springframework.http.ResponseEntity<Map<String, Object>> createIngredient(
+            @RequestBody IngredientCreateRequestDto request) {
         // 1. 서비스 호출
         String newIngredientId = ingredientService.createIngredient(request);
 
@@ -40,8 +41,9 @@ public class IngredientAdminController {
         Map<String, Object> data = new HashMap<>();
         data.put("ingredientId", newIngredientId);
 
-        // 3. 201 Created 응답 (원칙상 ResponseEntity.created()가 좋지만 명세서 포맷 준수를 위해 Map 반환)
-        return createSuccessResponse(data);
+        // 3. 201 Created 응답
+        return org.springframework.http.ResponseEntity.status(org.springframework.http.HttpStatus.CREATED)
+                .body(createSuccessResponse(data));
     }
 
     // 공통 응답 생성 헬퍼 메서드
@@ -97,6 +99,18 @@ public class IngredientAdminController {
         Map<String, Object> data = new HashMap<>();
         data.put("deleted", true);
         data.put("ingredientId", ingredientId);
+
+        return createSuccessResponse(data);
+    }
+
+    // [New] 특정 재료를 사용하는 메뉴 목록 조회 API (역방향 조회)
+    @GetMapping("/{ingredientId}/menu-items")
+    public Map<String, Object> getMenusByIngredient(@PathVariable String ingredientId) {
+        var items = ingredientService.getMenusByIngredient(ingredientId);
+
+        Map<String, Object> data = new HashMap<>();
+        data.put("ingredientId", ingredientId);
+        data.put("items", items);
 
         return createSuccessResponse(data);
     }
