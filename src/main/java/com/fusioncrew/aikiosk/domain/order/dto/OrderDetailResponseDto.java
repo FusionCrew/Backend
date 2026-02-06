@@ -20,7 +20,7 @@ public record OrderDetailResponseDto(
     public record Item(String menuItemId, String name, int price, int quantity) {
         public static Item from(OrderItem oi) {
             return new Item(
-                    String.valueOf(oi.getMenuItemId()),
+                    oi.getMenuItemId(),
                     oi.getName(),
                     oi.getPrice(),
                     oi.getQuantity());

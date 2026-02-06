@@ -52,7 +52,7 @@ public class OrderService {
 
             // 메뉴 상세 정보 조회하여 name, price 채우기
             menuItemRepository.findByMenuItemId(logicId).ifPresent(menu -> {
-                oi.setMenuItemId(menu.getId()); // OrderItem uses internal Long id
+                oi.setMenuItemId(logicId); // Store String logicId instead of PK
                 oi.setName(menu.getName());
                 oi.setPrice(menu.getPrice());
             });

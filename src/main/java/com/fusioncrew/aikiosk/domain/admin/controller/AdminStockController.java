@@ -29,22 +29,38 @@ public class AdminStockController {
     public ApiResponse<StockDtos.AdminStockUpsertResponse> upsert(@RequestBody StockDtos.StockUpsertRequest req) {
         StockDtos.StockUpdateResponse dto = stockService.upsert(req);
         StockDtos.AdminStockUpsertResponse res = new StockDtos.AdminStockUpsertResponse(
-                String.format("stk_%02d", dto.stockId()));
+                dto.stockId());
         return ApiResponse.ok(res);
     }
 
     // PATCH /api/v1/admin/stocks/{stockId} (입고/차감)
     @PatchMapping("/{stockId}")
-    public ApiResponse<StockDtos.StockUpdateResponse> adjust(@PathVariable Long stockId,
+    public ApiResponse<StockDtos.StockUpdateResponse> adjust(@PathVariable String stockId,
             @RequestBody StockDtos.StockAdjustRequest req) {
-        StockDtos.StockUpdateResponse dto = stockService.adjust(stockId, req);
+        Long id = parseStockId(stockId);
+        StockDtos.StockUpdateResponse dto = stockService.adjust(id, req);
         return ApiResponse.ok(dto);
     }
 
     // POST /api/v1/admin/stocks/{stockId}/out-of-stock
     @PostMapping("/{stockId}/out-of-stock")
-    public ApiResponse<StockDtos.StockUpdateResponse> outOfStock(@PathVariable Long stockId) {
-        StockDtos.StockUpdateResponse dto = stockService.outOfStock(stockId);
+    public ApiResponse<StockDtos.AdminStockOutOfStockResponse> outOfStock(@PathVariable String stockId,
+            @RequestBody StockDtos.StockOutOfStockRequest req) {
+        Long id = parseStockId(stockId);
+        StockDtos.AdminStockOutOfStockResponse dto = stockService.updateOutOfStock(id, req);
         return ApiResponse.ok(dto);
+    }
+
+    private Long parseStockId(String stockId) {
+        if (stockId == null)
+            return null;
+        if (stockId.startsWith("stk_")) {
+            return Long.parseLong(stockId.substring(4));
+        }
+        try {
+            return Long.parseLong(stockId);
+        } catch (NumberFormatException e) {
+            throw new IllegalArgumentException("Invalid stockId format: " + stockId);
+        }
     }
 }
