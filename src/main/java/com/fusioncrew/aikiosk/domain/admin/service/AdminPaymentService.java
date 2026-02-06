@@ -1,10 +1,11 @@
 package com.fusioncrew.aikiosk.domain.admin.service;
 
-import com.fusioncrew.aikiosk.domain.admin.dto.AdminPaymentDetailResponse;
 import com.fusioncrew.aikiosk.domain.admin.dto.AdminPaymentListResponse;
+import com.fusioncrew.aikiosk.domain.admin.dto.AdminPaymentListResponse.PaymentSummary;
 import com.fusioncrew.aikiosk.domain.order.entity.Order;
 import com.fusioncrew.aikiosk.domain.order.repository.OrderRepository;
 import com.fusioncrew.aikiosk.domain.payment.entity.Payment;
+import com.fusioncrew.aikiosk.domain.payment.entity.PaymentStatus;
 import com.fusioncrew.aikiosk.domain.payment.repository.PaymentRepository;
 import com.fusioncrew.aikiosk.global.exception.CustomException;
 import lombok.RequiredArgsConstructor;
@@ -47,7 +48,7 @@ public class AdminPaymentService {
                                                         .isMock(payment.isMock())
                                                         .requestedAt(payment.getCreatedAt())
                                                         .approvedAt(payment
-                                                                        .getStatus() == com.fusioncrew.aikiosk.domain.payment.entity.PaymentStatus.APPROVED
+                                                                        .getStatus() == PaymentStatus.APPROVED
                                                                                         ? payment.getUpdatedAt()
                                                                                         : null)
                                                         .orderStatus(order != null ? order.getStatus() : null)
@@ -60,8 +61,47 @@ public class AdminPaymentService {
                                 })
                                 .collect(Collectors.toList());
 
+                // Calculate summary
+                LocalDateTime now = LocalDateTime.now();
+                LocalDateTime startOfToday = now.minusHours(now.getHour()).minusMinutes(now.getMinute())
+                                .minusSeconds(now.getSecond());
+                LocalDateTime startOfMonth = now.withDayOfMonth(1).minusHours(now.getHour())
+                                .minusMinutes(now.getMinute()).minusSeconds(now.getSecond());
+
+                BigDecimal todayTotal = payments.stream()
+                                .filter(p -> p.getStatus() == PaymentStatus.APPROVED
+                                                && p.getCreatedAt().isAfter(startOfToday))
+                                .map(Payment::getAmount)
+                                .reduce(BigDecimal.ZERO, BigDecimal::add);
+
+                BigDecimal monthlyTotal = payments.stream()
+                                .filter(p -> p.getStatus() == PaymentStatus.APPROVED
+                                                && p.getCreatedAt().isAfter(startOfMonth))
+                                .map(Payment::getAmount)
+                                .reduce(BigDecimal.ZERO, BigDecimal::add);
+
+                BigDecimal refundTotal = payments.stream()
+                                .filter(p -> (p.getStatus() == PaymentStatus.REFUNDED
+                                                || p.getStatus() == PaymentStatus.PARTIALLY_REFUNDED)
+                                                && p.getUpdatedAt().isAfter(startOfToday))
+                                .map(Payment::getRefundedAmount)
+                                .reduce(BigDecimal.ZERO, BigDecimal::add);
+
+                BigDecimal pendingTotal = payments.stream()
+                                .filter(p -> p.getStatus() == PaymentStatus.PENDING)
+                                .map(Payment::getAmount)
+                                .reduce(BigDecimal.ZERO, BigDecimal::add);
+
+                PaymentSummary summary = PaymentSummary.builder()
+                                .todayTotal(todayTotal)
+                                .monthlyTotal(monthlyTotal)
+                                .refundTotal(refundTotal)
+                                .pendingTotal(pendingTotal)
+                                .build();
+
                 return AdminPaymentListResponse.builder()
                                 .items(items)
+                                .summary(summary)
                                 .timestamp(LocalDateTime.now().format(DateTimeFormatter.ISO_DATE_TIME))
                                 .requestId(UUID.randomUUID().toString().substring(0, 8))
                                 .build();

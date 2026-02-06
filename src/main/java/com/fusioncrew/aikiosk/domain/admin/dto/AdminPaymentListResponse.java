@@ -14,8 +14,18 @@ import java.util.List;
 @Builder
 public class AdminPaymentListResponse {
     private List<PaymentInfo> items;
+    private PaymentSummary summary;
     private String timestamp;
     private String requestId;
+
+    @Getter
+    @Builder
+    public static class PaymentSummary {
+        private BigDecimal todayTotal;
+        private BigDecimal monthlyTotal;
+        private BigDecimal refundTotal;
+        private BigDecimal pendingTotal;
+    }
 
     @Getter
     @Builder

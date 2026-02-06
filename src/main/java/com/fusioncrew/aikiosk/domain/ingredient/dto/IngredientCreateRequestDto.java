@@ -22,11 +22,15 @@ public class IngredientCreateRequestDto {
     // [New] 프론트엔드에서 직접 받을 수 있도록 추가
     private Integer calories; // 선택: 칼로리 (nutrition.kcal 대신)
     private Integer extraPrice; // 선택: 추가가격
+    private Integer protein;
+    private Integer sodium;
 
     @Getter
     @NoArgsConstructor
     public static class Nutrition {
         private Integer kcal; // 선택: 155
+        private Integer protein;
+        private Integer sodium;
     }
 
     // Entity로 변환하는 메서드
@@ -40,6 +44,22 @@ public class IngredientCreateRequestDto {
             caloriesValue = nutrition.getKcal();
         }
 
+        // protein 우선순위: 직접 입력 > nutrition.protein > 기본값 0
+        int proteinValue = 0;
+        if (this.protein != null) {
+            proteinValue = this.protein;
+        } else if (nutrition != null && nutrition.getProtein() != null) {
+            proteinValue = nutrition.getProtein();
+        }
+
+        // sodium 우선순위: 직접 입력 > nutrition.sodium > 기본값 0
+        int sodiumValue = 0;
+        if (this.sodium != null) {
+            sodiumValue = this.sodium;
+        } else if (nutrition != null && nutrition.getSodium() != null) {
+            sodiumValue = nutrition.getSodium();
+        }
+
         // extraPrice: 직접 입력 > 기본값 0
         int extraPriceValue = (this.extraPrice != null) ? this.extraPrice : 0;
 
@@ -49,8 +69,8 @@ public class IngredientCreateRequestDto {
                 .allergyTag(this.allergyTag)
                 .calories(caloriesValue)
                 .extraPrice(extraPriceValue)
-                .protein(0)
-                .sodium(0)
+                .protein(proteinValue)
+                .sodium(sodiumValue)
                 .build();
     }
 }

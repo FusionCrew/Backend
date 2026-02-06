@@ -2,7 +2,7 @@ package com.fusioncrew.aikiosk.domain.admin.controller;
 
 import com.fusioncrew.aikiosk.domain.admin.dto.*;
 import com.fusioncrew.aikiosk.domain.admin.service.AdminTicketService;
-import com.fusioncrew.aikiosk.global.common.ApiResponse;
+import com.fusioncrew.aikiosk.global.api.ApiResponse;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
@@ -16,7 +16,7 @@ public class AdminTicketController {
     @GetMapping
     public ApiResponse<AdminTicketListResponse> getTicketList() {
         AdminTicketListResponse response = adminTicketService.getTicketList();
-        return ApiResponse.success("티켓 목록을 성공적으로 조회했습니다.", response);
+        return ApiResponse.ok(response);
     }
 
     @PostMapping("/{ticketId}/call")
@@ -24,7 +24,7 @@ public class AdminTicketController {
             @PathVariable String ticketId,
             @RequestBody AdminTicketCallRequest request) {
         AdminTicketCallResponse response = adminTicketService.callTicket(ticketId, request);
-        return ApiResponse.success("티켓 호출이 성공적으로 완료되었습니다.", response);
+        return ApiResponse.ok(response);
     }
 
     @PostMapping("/{ticketId}/serve")
@@ -32,6 +32,6 @@ public class AdminTicketController {
             @PathVariable String ticketId,
             @RequestBody AdminTicketServeRequest request) {
         AdminTicketServeResponse response = adminTicketService.serveTicket(ticketId, request);
-        return ApiResponse.success("티켓 완료 처리가 성공적으로 완료되었습니다.", response);
+        return ApiResponse.ok(response);
     }
 }

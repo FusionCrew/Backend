@@ -36,7 +36,7 @@ public class AdminTicketService {
         long total = tickets.size();
         long waiting = tickets.stream().filter(t -> t.getStatus() == TicketStatus.WAITING).count();
         long called = tickets.stream().filter(t -> t.getStatus() == TicketStatus.CALLED).count();
-        long completed = tickets.stream().filter(t -> t.getStatus() == TicketStatus.COMPLETED).count();
+        long completed = tickets.stream().filter(t -> t.getStatus() == TicketStatus.SERVED).count();
 
         List<AdminTicketListResponse.TicketItem> items = tickets.stream().map(ticket -> {
             Order order = orderRepository.findByOrderId(ticket.getOrderId()).orElse(null);
@@ -64,7 +64,7 @@ public class AdminTicketService {
                     .kioskId(payment != null && payment.getKioskId() != null ? payment.getKioskId() : "kiosk_01")
                     .issuedAt(ticket.getCreatedAt())
                     .calledAt(ticket.getCalledAt())
-                    .completedAt(ticket.getCompletedAt())
+                    .completedAt(ticket.getServedAt())
                     .waitingSeconds(waitingSeconds)
                     .build();
         }).collect(Collectors.toList());
@@ -128,7 +128,7 @@ public class AdminTicketService {
                 .orElseThrow(() -> new CustomException(HttpStatus.NOT_FOUND, "티켓 정보를 찾을 수 없습니다."));
 
         // 상태 업데이트
-        ticket.complete();
+        ticket.serve();
 
         // TODO: servedBy 정보를 audit 로그에 남기거나 하는 로직 추가 가능
 

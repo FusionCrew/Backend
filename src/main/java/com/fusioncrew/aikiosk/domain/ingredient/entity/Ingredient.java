@@ -53,7 +53,8 @@ public class Ingredient {
     }
 
     // [New] 부분 업데이트 메서드 (PATCH용)
-    public void updateDetails(String name, AllergyTag allergyTag, Integer calories, Integer extraPrice) {
+    public void updateDetails(String name, AllergyTag allergyTag, Integer calories, Integer extraPrice, Integer protein,
+            Integer sodium) {
         if (name != null) {
             this.name = name;
         }
@@ -65,6 +66,12 @@ public class Ingredient {
         }
         if (extraPrice != null) {
             this.extraPrice = extraPrice;
+        }
+        if (protein != null) {
+            this.protein = protein;
+        }
+        if (sodium != null) {
+            this.sodium = sodium;
         }
     }
 }

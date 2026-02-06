@@ -4,40 +4,36 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import java.util.List;
 
 @Data
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
 public class DashboardSummaryDto {
-    private SalesDto sales;
-    private OrdersDto orders;
-    private SessionsDto sessions;
+    private Long todayRevenue;
+    private Double revenueChange;
+    private Integer activeOrders;
+    private List<LowStockIngredientDto> lowStockIngredients;
+    private List<Integer> hourlySales;
+    private List<ActivityLogDto> aiActivityLogs;
 
     @Data
     @Builder
     @NoArgsConstructor
     @AllArgsConstructor
-    public static class SalesDto {
-        private Long today;
-        private String currency;
+    public static class LowStockIngredientDto {
+        private String name;
+        private Integer stockLevel;
     }
 
     @Data
     @Builder
     @NoArgsConstructor
     @AllArgsConstructor
-    public static class OrdersDto {
-        private Integer count;
-        private Double failedRate;
-    }
-
-    @Data
-    @Builder
-    @NoArgsConstructor
-    @AllArgsConstructor
-    public static class SessionsDto {
-        private Integer count;
-        private Integer avgDurationSec;
+    public static class ActivityLogDto {
+        private String time;
+        private String title;
+        private String desc;
     }
 }

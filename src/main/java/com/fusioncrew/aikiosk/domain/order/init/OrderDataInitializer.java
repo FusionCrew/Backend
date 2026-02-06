@@ -13,15 +13,21 @@ import org.springframework.stereotype.Component;
 public class OrderDataInitializer implements CommandLineRunner {
 
     private final OrderRepository orderRepository;
+    private final com.fusioncrew.aikiosk.domain.ticket.repository.TicketRepository ticketRepository;
+    private final com.fusioncrew.aikiosk.domain.payment.repository.PaymentRepository paymentRepository;
 
     @Override
     public void run(String... args) {
+        ticketRepository.deleteAll();
+        paymentRepository.deleteAll();
+        orderRepository.deleteAll();
         if (orderRepository.count() == 0) {
 
-            // 주문 1
+            // 주문 1 - 총합 11000원 (불고기 3500*2 + 새우 4000*1)
             Order order1 = new Order();
             order1.setSessionId("sess_001");
             order1.setStatus(OrderStatus.CONFIRMED);
+            order1.setOrderId("ord_0001");
 
             OrderItem oi11 = new OrderItem();
             oi11.setMenuItemId("menu_001");
@@ -30,7 +36,15 @@ public class OrderDataInitializer implements CommandLineRunner {
             oi11.setQuantity(2);
             oi11.setOptionsJson("{\"name\":\"불고기버거\"}");
 
+            OrderItem oi12 = new OrderItem();
+            oi12.setMenuItemId("menu_002");
+            oi12.setName("새우버거");
+            oi12.setPrice(4000);
+            oi12.setQuantity(1);
+            oi12.setOptionsJson("{\"name\":\"새우버거\"}");
+
             order1.addItem(oi11);
+            order1.addItem(oi12);
             orderRepository.save(order1);
 
             // 주문 2

@@ -66,6 +66,8 @@ public class IngredientAdminController {
         data.put("name", ingredient.getName());
         data.put("allergyTag", ingredient.getAllergyTag());
         data.put("calories", ingredient.getCalories());
+        data.put("protein", ingredient.getProtein());
+        data.put("sodium", ingredient.getSodium());
         data.put("extraPrice", ingredient.getExtraPrice());
 
         return createSuccessResponse(data);
@@ -84,6 +86,8 @@ public class IngredientAdminController {
         data.put("name", updatedIngredient.getName());
         data.put("allergyTag", updatedIngredient.getAllergyTag());
         data.put("calories", updatedIngredient.getCalories());
+        data.put("protein", updatedIngredient.getProtein());
+        data.put("sodium", updatedIngredient.getSodium());
         data.put("extraPrice", updatedIngredient.getExtraPrice());
 
         return createSuccessResponse(data);

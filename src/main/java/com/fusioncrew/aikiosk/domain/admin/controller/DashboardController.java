@@ -13,7 +13,7 @@ import java.time.ZonedDateTime;
 import java.util.UUID;
 
 @RestController
-@RequestMapping("/api/v1/admin/dashboard")
+@RequestMapping("/api/v1/admin/dashboard/summary")
 @RequiredArgsConstructor
 public class DashboardController {
 
