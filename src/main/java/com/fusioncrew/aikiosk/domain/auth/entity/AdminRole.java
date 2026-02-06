@@ -1,6 +1,7 @@
 package com.fusioncrew.aikiosk.domain.auth.entity;
 
 public enum AdminRole {
-    SUPER_ADMIN,
-    ADMIN
+    ROLE_ADMIN,
+    ROLE_MANAGER,
+    ROLE_STAFF
 }

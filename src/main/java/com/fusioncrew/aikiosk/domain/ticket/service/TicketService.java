@@ -5,8 +5,7 @@ import com.fusioncrew.aikiosk.domain.order.repository.OrderRepository;
 import com.fusioncrew.aikiosk.domain.payment.entity.Payment;
 import com.fusioncrew.aikiosk.domain.payment.entity.PaymentStatus;
 import com.fusioncrew.aikiosk.domain.payment.repository.PaymentRepository;
-import com.fusioncrew.aikiosk.domain.ticket.dto.TicketCreateRequest;
-import com.fusioncrew.aikiosk.domain.ticket.dto.TicketResponse;
+import com.fusioncrew.aikiosk.domain.ticket.dto.TicketDtos;
 import com.fusioncrew.aikiosk.domain.ticket.entity.Ticket;
 import com.fusioncrew.aikiosk.domain.ticket.entity.TicketStatus;
 import com.fusioncrew.aikiosk.domain.ticket.repository.TicketRepository;
@@ -29,78 +28,64 @@ public class TicketService {
     private final OrderRepository orderRepository;
 
     @Transactional
-    public TicketResponse createTicket(TicketCreateRequest request) {
-        // 1. 중복 발급 체크
-        if (ticketRepository.existsByPaymentId(request.getPaymentId())) {
-            throw new CustomException(HttpStatus.CONFLICT, "이미 대기표가 발급된 결제 건입니다.");
+    public TicketDtos.TicketResponse issue(TicketDtos.IssueTicketRequest req) {
+
+        if (ticketRepository.existsByPaymentId(req.paymentId())) {
+            throw new CustomException(HttpStatus.CONFLICT, "이미 대기표가 발급된 결제입니다.");
         }
 
-        long paymentIdLong;
-        try {
-            paymentIdLong = Long.parseLong(request.getPaymentId().replace("pay_", "").trim());
-        } catch (NumberFormatException e) {
-            throw new CustomException(HttpStatus.BAD_REQUEST, "잘못된 결제 ID 형식입니다.");
+        Payment payment = paymentRepository.findById(parsePaymentId(req.paymentId()))
+                .orElseThrow(() -> new CustomException(HttpStatus.NOT_FOUND, "결제 정보 없음"));
+
+        if (payment.getStatus() != PaymentStatus.APPROVED) {
+            throw new CustomException(HttpStatus.BAD_REQUEST, "결제가 완료되지 않았습니다.");
         }
 
-        // 2. 결제 정보 검증
-        Payment payment = paymentRepository.findById(paymentIdLong)
-                .orElseThrow(() -> new CustomException(HttpStatus.NOT_FOUND, "결제 정보를 찾을 수 없습니다."));
-
-        if (!payment.getStatus().equals(PaymentStatus.APPROVED)) {
-            throw new CustomException(HttpStatus.BAD_REQUEST, "결제가 완료되지 않은 주문입니다.");
+        if (!payment.getOrderId().equals(req.orderId())) {
+            throw new CustomException(HttpStatus.BAD_REQUEST, "주문/결제 정보 불일치");
         }
 
-        if (!payment.getOrderId().equals(request.getOrderId())) {
-            throw new CustomException(HttpStatus.BAD_REQUEST, "주문 정보와 결제 정보가 일치하지 않습니다.");
-        }
+        LocalDateTime start = LocalDateTime.of(LocalDate.now(), LocalTime.MIN);
+        LocalDateTime end = LocalDateTime.of(LocalDate.now(), LocalTime.MAX);
+        int number = (int) ticketRepository.countByCreatedAtBetween(start, end) + 1;
 
-        // 3. 오늘 생성된 티켓 수 조회하여 번호 생성 (1부터 시작)
-        LocalDateTime startOfDay = LocalDateTime.of(LocalDate.now(), LocalTime.MIN);
-        LocalDateTime endOfDay = LocalDateTime.of(LocalDate.now(), LocalTime.MAX);
-        long countToday = ticketRepository.countByCreatedAtBetween(startOfDay, endOfDay);
-        int nextNumber = (int) countToday + 1;
-
-        // 4. 티켓 생성 및 저장
         Ticket ticket = Ticket.builder()
-                .orderId(request.getOrderId())
-                .paymentId(request.getPaymentId())
-                .number(nextNumber)
+                .orderId(req.orderId())
+                .paymentId(req.paymentId())
+                .number(number)
                 .status(TicketStatus.WAITING)
                 .build();
 
-        Ticket savedTicket = ticketRepository.save(ticket);
+        Ticket saved = ticketRepository.save(ticket);
 
-        return TicketResponse.builder()
-                .ticketId(savedTicket.getTicketId())
-                .number(savedTicket.getNumber())
-                .status(savedTicket.getStatus())
-                .build();
+        return new TicketDtos.TicketResponse(
+                saved.getTicketId(),
+                saved.getNumber(),
+                saved.getStatus()
+        );
     }
 
-    public Ticket get(Long ticketId) {
-        return ticketRepository.findById(ticketId)
-                .orElseThrow(() -> new CustomException(HttpStatus.NOT_FOUND, "티켓을 찾을 수 없습니다."));
+    public TicketDtos.TicketDetailResponse getDetail(String ticketId) {
+        Long id = parseTicketId(ticketId);
+
+        Ticket ticket = ticketRepository.findById(id)
+                .orElseThrow(() -> new CustomException(HttpStatus.NOT_FOUND, "티켓 없음"));
+
+        int estimatedWaitMin = ticketRepository.countByStatus(TicketStatus.WAITING) * 2;
+
+        return new TicketDtos.TicketDetailResponse(
+                ticket.getTicketId(),
+                ticket.getNumber(),
+                ticket.getStatus(),
+                estimatedWaitMin
+        );
     }
 
-    @Transactional
-    public Ticket issue(Long orderId) {
-        // Simple implementation for backward compatibility
-        Order order = orderRepository.findById(orderId)
-                .orElseThrow(() -> new CustomException(HttpStatus.NOT_FOUND, "주문을 찾을 수 없습니다."));
+    private Long parseTicketId(String ticketId) {
+        return Long.parseLong(ticketId.replace("tkt_", ""));
+    }
 
-        // 오늘 생성된 티켓 수 조회하여 번호 생성
-        LocalDateTime startOfDay = LocalDateTime.of(LocalDate.now(), LocalTime.MIN);
-        LocalDateTime endOfDay = LocalDateTime.of(LocalDate.now(), LocalTime.MAX);
-        long countToday = ticketRepository.countByCreatedAtBetween(startOfDay, endOfDay);
-        int nextNumber = (int) countToday + 1;
-
-        Ticket ticket = Ticket.builder()
-                .orderId(order.getOrderId())
-                .paymentId("ISSUED_WITHOUT_PAYMENT_" + orderId)
-                .number(nextNumber)
-                .status(TicketStatus.WAITING)
-                .build();
-
-        return ticketRepository.save(ticket);
+    private Long parsePaymentId(String paymentId) {
+        return Long.parseLong(paymentId.replace("pay_", ""));
     }
 }

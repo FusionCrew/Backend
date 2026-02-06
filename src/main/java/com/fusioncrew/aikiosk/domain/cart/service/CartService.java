@@ -1,11 +1,15 @@
 package com.fusioncrew.aikiosk.domain.cart.service;
 
+import com.fasterxml.jackson.core.type.TypeReference;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fusioncrew.aikiosk.domain.cart.dto.CartDtos;
 import com.fusioncrew.aikiosk.domain.cart.entity.Cart;
 import com.fusioncrew.aikiosk.domain.cart.entity.CartItem;
 import com.fusioncrew.aikiosk.domain.cart.repository.CartRepository;
 import jakarta.transaction.Transactional;
 import org.springframework.stereotype.Service;
+
+import java.util.*;
 
 @Service
 public class CartService {
@@ -26,14 +30,17 @@ public class CartService {
         });
     }
 
-    public Cart get(Long cartId) {
-        return cartRepository.findById(cartId).orElseThrow(() -> new IllegalArgumentException("cart not found"));
+    public Cart get(String cartId) {
+        Long id = CartDtos.parseCartId(cartId);
+        return cartRepository.findById(id).orElseThrow(() -> new IllegalArgumentException("cart not found"));
     }
 
     @Transactional
-    public Cart addItem(Long cartId, CartDtos.AddItemRequest req) {
+    public Cart addItem(String cartId, CartDtos.AddItemRequest req) {
         Cart cart = get(cartId);
-        if (req.menuItemId() == null) throw new IllegalArgumentException("menuItemId is required");
+        if (req.menuItemId() == null || req.menuItemId().isBlank())
+            throw new IllegalArgumentException("menuItemId is required");
+
         int qty = (req.quantity() == null ? 1 : req.quantity());
         if (qty <= 0) throw new IllegalArgumentException("quantity must be > 0");
 
@@ -47,12 +54,14 @@ public class CartService {
     }
 
     @Transactional
-    public Cart updateQty(Long cartId, Long itemId, int qty) {
+    public Cart updateQty(String cartId, String itemId, int qty) {
         if (qty <= 0) throw new IllegalArgumentException("quantity must be > 0");
         Cart cart = get(cartId);
 
+        Long targetId = CartDtos.parseCartItemId(itemId);
+
         CartItem item = cart.getItems().stream()
-                .filter(i -> i.getId().equals(itemId))
+                .filter(i -> i.getId().equals(targetId))
                 .findFirst()
                 .orElseThrow(() -> new IllegalArgumentException("item not found"));
 
@@ -61,16 +70,17 @@ public class CartService {
     }
 
     @Transactional
-    public Cart deleteItem(Long cartId, Long itemId) {
+    public void deleteItem(String cartId, String itemId) {
         Cart cart = get(cartId);
-        cart.getItems().removeIf(i -> i.getId().equals(itemId));
-        return cartRepository.save(cart);
+        Long targetId = CartDtos.parseCartItemId(itemId);
+        cart.getItems().removeIf(i -> i.getId().equals(targetId));
+        cartRepository.save(cart);
     }
 
     @Transactional
-    public Cart clear(Long cartId) {
+    public void clear(String cartId) {
         Cart cart = get(cartId);
         cart.getItems().clear();
-        return cartRepository.save(cart);
+        cartRepository.save(cart);
     }
 }

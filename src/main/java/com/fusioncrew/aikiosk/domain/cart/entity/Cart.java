@@ -29,6 +29,9 @@ public class Cart {
     @PreUpdate
     void preUpdate() { this.updatedAt = OffsetDateTime.now(); }
 
+    @Transient
+    public String getStatus() { return "OPEN"; }
+    
     public Long getId() { return id; }
     public String getSessionId() { return sessionId; }
     public List<CartItem> getItems() { return items; }

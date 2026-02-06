@@ -5,35 +5,43 @@ import com.fusioncrew.aikiosk.domain.ticket.entity.Ticket;
 import com.fusioncrew.aikiosk.domain.ticket.service.TicketService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.http.HttpStatus;
+import lombok.RequiredArgsConstructor;
+
+import java.time.OffsetDateTime;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.UUID;
 
 @RestController
-@RequestMapping("/api/v1/kiosk")
+@RequestMapping("/api/v1/kiosk/tickets")
+@RequiredArgsConstructor
 public class KioskTicketController {
 
     private final TicketService ticketService;
 
-    public KioskTicketController(TicketService ticketService) {
-        this.ticketService = ticketService;
+    @PostMapping
+    public ResponseEntity<Map<String, Object>> issue(
+            @RequestBody TicketDtos.IssueTicketRequest req
+    ) {
+        TicketDtos.TicketResponse data = ticketService.issue(req);
+
+        return ResponseEntity.status(HttpStatus.CREATED).body(commonResponse(data));
     }
 
-    @PostMapping("/tickets")
-    public ResponseEntity<TicketDtos.TicketResponse> issue(@RequestBody TicketDtos.IssueTicketRequest req) {
-        return ResponseEntity.ok(toRes(ticketService.issue(req.orderId())));
+    @GetMapping("/{ticketId}")
+    public ResponseEntity<Map<String, Object>> get(@PathVariable String ticketId) {
+        TicketDtos.TicketDetailResponse data = ticketService.getDetail(ticketId);
+
+        return ResponseEntity.ok(commonResponse(data));
     }
 
-    @GetMapping("/tickets/{ticketId}")
-    public ResponseEntity<TicketDtos.TicketResponse> get(@PathVariable Long ticketId) {
-        return ResponseEntity.ok(toRes(ticketService.get(ticketId)));
-    }
-
-    private TicketDtos.TicketResponse toRes(Ticket t) {
-        return new TicketDtos.TicketResponse(
-                t.getId(),
-                t.getOrderId(),
-                t.getIssuedDate(),
-                t.getDailyNumber(),
-                t.getStatus(),
-                t.getCreatedAt()
-        );
+    private Map<String, Object> commonResponse(Object data) {
+        Map<String, Object> res = new HashMap<>();
+        res.put("success", true);
+        res.put("data", data);
+        res.put("timestamp", OffsetDateTime.now());
+        res.put("requestId", "req_" + UUID.randomUUID().toString().substring(0, 8));
+        return res;
     }
 }

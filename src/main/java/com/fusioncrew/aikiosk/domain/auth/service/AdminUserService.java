@@ -41,11 +41,24 @@ public class AdminUserService {
             throw new IllegalArgumentException("username already exists");
         }
 
+        // ✅ roles 배열 → 현재 엔티티는 role 단일값이므로 첫 번째 값만 저장 (최소 수정)
+        AdminRole roleToSave = (req.getRoles() != null && !req.getRoles().isEmpty())
+                ? req.getRoles().get(0)
+                : null;
+
+        if (roleToSave == null) {
+            throw new IllegalArgumentException("roles is required");
+        }
+
+        String nameToSave = (req.getName() != null && !req.getName().isBlank())
+                ? req.getName()
+                : req.getUsername();
+
         AdminUser user = AdminUser.builder()
                 .username(req.getUsername())
                 .passwordHash(passwordEncoder.encode(req.getPassword()))
-                .name(req.getName())
-                .role(req.getRole())
+                .name(nameToSave)
+                .role(roleToSave)
                 .build();
 
         AdminUser saved = adminUserRepository.save(user);
