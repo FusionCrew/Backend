@@ -61,8 +61,7 @@ public class TicketService {
         return new TicketDtos.TicketResponse(
                 saved.getTicketId(),
                 saved.getNumber(),
-                saved.getStatus()
-        );
+                saved.getStatus());
     }
 
     public TicketDtos.TicketDetailResponse getDetail(String ticketId) {
@@ -71,14 +70,13 @@ public class TicketService {
         Ticket ticket = ticketRepository.findById(id)
                 .orElseThrow(() -> new CustomException(HttpStatus.NOT_FOUND, "티켓 없음"));
 
-        int estimatedWaitMin = ticketRepository.countByStatus(TicketStatus.WAITING) * 2;
+        int estimatedWaitMin = (int) (ticketRepository.countByStatus(TicketStatus.WAITING) * 2);
 
         return new TicketDtos.TicketDetailResponse(
                 ticket.getTicketId(),
                 ticket.getNumber(),
                 ticket.getStatus(),
-                estimatedWaitMin
-        );
+                estimatedWaitMin);
     }
 
     private Long parseTicketId(String ticketId) {

@@ -3,6 +3,7 @@ package com.fusioncrew.aikiosk.domain.auth.service;
 import com.fusioncrew.aikiosk.domain.auth.dto.AdminUserCreateRequest;
 import com.fusioncrew.aikiosk.domain.auth.dto.AdminUserResponse;
 import com.fusioncrew.aikiosk.domain.auth.dto.AdminUserUpdateRequest;
+import com.fusioncrew.aikiosk.domain.auth.entity.AdminRole;
 import com.fusioncrew.aikiosk.domain.auth.entity.AdminUser;
 import com.fusioncrew.aikiosk.domain.auth.repository.AdminUserRepository;
 import lombok.RequiredArgsConstructor;
@@ -22,9 +23,18 @@ public class AdminUserService {
 
     @Transactional(readOnly = true)
     public AdminUserResponse me(String username) {
-        AdminUser user = adminUserRepository.findByUsername(username)
+        return AdminUserResponse.from(getEntity(username));
+    }
+
+    @Transactional(readOnly = true)
+    public AdminUser getEntity(String username) {
+        return adminUserRepository.findByUsername(username)
                 .orElseThrow(() -> new UsernameNotFoundException("Admin not found"));
-        return AdminUserResponse.from(user);
+    }
+
+    @Transactional(readOnly = true)
+    public List<AdminUser> listEntity() {
+        return adminUserRepository.findAll();
     }
 
     @Transactional(readOnly = true)

@@ -48,11 +48,11 @@ public class OrderService {
 
         for (CartItem ci : cart.getItems()) {
             OrderItem oi = new OrderItem();
-            Long mId = ci.getMenuItemId();
-            oi.setMenuItemId(mId);
+            String logicId = ci.getMenuItemId();
 
-            // 메뉴 상세 정보 조회하여 name, price 채우기 (mId는 MenuItem.id)
-            menuItemRepository.findById(mId).ifPresent(menu -> {
+            // 메뉴 상세 정보 조회하여 name, price 채우기
+            menuItemRepository.findByMenuItemId(logicId).ifPresent(menu -> {
+                oi.setMenuItemId(menu.getId()); // OrderItem uses internal Long id
                 oi.setName(menu.getName());
                 oi.setPrice(menu.getPrice());
             });

@@ -4,13 +4,20 @@ import com.fusioncrew.aikiosk.domain.auth.dto.AdminUserCreateRequest;
 import com.fusioncrew.aikiosk.domain.auth.dto.AdminUserResponse;
 import com.fusioncrew.aikiosk.domain.auth.dto.AdminUserUpdateRequest;
 import com.fusioncrew.aikiosk.domain.auth.service.AdminUserService;
+import com.fusioncrew.aikiosk.global.common.ApiResponse;
 import jakarta.validation.Valid;
+import lombok.Builder;
+import lombok.Getter;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+import java.util.UUID;
 import java.time.OffsetDateTime;
 
 @RestController
@@ -69,8 +76,7 @@ public class AdminUserController {
     @PatchMapping("/users/{adminUserId}")
     public ResponseEntity<ApiResponse<AdminUserResponse>> update(
             @PathVariable String adminUserId,
-            @RequestBody AdminUserUpdateRequest req
-    ) {
+            @RequestBody AdminUserUpdateRequest req) {
         Long id = parseAdminUserId(adminUserId);
         AdminUserResponse data = adminUserService.update(id, req);
         return ResponseEntity.ok(ApiResponse.success("관리자 계정 수정 성공", data));
@@ -103,11 +109,19 @@ public class AdminUserController {
         private String adminUserId;
     }
 
+    private String toRoleString(String roleName) {
+        if (roleName == null)
+            return "ROLE_ADMIN";
+        if (roleName.startsWith("ROLE_"))
+            return roleName;
+        return "ROLE_" + roleName;
+    }
+
     private Map<String, Object> commonResponse(Object data) {
         Map<String, Object> res = new HashMap<>();
         res.put("success", true);
         res.put("data", data);
-        res.put("timestamp", OffsetDateTime.now());
+        res.put("timestamp", OffsetDateTime.now().toString());
         res.put("requestId", "req_" + UUID.randomUUID().toString().substring(0, 8));
         return res;
     }
@@ -118,7 +132,8 @@ public class AdminUserController {
 
     private Long parseAdminUserId(String adminUserId) {
         String raw = adminUserId == null ? "" : adminUserId.trim();
-        if (raw.startsWith("adm_")) raw = raw.substring("adm_".length());
+        if (raw.startsWith("adm_"))
+            raw = raw.substring("adm_".length());
         return Long.parseLong(raw);
     }
 }
