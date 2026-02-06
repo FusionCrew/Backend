@@ -11,11 +11,19 @@ import java.util.List;
 })
 public class Cart {
 
+    public enum CartStatus {
+        OPEN, CHECKED_OUT, CANCELLED, EXPIRED
+    }
+
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     @Column(nullable = false, length = 80)
     private String sessionId; // 세션당 1개 권장
+
+    @Enumerated(EnumType.STRING)
+    @Column(nullable = false, length = 20)
+    private CartStatus status = CartStatus.OPEN;
 
     @OneToMany(mappedBy = "cart", cascade = CascadeType.ALL, orphanRemoval = true)
     private final List<CartItem> items = new ArrayList<>();
@@ -29,8 +37,8 @@ public class Cart {
     @PreUpdate
     void preUpdate() { this.updatedAt = OffsetDateTime.now(); }
 
-    @Transient
-    public String getStatus() { return "OPEN"; }
+    public CartStatus getStatus() { return status; }
+    public void setStatus(CartStatus status) { this.status = status; }
     
     public Long getId() { return id; }
     public String getSessionId() { return sessionId; }

@@ -30,6 +30,22 @@ public class Order extends BaseEntity {
     @Builder.Default
     private OrderStatus status = OrderStatus.CREATED;
 
+    @Enumerated(EnumType.STRING)
+    @Column(nullable = false)
+    @Builder.Default
+    private OrderType orderType = OrderType.DINE_IN; // 기본값
+
+    @Column(length = 255)
+    private String memo; // 요청 사항
+
+    @Column(nullable = false)
+    @Builder.Default
+    private int totalPrice = 0; // 주문 총 금액
+
+    @Enumerated(EnumType.STRING)
+    @Column(length = 50)
+    private OrderCancelReason cancelReason; // 주문 취소 사유
+
     @Column(length = 255)
     private String statusUpdateNote; // 관리자 상태 변경 메모
 

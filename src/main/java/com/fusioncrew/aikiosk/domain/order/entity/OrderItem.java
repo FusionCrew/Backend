@@ -17,16 +17,19 @@ public class OrderItem {
     private Long id;
 
     @Column(nullable = false)
-    private Long menuItemId;
+    private String menuItemId; // 메뉴 ID (String)
 
     @Column(nullable = false)
     private String name;
 
     @Column(nullable = false)
-    private int price;
+    private int unitPrice; // 단가
 
     @Column(nullable = false)
-    private int quantity;
+    private int quantity; // 수량
+
+    @Column(nullable = false)
+    private int lineTotal; // 총 금액 (단가+옵션 * 수량)
 
     @Column(columnDefinition = "TEXT")
     private String optionsJson;
@@ -41,7 +44,7 @@ public class OrderItem {
             this.name = "Unknown Item";
         }
         if (this.menuItemId == null) {
-            this.menuItemId = 0L;
+            this.menuItemId = "unknown";
         }
     }
 }
