@@ -13,11 +13,12 @@ import java.util.List;
 public class StockService {
 
     private final StockRepository stockRepository;
-    private final IngredientRepository ingredientRepository;
+    private final com.fusioncrew.aikiosk.domain.menu.repository.MenuItemRepository menuItemRepository;
 
-    public StockService(StockRepository stockRepository, IngredientRepository ingredientRepository) {
+    public StockService(StockRepository stockRepository,
+            com.fusioncrew.aikiosk.domain.menu.repository.MenuItemRepository menuItemRepository) {
         this.stockRepository = stockRepository;
-        this.ingredientRepository = ingredientRepository;
+        this.menuItemRepository = menuItemRepository;
     }
 
     public List<StockDtos.StockResponse> list() {
@@ -29,15 +30,15 @@ public class StockService {
 
     @Transactional
     public StockDtos.StockUpdateResponse upsert(StockDtos.StockUpsertRequest req) {
-        if (req.ingredientId() == null || req.ingredientId().isBlank()) {
-            throw new IllegalArgumentException("ingredientId is required");
+        if (req.menuItemId() == null || req.menuItemId().isBlank()) {
+            throw new IllegalArgumentException("menuItemId is required");
         }
 
-        ingredientRepository.findByIngredientId(req.ingredientId())
-                .orElseThrow(() -> new IllegalArgumentException("ingredient not found"));
+        menuItemRepository.findByMenuItemId(req.menuItemId())
+                .orElseThrow(() -> new IllegalArgumentException("menu item not found"));
 
-        Stock stock = stockRepository.findByIngredientId(req.ingredientId())
-                .orElseGet(() -> new Stock(req.ingredientId(), 0));
+        Stock stock = stockRepository.findByIngredientId(req.menuItemId())
+                .orElseGet(() -> new Stock(req.menuItemId(), 0));
 
         stock.setQuantity(req.quantity());
         Stock saved = stockRepository.save(stock);

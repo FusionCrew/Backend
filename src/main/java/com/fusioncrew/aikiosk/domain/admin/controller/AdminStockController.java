@@ -5,6 +5,7 @@ import com.fusioncrew.aikiosk.domain.stock.service.StockService;
 import com.fusioncrew.aikiosk.global.api.ApiResponse;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.http.HttpStatus;
 
 import java.util.List;
 
@@ -24,9 +25,12 @@ public class AdminStockController {
 
     // POST /api/v1/admin/stocks (등록/초기화)
     @PostMapping
-    public ApiResponse<StockDtos.StockUpdateResponse> upsert(@RequestBody StockDtos.StockUpsertRequest req) {
+    @ResponseStatus(HttpStatus.CREATED)
+    public ApiResponse<StockDtos.AdminStockUpsertResponse> upsert(@RequestBody StockDtos.StockUpsertRequest req) {
         StockDtos.StockUpdateResponse dto = stockService.upsert(req);
-        return ApiResponse.ok(dto);
+        StockDtos.AdminStockUpsertResponse res = new StockDtos.AdminStockUpsertResponse(
+                String.format("stk_%02d", dto.stockId()));
+        return ApiResponse.ok(res);
     }
 
     // PATCH /api/v1/admin/stocks/{stockId} (입고/차감)
