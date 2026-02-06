@@ -1,20 +1,24 @@
 package com.fusioncrew.aikiosk.domain.ticket.dto;
 
 import com.fusioncrew.aikiosk.domain.ticket.entity.TicketStatus;
-import java.time.LocalDate;
-import java.time.LocalDateTime;
 
 public class TicketDtos {
 
-    public record IssueTicketRequest(Long orderId) {
-    }
+    public record IssueTicketRequest(
+            String orderId,
+            String paymentId
+    ) {}
 
     public record TicketResponse(
-            Long ticketId,
-            String orderId,
-            LocalDate issuedDate,
-            Integer dailyNumber,
+            String ticketId,
+            Integer number,
+            TicketStatus status
+    ) {}
+
+    public record TicketDetailResponse(
+            String ticketId,
+            Integer number,
             TicketStatus status,
-            LocalDateTime createdAt) {
-    }
+            Integer estimatedWaitMin
+    ) {}
 }

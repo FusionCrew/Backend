@@ -12,8 +12,8 @@ public class CartItem {
     @ManyToOne(fetch = FetchType.LAZY) @JoinColumn(name = "cart_id", nullable = false)
     private Cart cart;
 
-    @Column(nullable = false)
-    private Long menuItemId;
+    @Column(nullable = false, length = 100)
+    private String menuItemId;
 
     @Column(nullable = false)
     private int quantity;
@@ -23,12 +23,12 @@ public class CartItem {
 
     public Long getId() { return id; }
     public Cart getCart() { return cart; }
-    public Long getMenuItemId() { return menuItemId; }
+    public String getMenuItemId() { return menuItemId; }
     public int getQuantity() { return quantity; }
     public String getOptionsJson() { return optionsJson; }
 
     public void setCart(Cart cart) { this.cart = cart; }
-    public void setMenuItemId(Long menuItemId) { this.menuItemId = menuItemId; }
+    public void setMenuItemId(String menuItemId) { this.menuItemId = menuItemId; }
     public void setQuantity(int quantity) { this.quantity = quantity; }
     public void setOptionsJson(String optionsJson) { this.optionsJson = optionsJson; }
 }
