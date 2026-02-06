@@ -20,9 +20,9 @@ public record OrderDetailResponseDto(
     public record Item(String menuItemId, String name, int price, int quantity) {
         public static Item from(OrderItem oi) {
             return new Item(
-                    String.valueOf(oi.getMenuItemId()),
+                    oi.getMenuItemId(),
                     oi.getName(),
-                    oi.getPrice(),
+                    oi.getUnitPrice(),
                     oi.getQuantity());
         }
     }
@@ -32,7 +32,7 @@ public record OrderDetailResponseDto(
 
     public static OrderDetailResponseDto from(Order order) {
         int total = order.getItems().stream()
-                .mapToInt(item -> item.getPrice() * item.getQuantity())
+                .mapToInt(item -> item.getLineTotal()) // Use lineTotal for accuracy
                 .sum();
 
         return new OrderDetailResponseDto(

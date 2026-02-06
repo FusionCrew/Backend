@@ -179,7 +179,7 @@ public class PaymentService {
                 .map(item -> PaymentReceiptResponse.ReceiptItem.builder()
                         .name(item.getName())
                         .qty(item.getQuantity())
-                        .price(item.getPrice())
+                        .price(item.getUnitPrice())
                         .build())
                 .toList();
 

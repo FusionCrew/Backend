@@ -88,11 +88,10 @@ public class AdminPaymentService {
                                         .items(order.getItems().stream()
                                                         .map(item -> AdminPaymentDetailResponse.OrderItemDetail
                                                                         .builder()
-                                                                        .menuItemId(String
-                                                                                        .valueOf(item.getMenuItemId()))
+                                                                        .menuItemId(item.getMenuItemId())
                                                                         .name(item.getName())
                                                                         .quantity(item.getQuantity())
-                                                                        .price(item.getPrice())
+                                                                        .price(item.getUnitPrice())
                                                                         .build())
                                                         .collect(Collectors.toList()))
                                         .build();

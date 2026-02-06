@@ -8,11 +8,6 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.http.HttpStatus;
 import lombok.RequiredArgsConstructor;
 
-import java.time.OffsetDateTime;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.UUID;
-
 @RestController
 @RequestMapping("/api/v1/kiosk/tickets")
 @RequiredArgsConstructor
@@ -21,27 +16,18 @@ public class KioskTicketController {
     private final TicketService ticketService;
 
     @PostMapping
-    public ResponseEntity<Map<String, Object>> issue(
-            @RequestBody TicketDtos.IssueTicketRequest req
-    ) {
+    public ResponseEntity<com.fusioncrew.aikiosk.global.api.ApiResponse<TicketDtos.TicketResponse>> issue(
+            @RequestBody TicketDtos.IssueTicketRequest req) {
         TicketDtos.TicketResponse data = ticketService.issue(req);
 
-        return ResponseEntity.status(HttpStatus.CREATED).body(commonResponse(data));
+        return ResponseEntity.status(HttpStatus.CREATED).body(com.fusioncrew.aikiosk.global.api.ApiResponse.ok(data));
     }
 
     @GetMapping("/{ticketId}")
-    public ResponseEntity<Map<String, Object>> get(@PathVariable String ticketId) {
+    public ResponseEntity<com.fusioncrew.aikiosk.global.api.ApiResponse<TicketDtos.TicketDetailResponse>> get(
+            @PathVariable String ticketId) {
         TicketDtos.TicketDetailResponse data = ticketService.getDetail(ticketId);
 
-        return ResponseEntity.ok(commonResponse(data));
-    }
-
-    private Map<String, Object> commonResponse(Object data) {
-        Map<String, Object> res = new HashMap<>();
-        res.put("success", true);
-        res.put("data", data);
-        res.put("timestamp", OffsetDateTime.now());
-        res.put("requestId", "req_" + UUID.randomUUID().toString().substring(0, 8));
-        return res;
+        return ResponseEntity.ok(com.fusioncrew.aikiosk.global.api.ApiResponse.ok(data));
     }
 }
