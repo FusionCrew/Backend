@@ -23,7 +23,7 @@ public interface MenuItemRepository extends JpaRepository<MenuItem, Long> {
         // [키오스크용] 필터링 및 커서 기반 조회
         @Query("SELECT m FROM MenuItem m WHERE m.hidden = false " +
                         "AND (:categoryId IS NULL OR m.categoryId = :categoryId) " +
-                        "AND (:keyword IS NULL OR LOWER(m.name) LIKE LOWER(CONCAT('%', :keyword, '%')) OR LOWER(m.nameEn) LIKE LOWER(CONCAT('%', :keyword, '%'))) "
+                        "AND (:keyword IS NULL OR LOWER(CAST(m.name AS string)) LIKE LOWER(CONCAT('%', CAST(:keyword AS string), '%')) OR LOWER(CAST(m.nameEn AS string)) LIKE LOWER(CONCAT('%', CAST(:keyword AS string), '%'))) "
                         +
                         "AND (:cursor IS NULL OR m.menuItemId > :cursor) " +
                         "ORDER BY m.menuItemId ASC")

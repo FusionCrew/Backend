@@ -35,7 +35,7 @@ public class PaymentService {
                 .method(request.getMethod())
                 .mock(request.isMock())
                 .returnUrl(request.getReturnUrl())
-                .status(PaymentStatus.CREATED)
+                .status(PaymentStatus.APPROVED)
                 .build();
 
         Payment savedPayment = paymentRepository.save(payment);

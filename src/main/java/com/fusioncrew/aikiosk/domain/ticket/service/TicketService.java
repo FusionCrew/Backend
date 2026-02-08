@@ -29,12 +29,21 @@ public class TicketService {
 
     @Transactional
     public TicketDtos.TicketResponse issue(TicketDtos.IssueTicketRequest req) {
+        String paymentId = req.paymentId();
 
-        if (ticketRepository.existsByPaymentId(req.paymentId())) {
+        if (paymentId == null || paymentId.isBlank()) {
+            // Find successful payment for the order
+            Payment payment = paymentRepository
+                    .findTopByOrderIdAndStatusOrderByCreatedAtDesc(req.orderId(), PaymentStatus.APPROVED)
+                    .orElseThrow(() -> new CustomException(HttpStatus.BAD_REQUEST, "완료된 결제 정보를 찾을 수 없습니다."));
+            paymentId = payment.getPaymentId();
+        }
+
+        if (ticketRepository.existsByPaymentId(paymentId)) {
             throw new CustomException(HttpStatus.CONFLICT, "이미 대기표가 발급된 결제입니다.");
         }
 
-        Payment payment = paymentRepository.findById(parsePaymentId(req.paymentId()))
+        Payment payment = paymentRepository.findById(parsePaymentId(paymentId))
                 .orElseThrow(() -> new CustomException(HttpStatus.NOT_FOUND, "결제 정보 없음"));
 
         if (payment.getStatus() != PaymentStatus.APPROVED) {
@@ -51,7 +60,7 @@ public class TicketService {
 
         Ticket ticket = Ticket.builder()
                 .orderId(req.orderId())
-                .paymentId(req.paymentId())
+                .paymentId(paymentId)
                 .number(number)
                 .status(TicketStatus.WAITING)
                 .build();
@@ -80,10 +89,14 @@ public class TicketService {
     }
 
     private Long parseTicketId(String ticketId) {
+        if (ticketId == null)
+            return null;
         return Long.parseLong(ticketId.replace("tkt_", ""));
     }
 
     private Long parsePaymentId(String paymentId) {
+        if (paymentId == null)
+            return null;
         return Long.parseLong(paymentId.replace("pay_", ""));
     }
 }

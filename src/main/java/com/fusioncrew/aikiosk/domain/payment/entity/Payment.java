@@ -34,7 +34,6 @@ public class Payment extends BaseEntity {
     @Column(nullable = false)
     private boolean mock;
 
-    @Column(nullable = false)
     private String returnUrl;
 
     @Enumerated(EnumType.STRING)

@@ -47,9 +47,9 @@ public class SessionService {
     }
 
     private String generateSessionId() {
-        String dateStr = LocalDate.now().format(DateTimeFormatter.ofPattern("yyyyMMdd"));
-        long count = sessionRepository.count() + 1;
-        return String.format("ses_%s_%04d", dateStr, count);
+        String dateStr = java.time.LocalDate.now().format(java.time.format.DateTimeFormatter.ofPattern("yyyyMMdd"));
+        String uniqueSuffix = java.util.UUID.randomUUID().toString().substring(0, 4);
+        return String.format("ses_%s_%s", dateStr, uniqueSuffix);
     }
 
     @Transactional(readOnly = true)
