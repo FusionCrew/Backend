@@ -12,4 +12,6 @@ public class IngredientUpdateRequestDto {
     private AllergyTag allergyTag;
     private Integer calories;
     private Integer extraPrice;
+    private Integer protein;
+    private Integer sodium;
 }

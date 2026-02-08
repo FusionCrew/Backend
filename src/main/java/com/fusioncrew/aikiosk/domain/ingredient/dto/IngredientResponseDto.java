@@ -12,6 +12,8 @@ public class IngredientResponseDto {
 
     private final int calories;
     private final int extraPrice;
+    private final int protein;
+    private final int sodium;
 
     public IngredientResponseDto(Ingredient ingredient) {
         this.ingredientId = ingredient.getIngredientId();
@@ -19,5 +21,7 @@ public class IngredientResponseDto {
         this.allergyTag = ingredient.getAllergyTag();
         this.calories = ingredient.getCalories();
         this.extraPrice = ingredient.getExtraPrice();
+        this.protein = ingredient.getProtein();
+        this.sodium = ingredient.getSodium();
     }
 }

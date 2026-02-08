@@ -14,6 +14,23 @@ public class StaffService {
 
     private final StaffRepository staffRepository;
 
+    public java.util.List<Staff> getAllCalls() {
+        return staffRepository.findAllByOrderByIdDesc();
+    }
+
+    public void resolveCall(String callId) {
+        Long id;
+        if (callId.startsWith("call_")) {
+            id = Long.parseLong(callId.substring(5));
+        } else {
+            id = Long.parseLong(callId);
+        }
+        Staff staff = staffRepository.findById(id)
+                .orElseThrow(() -> new IllegalArgumentException("Call not found"));
+        staff.resolve();
+        staffRepository.save(staff);
+    }
+
     public Staff submitCall(StaffRequest request) {
         Staff.StaffBuilder builder = Staff.builder()
                 .sessionId(request.getSessionId())

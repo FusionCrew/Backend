@@ -10,6 +10,7 @@ import lombok.*;
 @Builder
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @AllArgsConstructor
+@Setter
 public class Staff extends BaseEntity {
 
     @Id
@@ -34,6 +35,10 @@ public class Staff extends BaseEntity {
     @Builder.Default
     @Column(nullable = false)
     private String status = "OPEN";
+
+    public void resolve() {
+        this.status = "RESOLVED";
+    }
 
     public String getFormattedCallId() {
         return String.format("call_%04d", this.id);

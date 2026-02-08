@@ -4,10 +4,7 @@ import jakarta.persistence.*;
 import java.time.OffsetDateTime;
 
 @Entity
-@Table(
-        name = "stocks",
-        uniqueConstraints = @UniqueConstraint(name = "uk_stocks_ingredient_id", columnNames = "ingredient_id")
-)
+@Table(name = "stocks", uniqueConstraints = @UniqueConstraint(name = "uk_stocks_ingredient_id", columnNames = "ingredient_id"))
 public class Stock {
 
     @Id
@@ -29,7 +26,8 @@ public class Stock {
     @Column(nullable = false)
     private OffsetDateTime updatedAt = OffsetDateTime.now();
 
-    protected Stock() {}
+    protected Stock() {
+    }
 
     public Stock(String ingredientId, int quantity) {
         this.ingredientId = ingredientId;
@@ -41,12 +39,29 @@ public class Stock {
         this.updatedAt = OffsetDateTime.now();
     }
 
-    public Long getId() { return id; }
-    public String getIngredientId() { return ingredientId; }
-    public int getQuantity() { return quantity; }
-    public boolean isOutOfStock() { return outOfStock; }
-    public OffsetDateTime getCreatedAt() { return createdAt; }
-    public OffsetDateTime getUpdatedAt() { return updatedAt; }
+    public Long getId() {
+        return id;
+    }
+
+    public String getIngredientId() {
+        return ingredientId;
+    }
+
+    public int getQuantity() {
+        return quantity;
+    }
+
+    public boolean isOutOfStock() {
+        return outOfStock;
+    }
+
+    public OffsetDateTime getCreatedAt() {
+        return createdAt;
+    }
+
+    public OffsetDateTime getUpdatedAt() {
+        return updatedAt;
+    }
 
     public void setQuantity(int quantity) {
         this.quantity = Math.max(quantity, 0);
@@ -60,5 +75,9 @@ public class Stock {
     public void markOutOfStock() {
         this.quantity = 0;
         this.outOfStock = true;
+    }
+
+    public void setOutOfStock(boolean outOfStock) {
+        this.outOfStock = outOfStock;
     }
 }

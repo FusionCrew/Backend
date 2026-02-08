@@ -62,7 +62,9 @@ public class IngredientService {
                 requestDto.getName(),
                 requestDto.getAllergyTag(),
                 requestDto.getCalories(),
-                requestDto.getExtraPrice());
+                requestDto.getExtraPrice(),
+                requestDto.getProtein(),
+                requestDto.getSodium());
         return ingredient;
     }
 

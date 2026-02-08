@@ -37,7 +37,7 @@ public class Ticket extends BaseEntity {
     private String priority = "NORMAL";
 
     private LocalDateTime calledAt;
-    private LocalDateTime completedAt;
+    private LocalDateTime servedAt;
 
     public String getTicketId() {
         return String.format("tkt_%04d", this.id);
@@ -48,9 +48,9 @@ public class Ticket extends BaseEntity {
         this.calledAt = LocalDateTime.now();
     }
 
-    public void complete() {
-        this.status = TicketStatus.COMPLETED;
-        this.completedAt = LocalDateTime.now();
+    public void serve() {
+        this.status = TicketStatus.SERVED;
+        this.servedAt = LocalDateTime.now();
     }
 
     public LocalDate getIssuedDate() {

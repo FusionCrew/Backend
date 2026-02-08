@@ -56,12 +56,18 @@ public class StockService {
     }
 
     @Transactional
-    public StockDtos.StockUpdateResponse outOfStock(Long stockId) {
+    public StockDtos.AdminStockOutOfStockResponse updateOutOfStock(Long stockId, StockDtos.StockOutOfStockRequest req) {
+        if (req == null || req.isOutOfStock() == null) {
+            throw new IllegalArgumentException("isOutOfStock is required");
+        }
+
         Stock stock = stockRepository.findById(stockId)
                 .orElseThrow(() -> new IllegalArgumentException("stock not found"));
 
-        stock.markOutOfStock();
+        stock.setOutOfStock(req.isOutOfStock());
         Stock saved = stockRepository.save(stock);
-        return StockDtos.StockUpdateResponse.from(saved);
+        return new StockDtos.AdminStockOutOfStockResponse(
+                String.format("stk_%02d", saved.getId()),
+                saved.isOutOfStock());
     }
 }

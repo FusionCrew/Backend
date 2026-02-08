@@ -16,8 +16,13 @@ public class OrderItem {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+<<<<<<< HEAD
     @Column(nullable = false)
     private String menuItemId; // 메뉴 ID (String)
+=======
+    @Column(name = "menu_item_id", nullable = false)
+    private String menuItemId;
+>>>>>>> origin/feature/admin
 
     @Column(nullable = false)
     private String name;
@@ -44,7 +49,11 @@ public class OrderItem {
             this.name = "Unknown Item";
         }
         if (this.menuItemId == null) {
+<<<<<<< HEAD
             this.menuItemId = "unknown";
+=======
+            this.menuItemId = "UNKNOWN";
+>>>>>>> origin/feature/admin
         }
     }
 }
