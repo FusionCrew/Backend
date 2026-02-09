@@ -1,6 +1,7 @@
 package com.fusioncrew.aikiosk.domain.admin.service;
 
 import com.fusioncrew.aikiosk.domain.admin.dto.AdminPaymentListResponse;
+import com.fusioncrew.aikiosk.domain.admin.dto.AdminPaymentDetailResponse;
 import com.fusioncrew.aikiosk.domain.admin.dto.AdminPaymentListResponse.PaymentSummary;
 import com.fusioncrew.aikiosk.domain.order.entity.Order;
 import com.fusioncrew.aikiosk.domain.order.repository.OrderRepository;

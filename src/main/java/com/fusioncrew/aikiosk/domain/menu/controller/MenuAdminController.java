@@ -2,6 +2,7 @@ package com.fusioncrew.aikiosk.domain.menu.controller;
 
 import com.fusioncrew.aikiosk.domain.menu.dto.MenuCreateRequestDto;
 import com.fusioncrew.aikiosk.domain.menu.dto.MenuItemResponseDto;
+import com.fusioncrew.aikiosk.domain.menu.dto.MenuSimpleResponseDto;
 import com.fusioncrew.aikiosk.domain.menu.service.MenuService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
@@ -26,7 +27,7 @@ public class MenuAdminController {
     @GetMapping
     public Map<String, Object> getMenuList() {
         // 1. 서비스 로직 수행
-        List<MenuItemResponseDto> items = menuService.getAdminMenuList();
+        List<MenuSimpleResponseDto> items = menuService.getAdminMenuList();
 
         // 2. 응답 데이터 구조 조립
         Map<String, Object> data = new HashMap<>();
@@ -97,20 +98,10 @@ public class MenuAdminController {
         // 1. 서비스 호출 (수정된 Entity를 받음)
         MenuItem updatedMenu = menuService.updateMenu(menuItemId, request);
 
-        // 2. data 객체 조립 (명세서 요구사항 반영)
-        Map<String, Object> data = new HashMap<>();
-        data.put("menuItemId", updatedMenu.getMenuItemId());
-        data.put("name", updatedMenu.getName());
-        data.put("price", updatedMenu.getPrice());
-        data.put("categoryId", updatedMenu.getCategoryId());
-        data.put("imageUrl", updatedMenu.getImageUrl());
-        data.put("hidden", updatedMenu.isHidden());
-        data.put("description", updatedMenu.getDescription());
-
-        // 3. 최종 응답 생성
+        // 2. 최종 응답 생성
         Map<String, Object> response = new HashMap<>();
         response.put("success", true);
-        response.put("data", data);
+        response.put("data", new MenuItemResponseDto(updatedMenu));
         response.put("timestamp", LocalDateTime.now());
         response.put("requestId", "req_" + UUID.randomUUID().toString().substring(0, 8));
 
@@ -163,40 +154,15 @@ public class MenuAdminController {
         return response;
     }
 
-    // [New] 단일 메뉴 조회 API (GET) - 재료 목록 포함
     @GetMapping("/{menuItemId}")
     public Map<String, Object> getMenuDetail(@PathVariable String menuItemId) {
         // 1. 서비스 호출
         MenuItemResponseDto menuItem = menuService.getMenuDetail(menuItemId);
 
-        // 2. 재료 목록도 조회 (MenuItem Entity에서 직접)
-        MenuItem menu = menuService.getMenuEntity(menuItemId);
-        List<Map<String, Object>> ingredients = menu.getIngredients().stream()
-                .map(ing -> {
-                    Map<String, Object> ingMap = new HashMap<>();
-                    ingMap.put("ingredientId", ing.getIngredientId());
-                    ingMap.put("name", ing.getName());
-                    ingMap.put("allergyTag", ing.getAllergyTag());
-                    ingMap.put("calories", ing.getCalories());
-                    ingMap.put("extraPrice", ing.getExtraPrice());
-                    return ingMap;
-                })
-                .collect(java.util.stream.Collectors.toList());
-
-        // 3. data 객체에 재료 목록 추가
-        Map<String, Object> data = new HashMap<>();
-        data.put("menuItemId", menuItem.getMenuItemId());
-        data.put("name", menuItem.getName());
-        data.put("price", menuItem.getPrice());
-        data.put("hidden", menuItem.isHidden());
-        data.put("imageUrl", menu.getImageUrl());
-        data.put("categoryId", menu.getCategoryId());
-        data.put("ingredients", ingredients);
-
-        // 4. 응답 생성
+        // 2. 최종 응답 생성
         Map<String, Object> response = new HashMap<>();
         response.put("success", true);
-        response.put("data", data);
+        response.put("data", menuItem);
         response.put("timestamp", LocalDateTime.now());
         response.put("requestId", "req_" + UUID.randomUUID().toString().substring(0, 8));
 

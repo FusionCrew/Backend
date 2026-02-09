@@ -36,8 +36,10 @@ public class KioskMenuListResponse {
         private String name;
         private int price;
         private String thumbnailUrl;
+        private String imageUrl; // Added for consistency
         private boolean isAvailable;
         private String categoryId;
+        private String description; // Added description
     }
 
     @Data

@@ -12,6 +12,7 @@ import com.fusioncrew.aikiosk.domain.order.entity.OrderStatus;
 import com.fusioncrew.aikiosk.domain.order.entity.OrderType;
 import com.fusioncrew.aikiosk.domain.order.repository.OrderRepository;
 import com.fusioncrew.aikiosk.domain.menu.repository.MenuItemRepository;
+import com.fusioncrew.aikiosk.domain.stock.repository.StockRepository;
 import jakarta.transaction.Transactional;
 import org.springframework.stereotype.Service;
 
@@ -24,12 +25,14 @@ public class OrderService {
     private final OrderRepository orderRepository;
     private final CartRepository cartRepository;
     private final MenuItemRepository menuItemRepository;
+    private final StockRepository stockRepository;
 
     public OrderService(OrderRepository orderRepository, CartRepository cartRepository,
-            MenuItemRepository menuItemRepository) {
+            MenuItemRepository menuItemRepository, StockRepository stockRepository) {
         this.orderRepository = orderRepository;
         this.cartRepository = cartRepository;
         this.menuItemRepository = menuItemRepository;
+        this.stockRepository = stockRepository;
     }
 
     @Transactional
@@ -192,6 +195,18 @@ public class OrderService {
         if (order.getStatus() != OrderStatus.CREATED) {
             throw new IllegalStateException(
                     "Order must be in CREATED state to confirm. Current state: " + order.getStatus());
+        }
+
+        // 재고 차감 로직: 주문 아이템 -> 메뉴 -> 재료 -> 재고
+        for (OrderItem item : order.getItems()) {
+            menuItemRepository.findByMenuItemId(item.getMenuItemId()).ifPresent(menuItem -> {
+                for (var ingredient : menuItem.getIngredients()) {
+                    stockRepository.findByIngredientId(ingredient.getIngredientId()).ifPresent(stock -> {
+                        stock.applyDelta(-item.getQuantity()); // 주문 수량만큼 차감
+                        stockRepository.save(stock);
+                    });
+                }
+            });
         }
 
         order.setStatus(OrderStatus.CONFIRMED);

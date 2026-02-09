@@ -2,11 +2,11 @@ package com.fusioncrew.aikiosk.domain.menu.dto;
 
 import com.fusioncrew.aikiosk.domain.ingredient.entity.Ingredient;
 import com.fusioncrew.aikiosk.domain.menu.entity.MenuItem;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Builder;
 import lombok.Getter;
 
 import java.util.List;
-import java.util.Set;
 import java.util.stream.Collectors;
 
 @Getter
@@ -20,27 +20,34 @@ public class MenuDetailKioskResponseDto {
     private final List<OptionGroup> options;
 
     @Builder
-    public MenuDetailKioskResponseDto(MenuItem menuItem, List<OptionGroup> options) {
-        this.menuItemId = menuItem.getMenuItemId();
-        this.name = menuItem.getName();
-        this.description = menuItem.getDescription();
-        this.price = menuItem.getPrice();
-
-        // 영양 정보 계산 (재료들의 합)
-        this.nutrition = calculateTotalNutrition(menuItem.getIngredients());
-
-        // 알레르기 정보 추출 (중복 제거)
-        this.allergies = menuItem.getIngredients().stream()
-                .filter(i -> i.getAllergyTag() != null) // NONE 제외 로직이 필요하다면 추가
-                .map(i -> i.getAllergyTag().name()) // Enum -> String ("MILK")
-                .distinct()
-                .collect(Collectors.toList());
-
+    public MenuDetailKioskResponseDto(String menuItemId, String name, String description, int price,
+            Nutrition nutrition, List<String> allergies, List<OptionGroup> options) {
+        this.menuItemId = menuItemId;
+        this.name = name;
+        this.description = description;
+        this.price = price;
+        this.nutrition = nutrition;
+        this.allergies = allergies;
         this.options = options;
     }
 
-    // 재료 리스트를 순회하며 영양소 합산
-    private Nutrition calculateTotalNutrition(List<Ingredient> ingredients) {
+    public static MenuDetailKioskResponseDto fromEntity(MenuItem menuItem, List<OptionGroup> options) {
+        return MenuDetailKioskResponseDto.builder()
+                .menuItemId(menuItem.getMenuItemId())
+                .name(menuItem.getName())
+                .description(menuItem.getDescription())
+                .price(menuItem.getPrice())
+                .nutrition(calculateTotalNutrition(menuItem.getIngredients()))
+                .allergies(menuItem.getIngredients().stream()
+                        .filter(i -> i.getAllergyTag() != null)
+                        .map(i -> i.getAllergyTag().name())
+                        .distinct()
+                        .collect(Collectors.toList()))
+                .options(options)
+                .build();
+    }
+
+    private static Nutrition calculateTotalNutrition(List<Ingredient> ingredients) {
         int totalKcal = 0;
         int totalProtein = 0;
         int totalSodium = 0;
@@ -53,12 +60,11 @@ public class MenuDetailKioskResponseDto {
         return new Nutrition(totalKcal, totalProtein, totalSodium);
     }
 
-    // --- 내부 클래스 (JSON 중첩 구조용) ---
     @Getter
     public static class Nutrition {
         private final int kcal;
-        private final int proteinG; // JSON 필드명: proteinG
-        private final int sodiumMg; // JSON 필드명: sodiumMg
+        private final int proteinG;
+        private final int sodiumMg;
 
         public Nutrition(int kcal, int proteinG, int sodiumMg) {
             this.kcal = kcal;
@@ -70,7 +76,19 @@ public class MenuDetailKioskResponseDto {
     @Getter
     @Builder
     public static class OptionGroup {
+        @JsonProperty("optionGroup")
         private final String optionGroup; // "SIZE", "SET", "EXTRA"
-        private final List<String> choices; // ["SINGLE", "DOUBLE"]
+        @JsonProperty("isRequired")
+        private final boolean isRequired;
+        @JsonProperty("isMultipleSelectionAllowed")
+        private final boolean isMultipleSelectionAllowed;
+        private final List<OptionChoice> choices;
+    }
+
+    @Getter
+    @Builder
+    public static class OptionChoice {
+        private final String name;
+        private final int extraPrice;
     }
 }

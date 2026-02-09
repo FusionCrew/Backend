@@ -15,18 +15,22 @@ public class TicketDataInitializer implements CommandLineRunner {
 
     @Override
     public void run(String... args) {
-        if (ticketRepository.count() == 0) {
-            for (int i = 1; i <= 10; i++) {
-                Ticket ticket = Ticket.builder()
-                        .orderId("ord_0001")
-                        .paymentId("pay_0001")
-                        .number(i)
-                        .status(TicketStatus.WAITING)
-                        .priority("NORMAL")
-                        .build();
-                ticketRepository.save(ticket);
+        try {
+            if (ticketRepository.count() == 0) {
+                for (int i = 1; i <= 10; i++) {
+                    Ticket ticket = Ticket.builder()
+                            .orderId("ord_0001")
+                            .paymentId("pay_0001")
+                            .number(i)
+                            .status(TicketStatus.WAITING)
+                            .priority("NORMAL")
+                            .build();
+                    ticketRepository.save(ticket);
+                }
+                System.out.println("✅ 초기 티켓 데이터 10개가 생성되었습니다.");
             }
-            System.out.println("✅ 초기 티켓 데이터 10개가 생성되었습니다.");
+        } catch (Exception e) {
+            System.err.println("❌ 티켓 데이터 초기화 실패 (무시하고 계속 진행): " + e.getMessage());
         }
     }
 }

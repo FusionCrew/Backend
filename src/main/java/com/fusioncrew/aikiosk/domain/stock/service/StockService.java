@@ -14,11 +14,14 @@ public class StockService {
 
     private final StockRepository stockRepository;
     private final com.fusioncrew.aikiosk.domain.menu.repository.MenuItemRepository menuItemRepository;
+    private final IngredientRepository ingredientRepository;
 
     public StockService(StockRepository stockRepository,
-            com.fusioncrew.aikiosk.domain.menu.repository.MenuItemRepository menuItemRepository) {
+            com.fusioncrew.aikiosk.domain.menu.repository.MenuItemRepository menuItemRepository,
+            IngredientRepository ingredientRepository) {
         this.stockRepository = stockRepository;
         this.menuItemRepository = menuItemRepository;
+        this.ingredientRepository = ingredientRepository;
     }
 
     public List<StockDtos.StockResponse> list() {
@@ -34,8 +37,14 @@ public class StockService {
             throw new IllegalArgumentException("menuItemId is required");
         }
 
-        menuItemRepository.findByMenuItemId(req.menuItemId())
-                .orElseThrow(() -> new IllegalArgumentException("menu item not found"));
+        // menuItemId가 ing_로 시작하면 ingredient로 검색, 그 외에는 menuItem으로 검색
+        if (req.menuItemId().startsWith("ing_")) {
+            ingredientRepository.findByIngredientId(req.menuItemId())
+                    .orElseThrow(() -> new IllegalArgumentException("ingredient not found: " + req.menuItemId()));
+        } else {
+            menuItemRepository.findByMenuItemId(req.menuItemId())
+                    .orElseThrow(() -> new IllegalArgumentException("menu item not found: " + req.menuItemId()));
+        }
 
         Stock stock = stockRepository.findByIngredientId(req.menuItemId())
                 .orElseGet(() -> new Stock(req.menuItemId(), 0));

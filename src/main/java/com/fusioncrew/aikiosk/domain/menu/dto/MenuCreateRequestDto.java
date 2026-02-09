@@ -15,6 +15,25 @@ public class MenuCreateRequestDto {
     private boolean hidden; // 필수: false
     private String imageUrl; // 선택
     private String description; // 선택
+    private java.util.List<OptionGroupData> optionGroups; // 선택: 옵션 그룹 목록
+
+    @Getter
+    @NoArgsConstructor
+    public static class OptionGroupData {
+        private String name;
+        @com.fasterxml.jackson.annotation.JsonProperty("isRequired")
+        private boolean isRequired;
+        @com.fasterxml.jackson.annotation.JsonProperty("isMultipleSelectionAllowed")
+        private boolean isMultipleSelectionAllowed;
+        private java.util.List<OptionItemData> items;
+    }
+
+    @Getter
+    @NoArgsConstructor
+    public static class OptionItemData {
+        private String name;
+        private int extraPrice;
+    }
 
     // DTO -> Entity 변환
     public MenuItem toEntity(String generatedId) {

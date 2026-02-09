@@ -15,4 +15,8 @@ public class MenuUpdateRequestDto {
     private String name;
     private String nameEn;
     private String categoryId;
+    private java.util.List<com.fusioncrew.aikiosk.domain.menu.dto.MenuCreateRequestDto.OptionGroupData> optionGroups; // 등록용
+                                                                                                                      // DTO
+                                                                                                                      // 구조
+                                                                                                                      // 재사용
 }

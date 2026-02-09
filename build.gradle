@@ -38,11 +38,6 @@ dependencies {
     
     // JWT
     implementation 'io.jsonwebtoken:jjwt-api:0.11.5'
-    runtimeOnly 'io.jsonwebtoken:jjwt-impl:0.11.5'
-    runtimeOnly 'io.jsonwebtoken:jjwt-jackson:0.11.5'
-    
-    // Spring Boot DevTools (Hot Reload)
-    developmentOnly 'org.springframework.boot:spring-boot-devtools'
     
     // Lombok
     compileOnly 'org.projectlombok:lombok'
@@ -55,4 +50,9 @@ dependencies {
 
 tasks.named('test') {
     useJUnitPlatform()
+}
+
+// Prevent bootRun from exiting when stdin is closed
+tasks.named('bootRun') {
+    standardInput = System.in
 }

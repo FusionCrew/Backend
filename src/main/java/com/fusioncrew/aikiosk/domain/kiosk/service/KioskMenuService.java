@@ -76,6 +76,8 @@ public class KioskMenuService {
                                                         .name(item.getName())
                                                         .price(item.getPrice())
                                                         .thumbnailUrl(item.getImageUrl())
+                                                        .imageUrl(item.getImageUrl())
+                                                        .description(item.getDescription())
                                                         .isAvailable(isAvailable)
                                                         .categoryId(item.getCategoryId())
                                                         .build();

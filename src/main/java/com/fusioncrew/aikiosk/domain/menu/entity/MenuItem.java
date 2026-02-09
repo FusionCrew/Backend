@@ -38,8 +38,8 @@ public class MenuItem {
     @Column(name = "category_id", nullable = false)
     private String categoryId; // 예: cat_burger
 
-    @Column(name = "image_url")
-    private String imageUrl; // 예: https://...
+    @Column(name = "image_url", columnDefinition = "TEXT")
+    private String imageUrl; // 예: https://... or data:image/...
     // --------------------
 
     // [New] 메뉴 설명 (상세 조회용)
@@ -64,6 +64,14 @@ public class MenuItem {
     @ManyToMany
     @JoinTable(name = "menu_ingredient_links", joinColumns = @JoinColumn(name = "menu_id"), inverseJoinColumns = @JoinColumn(name = "ingredient_id"))
     private List<Ingredient> ingredients = new ArrayList<>();
+
+    @OneToMany(mappedBy = "menuItem", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<OptionGroup> optionGroups = new ArrayList<>();
+
+    public void addOptionGroup(OptionGroup group) {
+        this.optionGroups.add(group);
+        group.setMenuItem(this);
+    }
 
     // [핵심] A안: 덮어쓰기(Replace) 로직
     // 기존 목록을 비우고(clear), 새로운 리스트로 채웁니다.
@@ -111,5 +119,14 @@ public class MenuItem {
     // [New] 특정 ingredientId로 재료 제거
     public boolean removeIngredientById(String ingredientId) {
         return this.ingredients.removeIf(ing -> ing.getIngredientId().equals(ingredientId));
+    }
+
+    public void removeOptionGroup(OptionGroup group) {
+        this.optionGroups.remove(group);
+        group.setMenuItem(null);
+    }
+
+    public void clearOptionGroups() {
+        this.optionGroups.clear();
     }
 }
