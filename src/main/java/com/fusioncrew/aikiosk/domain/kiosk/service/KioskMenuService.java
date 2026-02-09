@@ -80,6 +80,24 @@ public class KioskMenuService {
                                                         .description(item.getDescription())
                                                         .isAvailable(isAvailable)
                                                         .categoryId(item.getCategoryId())
+                                                        .ingredients(item.getIngredients().stream()
+                                                                        .map(ing -> ing.getName())
+                                                                        .collect(Collectors.toList()))
+                                                        .optionGroups(item.getOptionGroups().stream()
+                                                                        .map(og -> KioskMenuListResponse.KioskOptionGroupDto.builder()
+                                                                                        .optionGroupId(og.getOptionGroupId())
+                                                                                        .name(og.getName())
+                                                                                        .isRequired(og.isRequired())
+                                                                                        .isMultipleSelectionAllowed(og.isMultipleSelectionAllowed())
+                                                                                        .optionItems(og.getOptionItems().stream()
+                                                                                                        .map(oi -> KioskMenuListResponse.KioskOptionItemDto.builder()
+                                                                                                                        .optionItemId(oi.getOptionItemId())
+                                                                                                                        .name(oi.getName())
+                                                                                                                        .extraPrice(oi.getExtraPrice())
+                                                                                                                        .build())
+                                                                                                        .collect(Collectors.toList()))
+                                                                                        .build())
+                                                                        .collect(Collectors.toList()))
                                                         .build();
                                 })
                                 .collect(Collectors.toList());
@@ -102,16 +120,16 @@ public class KioskMenuService {
                 // Mock mapping since we don't have a Category entity yet
                 List<KioskCategoryResponse.CategoryDto> categories = List.of(
                                 KioskCategoryResponse.CategoryDto.builder()
-                                                .categoryId("cat_01")
-                                                .name("커피")
-                                                .build(),
-                                KioskCategoryResponse.CategoryDto.builder()
-                                                .categoryId("cat_02")
+                                                .categoryId("cat_burger")
                                                 .name("버거")
                                                 .build(),
                                 KioskCategoryResponse.CategoryDto.builder()
-                                                .categoryId("cat_03")
-                                                .name("사이드/음료")
+                                                .categoryId("cat_side")
+                                                .name("사이드")
+                                                .build(),
+                                KioskCategoryResponse.CategoryDto.builder()
+                                                .categoryId("cat_drink")
+                                                .name("음료")
                                                 .build());
 
                 return KioskCategoryResponse.builder()

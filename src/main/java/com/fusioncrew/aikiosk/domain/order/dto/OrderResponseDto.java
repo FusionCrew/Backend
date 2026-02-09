@@ -16,7 +16,7 @@ public record OrderResponseDto(
                 order.getOrderId(),
                 order.getSessionId(),
                 order.getStatus(),
-                0, // 현재 Order에 totalPrice가 없으므로 일단 0 (추후 계산 로직 추가 가능)
+                order.getTotalPrice(),
                 order.getCreatedAt());
     }
 }

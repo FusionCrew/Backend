@@ -40,6 +40,30 @@ public class KioskMenuListResponse {
         private boolean isAvailable;
         private String categoryId;
         private String description; // Added description
+        private List<KioskOptionGroupDto> optionGroups;
+        private List<String> ingredients;
+    }
+
+    @Data
+    @Builder
+    @NoArgsConstructor
+    @AllArgsConstructor
+    public static class KioskOptionGroupDto {
+        private String optionGroupId;
+        private String name;
+        private boolean isRequired;
+        private boolean isMultipleSelectionAllowed;
+        private List<KioskOptionItemDto> optionItems;
+    }
+
+    @Data
+    @Builder
+    @NoArgsConstructor
+    @AllArgsConstructor
+    public static class KioskOptionItemDto {
+        private String optionItemId;
+        private String name;
+        private int extraPrice;
     }
 
     @Data

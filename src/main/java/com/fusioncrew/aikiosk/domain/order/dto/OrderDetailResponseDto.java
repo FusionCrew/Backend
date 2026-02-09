@@ -17,13 +17,14 @@ public record OrderDetailResponseDto(
         PaymentDto payment,
         List<Item> items) {
 
-    public record Item(String menuItemId, String name, int price, int quantity) {
+    public record Item(String menuItemId, String name, int price, int quantity, String optionsJson) {
         public static Item from(OrderItem oi) {
             return new Item(
                     oi.getMenuItemId(),
                     oi.getName(),
                     oi.getUnitPrice(),
-                    oi.getQuantity());
+                    oi.getQuantity(),
+                    oi.getOptionsJson());
         }
     }
 
@@ -31,15 +32,11 @@ public record OrderDetailResponseDto(
     }
 
     public static OrderDetailResponseDto from(Order order) {
-        int total = order.getItems().stream()
-                .mapToInt(item -> item.getLineTotal()) // Use lineTotal for accuracy
-                .sum();
-
         return new OrderDetailResponseDto(
                 order.getOrderId(),
                 order.getSessionId(),
                 order.getStatus(),
-                total,
+                order.getTotalPrice(),
                 order.getCreatedAt(),
                 order.getStatusUpdateNote(),
                 new PaymentDto("MOCK", "PAID"), // 현재는 Mock 데이터 반환

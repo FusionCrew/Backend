@@ -96,10 +96,26 @@ public class OrderService {
                     java.util.Map<String, Object> options = objectMapper.readValue(ci.getOptionsJson(),
                             new com.fasterxml.jackson.core.type.TypeReference<java.util.Map<String, Object>>() {
                             });
-                    if (options.containsKey("CHEESE") && "EXTRA".equals(options.get("CHEESE")))
+                    
+                    // 1. Check for legacy/special flags
+                    if (options.containsKey("isLargeSet") && Boolean.TRUE.equals(options.get("isLargeSet"))) {
                         optionPrice += 500;
-                    if (options.containsKey("FRIES_SIZE") && "LARGE".equals(options.get("FRIES_SIZE")))
-                        optionPrice += 500;
+                    }
+                    if (options.containsKey("size") && "세트".equals(options.get("size"))) {
+                        optionPrice += 3000;
+                    }
+
+                    // 2. Dynamic selectedOptions processing
+                    if (options.get("selectedOptions") instanceof List<?> selectedOptions) {
+                        for (Object optObj : selectedOptions) {
+                            if (optObj instanceof java.util.Map<?, ?> optMap) {
+                                Object extraPriceObj = optMap.get("extraPrice");
+                                if (extraPriceObj instanceof Number num) {
+                                    optionPrice += num.intValue();
+                                }
+                            }
+                        }
+                    }
                 }
             } catch (Exception e) {
                 // ignore parsing error
