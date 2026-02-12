@@ -1,0 +1,51 @@
+> Task :compileJava UP-TO-DATE
+> Task :processResources UP-TO-DATE
+> Task :classes UP-TO-DATE
+> Task :resolveMainClassName UP-TO-DATE
+
+> Task :bootRun FAILED
+
+  .   ____          _            __ _ _
+ /\\ / ___'_ __ _ _(_)_ __  __ _ \ \ \ \
+( ( )\___ | '_ | '_| | '_ \/ _` | \ \ \ \
+ \\/  ___)| |_)| | | | | || (_| |  ) ) ) )
+  '  |____| .__|_| |_|_| |_\__, | / / / /
+ =========|_|==============|___/=/_/_/_/
+ :: Spring Boot ::                (v3.2.0)
+
+2026-02-12T19:48:05.105+09:00  INFO 18572 --- [aikiosk-backend] [           main] c.fusioncrew.aikiosk.AiKioskApplication  : Starting AiKioskApplication using Java 21.0.9 with PID 18572 (C:\workspace\AI_Kiosk\Backend\build\classes\java\main started by USER in C:\workspace\AI_Kiosk\Backend)
+2026-02-12T19:48:05.107+09:00 DEBUG 18572 --- [aikiosk-backend] [           main] c.fusioncrew.aikiosk.AiKioskApplication  : Running with Spring Boot v3.2.0, Spring v6.1.1
+2026-02-12T19:48:05.107+09:00  INFO 18572 --- [aikiosk-backend] [           main] c.fusioncrew.aikiosk.AiKioskApplication  : No active profile set, falling back to 1 default profile: "default"
+2026-02-12T19:48:05.727+09:00  WARN 18572 --- [aikiosk-backend] [           main] ConfigServletWebServerApplicationContext : Exception encountered during context initialization - cancelling refresh attempt: org.springframework.beans.factory.support.BeanDefinitionOverrideException: Invalid bean definition with name 'jpaAuditingHandler' defined in null: Cannot register bean definition [Root bean: class [org.springframework.data.auditing.AuditingHandler]; scope=; abstract=false; lazyInit=null; autowireMode=2; dependencyCheck=0; autowireCandidate=true; primary=false; factoryBeanName=null; factoryMethodName=from; initMethodNames=null; destroyMethodNames=null] for bean 'jpaAuditingHandler' since there is already [Root bean: class [org.springframework.data.auditing.AuditingHandler]; scope=; abstract=false; lazyInit=null; autowireMode=2; dependencyCheck=0; autowireCandidate=true; primary=false; factoryBeanName=null; factoryMethodName=from; initMethodNames=null; destroyMethodNames=null] bound.
+2026-02-12T19:48:05.732+09:00  INFO 18572 --- [aikiosk-backend] [           main] .s.b.a.l.ConditionEvaluationReportLogger : 
+
+Error starting ApplicationContext. To display the condition evaluation report re-run your application with 'debug' enabled.
+2026-02-12T19:48:05.750+09:00 ERROR 18572 --- [aikiosk-backend] [           main] o.s.b.d.LoggingFailureAnalysisReporter   : 
+
+***************************
+APPLICATION FAILED TO START
+***************************
+
+Description:
+
+The bean 'jpaAuditingHandler' could not be registered. A bean with that name has already been defined and overriding is disabled.
+
+Action:
+
+Consider renaming one of the beans or enabling overriding by setting spring.main.allow-bean-definition-overriding=true
+
+
+FAILURE: Build failed with an exception.
+
+* What went wrong:
+Execution failed for task ':bootRun'.
+> Process 'command 'C:\Program Files\Eclipse Adoptium\jdk-21.0.9.10-hotspot\bin\java.exe'' finished with non-zero exit value 1
+
+* Try:
+> Run with --stacktrace option to get the stack trace.
+> Run with --info or --debug option to get more log output.
+> Run with --scan to get full insights.
+> Get more help at https://help.gradle.org.
+
+BUILD FAILED in 2s
+4 actionable tasks: 1 executed, 3 up-to-date

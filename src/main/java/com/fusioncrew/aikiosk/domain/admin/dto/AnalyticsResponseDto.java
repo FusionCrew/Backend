@@ -16,6 +16,7 @@ public class AnalyticsResponseDto {
     private Integer avgOrderValue;
     private Integer totalVisitors;
     private Double returnRate;
+    private Long refundAmount;
     private List<MenuRankingDto> topMenus;
     private List<String> aiInsights;
 
