@@ -25,6 +25,6 @@ public class AnalyticsResponseDto {
     @AllArgsConstructor
     public static class MenuRankingDto {
         private String name;
-        private Integer count;
+        private Long count;
     }
 }

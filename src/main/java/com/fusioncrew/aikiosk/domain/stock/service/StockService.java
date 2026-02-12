@@ -33,21 +33,21 @@ public class StockService {
 
     @Transactional
     public StockDtos.StockUpdateResponse upsert(StockDtos.StockUpsertRequest req) {
-        if (req.menuItemId() == null || req.menuItemId().isBlank()) {
-            throw new IllegalArgumentException("menuItemId is required");
+        if (req.ingredientId() == null || req.ingredientId().isBlank()) {
+            throw new IllegalArgumentException("ingredientId is required");
         }
 
-        // menuItemId가 ing_로 시작하면 ingredient로 검색, 그 외에는 menuItem으로 검색
-        if (req.menuItemId().startsWith("ing_")) {
-            ingredientRepository.findByIngredientId(req.menuItemId())
-                    .orElseThrow(() -> new IllegalArgumentException("ingredient not found: " + req.menuItemId()));
+        // ingredientId가 ing_로 시작하면 ingredient로 검색, 그 외에는 menuItem으로 검색 (호환성 유지)
+        if (req.ingredientId().startsWith("ing_")) {
+            ingredientRepository.findByIngredientId(req.ingredientId())
+                    .orElseThrow(() -> new IllegalArgumentException("ingredient not found: " + req.ingredientId()));
         } else {
-            menuItemRepository.findByMenuItemId(req.menuItemId())
-                    .orElseThrow(() -> new IllegalArgumentException("menu item not found: " + req.menuItemId()));
+            menuItemRepository.findByMenuItemId(req.ingredientId())
+                    .orElseThrow(() -> new IllegalArgumentException("menu item not found: " + req.ingredientId()));
         }
 
-        Stock stock = stockRepository.findByIngredientId(req.menuItemId())
-                .orElseGet(() -> new Stock(req.menuItemId(), 0));
+        Stock stock = stockRepository.findByIngredientId(req.ingredientId())
+                .orElseGet(() -> new Stock(req.ingredientId(), 0));
 
         stock.setQuantity(req.quantity());
         Stock saved = stockRepository.save(stock);

@@ -26,13 +26,16 @@ public class OrderService {
     private final CartRepository cartRepository;
     private final MenuItemRepository menuItemRepository;
     private final StockRepository stockRepository;
+    private final com.fusioncrew.aikiosk.domain.payment.repository.PaymentRepository paymentRepository;
 
     public OrderService(OrderRepository orderRepository, CartRepository cartRepository,
-            MenuItemRepository menuItemRepository, StockRepository stockRepository) {
+            MenuItemRepository menuItemRepository, StockRepository stockRepository,
+            com.fusioncrew.aikiosk.domain.payment.repository.PaymentRepository paymentRepository) {
         this.orderRepository = orderRepository;
         this.cartRepository = cartRepository;
         this.menuItemRepository = menuItemRepository;
         this.stockRepository = stockRepository;
+        this.paymentRepository = paymentRepository;
     }
 
     @Transactional
@@ -96,7 +99,7 @@ public class OrderService {
                     java.util.Map<String, Object> options = objectMapper.readValue(ci.getOptionsJson(),
                             new com.fasterxml.jackson.core.type.TypeReference<java.util.Map<String, Object>>() {
                             });
-                    
+
                     // 1. Check for legacy/special flags
                     if (options.containsKey("isLargeSet") && Boolean.TRUE.equals(options.get("isLargeSet"))) {
                         optionPrice += 500;
@@ -196,6 +199,12 @@ public class OrderService {
         order.setStatus(OrderStatus.CANCELED);
         order.setCancelReason(reason);
 
+        // Payment Refund Logic
+        paymentRepository.findByOrderId(orderId).ifPresent(payment -> {
+            payment.refund(payment.getAmount()); // Full refund
+            // payment is managed entity, so dirty checking will save it
+        });
+
         return new OrderDtos.OrderCancelResponse(order.getOrderId(), order.getStatus().name());
     }
 
@@ -264,6 +273,13 @@ public class OrderService {
             order.setStatusUpdateNote(request.note());
         }
 
+        // 3. 주문 취소 시 환불 처리
+        if (newStatus == OrderStatus.CANCELED) {
+            paymentRepository.findByOrderId(order.getOrderId()).ifPresent(payment -> {
+                payment.refund(payment.getAmount());
+            });
+        }
+
         Order saved = orderRepository.save(order);
 
         return OrderStatusUpdateResponseDto.from(saved, previousStatus);
@@ -306,6 +322,12 @@ public class OrderService {
         if (order.getStatus() == OrderStatus.CONFIRMED)
             throw new IllegalArgumentException("cannot cancel confirmed order");
         order.setStatus(OrderStatus.CANCELED);
+
+        // Payment sync
+        paymentRepository.findByOrderId(order.getOrderId()).ifPresent(payment -> {
+            payment.refund(payment.getAmount());
+        });
+
         return orderRepository.save(order);
     }
 }

@@ -8,7 +8,7 @@ public class StockDtos {
 
         public record StockResponse(
                         String stockId,
-                        String menuItemId,
+                        String ingredientId,
                         int quantity,
                         boolean outOfStock,
                         OffsetDateTime updatedAt) {
@@ -24,7 +24,7 @@ public class StockDtos {
 
         // POST /api/v1/admin/stocks (등록/초기화)
         public record StockUpsertRequest(
-                        String menuItemId,
+                        String ingredientId,
                         int quantity) {
         }
 

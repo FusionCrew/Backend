@@ -71,12 +71,14 @@ public class AdminPaymentService {
 
                 BigDecimal todayTotal = payments.stream()
                                 .filter(p -> p.getStatus() == PaymentStatus.APPROVED
+                                                && p.getCreatedAt() != null
                                                 && p.getCreatedAt().isAfter(startOfToday))
                                 .map(Payment::getAmount)
                                 .reduce(BigDecimal.ZERO, BigDecimal::add);
 
                 BigDecimal monthlyTotal = payments.stream()
                                 .filter(p -> p.getStatus() == PaymentStatus.APPROVED
+                                                && p.getCreatedAt() != null
                                                 && p.getCreatedAt().isAfter(startOfMonth))
                                 .map(Payment::getAmount)
                                 .reduce(BigDecimal.ZERO, BigDecimal::add);
@@ -84,7 +86,10 @@ public class AdminPaymentService {
                 BigDecimal refundTotal = payments.stream()
                                 .filter(p -> (p.getStatus() == PaymentStatus.REFUNDED
                                                 || p.getStatus() == PaymentStatus.PARTIALLY_REFUNDED)
-                                                && p.getUpdatedAt().isAfter(startOfToday))
+                                                && (p.getUpdatedAt() != null ? p.getUpdatedAt()
+                                                                : p.getCreatedAt()) != null
+                                                && (p.getUpdatedAt() != null ? p.getUpdatedAt() : p.getCreatedAt())
+                                                                .isAfter(startOfToday))
                                 .map(Payment::getRefundedAmount)
                                 .reduce(BigDecimal.ZERO, BigDecimal::add);
 
