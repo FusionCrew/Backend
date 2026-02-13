@@ -57,4 +57,5 @@ tasks.named('test') {
 // Prevent bootRun from exiting when stdin is closed
 tasks.named('bootRun') {
     standardInput = System.in
+    jvmArgs = ['-Djava.net.preferIPv4Stack=true']
 }

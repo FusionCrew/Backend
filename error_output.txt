@@ -1,0 +1,814 @@
+﻿> Task :compileJava UP-TO-DATE
+> Task :processResources UP-TO-DATE
+> Task :classes UP-TO-DATE
+> Task :resolveMainClassName UP-TO-DATE
+
+> Task :bootRun
+
+  .   ____          _            __ _ _
+ /\\ / ___'_ __ _ _(_)_ __  __ _ \ \ \ \
+( ( )\___ | '_ | '_| | '_ \/ _` | \ \ \ \
+ \\/  ___)| |_)| | | | | || (_| |  ) ) ) )
+  '  |____| .__|_| |_|_| |_\__, | / / / /
+ =========|_|==============|___/=/_/_/_/
+ :: Spring Boot ::                (v3.2.0)
+
+2026-02-12T22:11:57.167+09:00  INFO 38648 --- [aikiosk-backend] [           main] c.fusioncrew.aikiosk.AiKioskApplication  : Starting AiKioskApplication using Java 17.0.11 with PID 38648 (C:\AIkiosk\Backend\build\classes\java\main started by ldy34 in C:\AIkiosk\Backend)
+2026-02-12T22:11:57.168+09:00 DEBUG 38648 --- [aikiosk-backend] [           main] c.fusioncrew.aikiosk.AiKioskApplication  : Running with Spring Boot v3.2.0, Spring v6.1.1
+2026-02-12T22:11:57.168+09:00  INFO 38648 --- [aikiosk-backend] [           main] c.fusioncrew.aikiosk.AiKioskApplication  : No active profile set, falling back to 1 default profile: "default"
+2026-02-12T22:11:57.638+09:00  INFO 38648 --- [aikiosk-backend] [           main] .s.d.r.c.RepositoryConfigurationDelegate : Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2026-02-12T22:11:57.705+09:00  INFO 38648 --- [aikiosk-backend] [           main] .s.d.r.c.RepositoryConfigurationDelegate : Finished Spring Data repository scanning in 63 ms. Found 13 JPA repository interfaces.
+2026-02-12T22:11:58.010+09:00  INFO 38648 --- [aikiosk-backend] [           main] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat initialized with port 8080 (http)
+2026-02-12T22:11:58.019+09:00  INFO 38648 --- [aikiosk-backend] [           main] o.apache.catalina.core.StandardService   : Starting service [Tomcat]
+2026-02-12T22:11:58.019+09:00  INFO 38648 --- [aikiosk-backend] [           main] o.apache.catalina.core.StandardEngine    : Starting Servlet engine: [Apache Tomcat/10.1.16]
+2026-02-12T22:11:58.055+09:00  INFO 38648 --- [aikiosk-backend] [           main] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring embedded WebApplicationContext
+2026-02-12T22:11:58.056+09:00  INFO 38648 --- [aikiosk-backend] [           main] w.s.c.ServletWebServerApplicationContext : Root WebApplicationContext: initialization completed in 864 ms
+2026-02-12T22:11:58.136+09:00  INFO 38648 --- [aikiosk-backend] [           main] o.hibernate.jpa.internal.util.LogHelper  : HHH000204: Processing PersistenceUnitInfo [name: default]
+2026-02-12T22:11:58.168+09:00  INFO 38648 --- [aikiosk-backend] [           main] org.hibernate.Version                    : HHH000412: Hibernate ORM core version 6.3.1.Final
+2026-02-12T22:11:58.191+09:00  INFO 38648 --- [aikiosk-backend] [           main] o.h.c.internal.RegionFactoryInitiator    : HHH000026: Second-level cache disabled
+2026-02-12T22:11:58.313+09:00  INFO 38648 --- [aikiosk-backend] [           main] o.s.o.j.p.SpringPersistenceUnitInfo      : No LoadTimeWeaver setup: ignoring JPA class transformer
+2026-02-12T22:11:58.327+09:00  INFO 38648 --- [aikiosk-backend] [           main] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Starting...
+2026-02-12T22:11:59.370+09:00 ERROR 38648 --- [aikiosk-backend] [           main] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - Exception during pool initialization.
+
+org.postgresql.util.PSQLException: The connection attempt failed.
+	at org.postgresql.core.v3.ConnectionFactoryImpl.openConnectionImpl(ConnectionFactoryImpl.java:354) ~[postgresql-42.6.0.jar:42.6.0]
+	at org.postgresql.core.ConnectionFactory.openConnection(ConnectionFactory.java:54) ~[postgresql-42.6.0.jar:42.6.0]
+	at org.postgresql.jdbc.PgConnection.<init>(PgConnection.java:263) ~[postgresql-42.6.0.jar:42.6.0]
+	at org.postgresql.Driver.makeConnection(Driver.java:443) ~[postgresql-42.6.0.jar:42.6.0]
+	at org.postgresql.Driver.connect(Driver.java:297) ~[postgresql-42.6.0.jar:42.6.0]
+	at com.zaxxer.hikari.util.DriverDataSource.getConnection(DriverDataSource.java:138) ~[HikariCP-5.0.1.jar:na]
+	at com.zaxxer.hikari.pool.PoolBase.newConnection(PoolBase.java:359) ~[HikariCP-5.0.1.jar:na]
+	at com.zaxxer.hikari.pool.PoolBase.newPoolEntry(PoolBase.java:201) ~[HikariCP-5.0.1.jar:na]
+	at com.zaxxer.hikari.pool.HikariPool.createPoolEntry(HikariPool.java:470) ~[HikariCP-5.0.1.jar:na]
+	at com.zaxxer.hikari.pool.HikariPool.checkFailFast(HikariPool.java:561) ~[HikariCP-5.0.1.jar:na]
+	at com.zaxxer.hikari.pool.HikariPool.<init>(HikariPool.java:100) ~[HikariCP-5.0.1.jar:na]
+	at com.zaxxer.hikari.HikariDataSource.getConnection(HikariDataSource.java:112) ~[HikariCP-5.0.1.jar:na]
+	at org.hibernate.engine.jdbc.connections.internal.DatasourceConnectionProviderImpl.getConnection(DatasourceConnectionProviderImpl.java:122) ~[hibernate-core-6.3.1.Final.jar:6.3.1.Final]
+	at org.hibernate.engine.jdbc.env.internal.JdbcEnvironmentInitiator$ConnectionProviderJdbcConnectionAccess.obtainConnection(JdbcEnvironmentInitiator.java:424) ~[hibernate-core-6.3.1.Final.jar:6.3.1.Final]
+	at org.hibernate.resource.transaction.backend.jdbc.internal.JdbcIsolationDelegate.delegateWork(JdbcIsolationDelegate.java:61) ~[hibernate-core-6.3.1.Final.jar:6.3.1.Final]
+	at org.hibernate.engine.jdbc.env.internal.JdbcEnvironmentInitiator.getJdbcEnvironmentUsingJdbcMetadata(JdbcEnvironmentInitiator.java:273) ~[hibernate-core-6.3.1.Final.jar:6.3.1.Final]
+	at org.hibernate.engine.jdbc.env.internal.JdbcEnvironmentInitiator.initiateService(JdbcEnvironmentInitiator.java:105) ~[hibernate-core-6.3.1.Final.jar:6.3.1.Final]
+	at org.hibernate.engine.jdbc.env.internal.JdbcEnvironmentInitiator.initiateService(JdbcEnvironmentInitiator.java:66) ~[hibernate-core-6.3.1.Final.jar:6.3.1.Final]
+	at org.hibernate.boot.registry.internal.StandardServiceRegistryImpl.initiateService(StandardServiceRegistryImpl.java:129) ~[hibernate-core-6.3.1.Final.jar:6.3.1.Final]
+	at org.hibernate.service.internal.AbstractServiceRegistryImpl.createService(AbstractServiceRegistryImpl.java:263) ~[hibernate-core-6.3.1.Final.jar:6.3.1.Final]
+	at org.hibernate.service.internal.AbstractServiceRegistryImpl.initializeService(AbstractServiceRegistryImpl.java:238) ~[hibernate-core-6.3.1.Final.jar:6.3.1.Final]
+	at org.hibernate.service.internal.AbstractServiceRegistryImpl.getService(AbstractServiceRegistryImpl.java:215) ~[hibernate-core-6.3.1.Final.jar:6.3.1.Final]
+	at org.hibernate.boot.model.relational.Database.<init>(Database.java:45) ~[hibernate-core-6.3.1.Final.jar:6.3.1.Final]
+	at org.hibernate.boot.internal.InFlightMetadataCollectorImpl.getDatabase(InFlightMetadataCollectorImpl.java:223) ~[hibernate-core-6.3.1.Final.jar:6.3.1.Final]
+	at org.hibernate.boot.internal.InFlightMetadataCollectorImpl.<init>(InFlightMetadataCollectorImpl.java:191) ~[hibernate-core-6.3.1.Final.jar:6.3.1.Final]
+	at org.hibernate.boot.model.process.spi.MetadataBuildingProcess.complete(MetadataBuildingProcess.java:169) ~[hibernate-core-6.3.1.Final.jar:6.3.1.Final]
+	at org.hibernate.jpa.boot.internal.EntityManagerFactoryBuilderImpl.metadata(EntityManagerFactoryBuilderImpl.java:1432) ~[hibernate-core-6.3.1.Final.jar:6.3.1.Final]
+	at org.hibernate.jpa.boot.internal.EntityManagerFactoryBuilderImpl.build(EntityManagerFactoryBuilderImpl.java:1503) ~[hibernate-core-6.3.1.Final.jar:6.3.1.Final]
+	at org.springframework.orm.jpa.vendor.SpringHibernateJpaPersistenceProvider.createContainerEntityManagerFactory(SpringHibernateJpaPersistenceProvider.java:75) ~[spring-orm-6.1.1.jar:6.1.1]
+	at org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean.createNativeEntityManagerFactory(LocalContainerEntityManagerFactoryBean.java:376) ~[spring-orm-6.1.1.jar:6.1.1]
+	at org.springframework.orm.jpa.AbstractEntityManagerFactoryBean.buildNativeEntityManagerFactory(AbstractEntityManagerFactoryBean.java:409) ~[spring-orm-6.1.1.jar:6.1.1]
+	at org.springframework.orm.jpa.AbstractEntityManagerFactoryBean.afterPropertiesSet(AbstractEntityManagerFactoryBean.java:396) ~[spring-orm-6.1.1.jar:6.1.1]
+	at org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean.afterPropertiesSet(LocalContainerEntityManagerFactoryBean.java:352) ~[spring-orm-6.1.1.jar:6.1.1]
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.invokeInitMethods(AbstractAutowireCapableBeanFactory.java:1822) ~[spring-beans-6.1.1.jar:6.1.1]
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.initializeBean(AbstractAutowireCapableBeanFactory.java:1771) ~[spring-beans-6.1.1.jar:6.1.1]
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.doCreateBean(AbstractAutowireCapableBeanFactory.java:601) ~[spring-beans-6.1.1.jar:6.1.1]
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.createBean(AbstractAutowireCapableBeanFactory.java:523) ~[spring-beans-6.1.1.jar:6.1.1]
+	at org.springframework.beans.factory.support.AbstractBeanFactory.lambda$doGetBean$0(AbstractBeanFactory.java:325) ~[spring-beans-6.1.1.jar:6.1.1]
+	at org.springframework.beans.factory.support.DefaultSingletonBeanRegistry.getSingleton(DefaultSingletonBeanRegistry.java:234) ~[spring-beans-6.1.1.jar:6.1.1]
+	at org.springframework.beans.factory.support.AbstractBeanFactory.doGetBean(AbstractBeanFactory.java:323) ~[spring-beans-6.1.1.jar:6.1.1]
+	at org.springframework.beans.factory.support.AbstractBeanFactory.getBean(AbstractBeanFactory.java:199) ~[spring-beans-6.1.1.jar:6.1.1]
+	at org.springframework.context.support.AbstractApplicationContext.getBean(AbstractApplicationContext.java:1173) ~[spring-context-6.1.1.jar:6.1.1]
+	at org.springframework.context.support.AbstractApplicationContext.finishBeanFactoryInitialization(AbstractApplicationContext.java:936) ~[spring-context-6.1.1.jar:6.1.1]
+	at org.springframework.context.support.AbstractApplicationContext.refresh(AbstractApplicationContext.java:616) ~[spring-context-6.1.1.jar:6.1.1]
+	at org.springframework.boot.web.servlet.context.ServletWebServerApplicationContext.refresh(ServletWebServerApplicationContext.java:146) ~[spring-boot-3.2.0.jar:3.2.0]
+	at org.springframework.boot.SpringApplication.refresh(SpringApplication.java:753) ~[spring-boot-3.2.0.jar:3.2.0]
+	at org.springframework.boot.SpringApplication.refreshContext(SpringApplication.java:455) ~[spring-boot-3.2.0.jar:3.2.0]
+	at org.springframework.boot.SpringApplication.run(SpringApplication.java:323) ~[spring-boot-3.2.0.jar:3.2.0]
+	at org.springframework.boot.SpringApplication.run(SpringApplication.java:1342) ~[spring-boot-3.2.0.jar:3.2.0]
+	at org.springframework.boot.SpringApplication.run(SpringApplication.java:1331) ~[spring-boot-3.2.0.jar:3.2.0]
+	at com.fusioncrew.aikiosk.AiKioskApplication.main(AiKioskApplication.java:10) ~[main/:na]
+Caused by: java.net.UnknownHostException: db.rxfdeaizxpybdpffxbxq.supabase.co
+	at java.base/sun.nio.ch.NioSocketImpl.connect(NioSocketImpl.java:572) ~[na:na]
+	at java.base/java.net.SocksSocketImpl.connect(SocksSocketImpl.java:327) ~[na:na]
+	at java.base/java.net.Socket.connect(Socket.java:633) ~[na:na]
+	at org.postgresql.core.PGStream.createSocket(PGStream.java:243) ~[postgresql-42.6.0.jar:42.6.0]
+	at org.postgresql.core.PGStream.<init>(PGStream.java:98) ~[postgresql-42.6.0.jar:42.6.0]
+	at org.postgresql.core.v3.ConnectionFactoryImpl.tryConnect(ConnectionFactoryImpl.java:132) ~[postgresql-42.6.0.jar:42.6.0]
+	at org.postgresql.core.v3.ConnectionFactoryImpl.openConnectionImpl(ConnectionFactoryImpl.java:258) ~[postgresql-42.6.0.jar:42.6.0]
+	... 50 common frames omitted
+
+2026-02-12T22:11:59.373+09:00  WARN 38648 --- [aikiosk-backend] [           main] o.h.e.j.e.i.JdbcEnvironmentInitiator     : HHH000342: Could not obtain connection to query metadata
+
+java.lang.NullPointerException: Cannot invoke "org.hibernate.engine.jdbc.spi.SqlExceptionHelper.convert(java.sql.SQLException, String)" because the return value of "org.hibernate.resource.transaction.backend.jdbc.internal.JdbcIsolationDelegate.sqlExceptionHelper()" is null
+	at org.hibernate.resource.transaction.backend.jdbc.internal.JdbcIsolationDelegate.delegateWork(JdbcIsolationDelegate.java:116) ~[hibernate-core-6.3.1.Final.jar:6.3.1.Final]
+	at org.hibernate.engine.jdbc.env.internal.JdbcEnvironmentInitiator.getJdbcEnvironmentUsingJdbcMetadata(JdbcEnvironmentInitiator.java:273) ~[hibernate-core-6.3.1.Final.jar:6.3.1.Final]
+	at org.hibernate.engine.jdbc.env.internal.JdbcEnvironmentInitiator.initiateService(JdbcEnvironmentInitiator.java:105) ~[hibernate-core-6.3.1.Final.jar:6.3.1.Final]
+	at org.hibernate.engine.jdbc.env.internal.JdbcEnvironmentInitiator.initiateService(JdbcEnvironmentInitiator.java:66) ~[hibernate-core-6.3.1.Final.jar:6.3.1.Final]
+	at org.hibernate.boot.registry.internal.StandardServiceRegistryImpl.initiateService(StandardServiceRegistryImpl.java:129) ~[hibernate-core-6.3.1.Final.jar:6.3.1.Final]
+	at org.hibernate.service.internal.AbstractServiceRegistryImpl.createService(AbstractServiceRegistryImpl.java:263) ~[hibernate-core-6.3.1.Final.jar:6.3.1.Final]
+	at org.hibernate.service.internal.AbstractServiceRegistryImpl.initializeService(AbstractServiceRegistryImpl.java:238) ~[hibernate-core-6.3.1.Final.jar:6.3.1.Final]
+	at org.hibernate.service.internal.AbstractServiceRegistryImpl.getService(AbstractServiceRegistryImpl.java:215) ~[hibernate-core-6.3.1.Final.jar:6.3.1.Final]
+	at org.hibernate.boot.model.relational.Database.<init>(Database.java:45) ~[hibernate-core-6.3.1.Final.jar:6.3.1.Final]
+	at org.hibernate.boot.internal.InFlightMetadataCollectorImpl.getDatabase(InFlightMetadataCollectorImpl.java:223) ~[hibernate-core-6.3.1.Final.jar:6.3.1.Final]
+	at org.hibernate.boot.internal.InFlightMetadataCollectorImpl.<init>(InFlightMetadataCollectorImpl.java:191) ~[hibernate-core-6.3.1.Final.jar:6.3.1.Final]
+	at org.hibernate.boot.model.process.spi.MetadataBuildingProcess.complete(MetadataBuildingProcess.java:169) ~[hibernate-core-6.3.1.Final.jar:6.3.1.Final]
+	at org.hibernate.jpa.boot.internal.EntityManagerFactoryBuilderImpl.metadata(EntityManagerFactoryBuilderImpl.java:1432) ~[hibernate-core-6.3.1.Final.jar:6.3.1.Final]
+	at org.hibernate.jpa.boot.internal.EntityManagerFactoryBuilderImpl.build(EntityManagerFactoryBuilderImpl.java:1503) ~[hibernate-core-6.3.1.Final.jar:6.3.1.Final]
+	at org.springframework.orm.jpa.vendor.SpringHibernateJpaPersistenceProvider.createContainerEntityManagerFactory(SpringHibernateJpaPersistenceProvider.java:75) ~[spring-orm-6.1.1.jar:6.1.1]
+	at org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean.createNativeEntityManagerFactory(LocalContainerEntityManagerFactoryBean.java:376) ~[spring-orm-6.1.1.jar:6.1.1]
+	at org.springframework.orm.jpa.AbstractEntityManagerFactoryBean.buildNativeEntityManagerFactory(AbstractEntityManagerFactoryBean.java:409) ~[spring-orm-6.1.1.jar:6.1.1]
+	at org.springframework.orm.jpa.AbstractEntityManagerFactoryBean.afterPropertiesSet(AbstractEntityManagerFactoryBean.java:396) ~[spring-orm-6.1.1.jar:6.1.1]
+	at org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean.afterPropertiesSet(LocalContainerEntityManagerFactoryBean.java:352) ~[spring-orm-6.1.1.jar:6.1.1]
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.invokeInitMethods(AbstractAutowireCapableBeanFactory.java:1822) ~[spring-beans-6.1.1.jar:6.1.1]
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.initializeBean(AbstractAutowireCapableBeanFactory.java:1771) ~[spring-beans-6.1.1.jar:6.1.1]
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.doCreateBean(AbstractAutowireCapableBeanFactory.java:601) ~[spring-beans-6.1.1.jar:6.1.1]
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.createBean(AbstractAutowireCapableBeanFactory.java:523) ~[spring-beans-6.1.1.jar:6.1.1]
+	at org.springframework.beans.factory.support.AbstractBeanFactory.lambda$doGetBean$0(AbstractBeanFactory.java:325) ~[spring-beans-6.1.1.jar:6.1.1]
+	at org.springframework.beans.factory.support.DefaultSingletonBeanRegistry.getSingleton(DefaultSingletonBeanRegistry.java:234) ~[spring-beans-6.1.1.jar:6.1.1]
+	at org.springframework.beans.factory.support.AbstractBeanFactory.doGetBean(AbstractBeanFactory.java:323) ~[spring-beans-6.1.1.jar:6.1.1]
+	at org.springframework.beans.factory.support.AbstractBeanFactory.getBean(AbstractBeanFactory.java:199) ~[spring-beans-6.1.1.jar:6.1.1]
+	at org.springframework.context.support.AbstractApplicationContext.getBean(AbstractApplicationContext.java:1173) ~[spring-context-6.1.1.jar:6.1.1]
+	at org.springframework.context.support.AbstractApplicationContext.finishBeanFactoryInitialization(AbstractApplicationContext.java:936) ~[spring-context-6.1.1.jar:6.1.1]
+	at org.springframework.context.support.AbstractApplicationContext.refresh(AbstractApplicationContext.java:616) ~[spring-context-6.1.1.jar:6.1.1]
+	at org.springframework.boot.web.servlet.context.ServletWebServerApplicationContext.refresh(ServletWebServerApplicationContext.java:146) ~[spring-boot-3.2.0.jar:3.2.0]
+	at org.springframework.boot.SpringApplication.refresh(SpringApplication.java:753) ~[spring-boot-3.2.0.jar:3.2.0]
+	at org.springframework.boot.SpringApplication.refreshContext(SpringApplication.java:455) ~[spring-boot-3.2.0.jar:3.2.0]
+	at org.springframework.boot.SpringApplication.run(SpringApplication.java:323) ~[spring-boot-3.2.0.jar:3.2.0]
+	at org.springframework.boot.SpringApplication.run(SpringApplication.java:1342) ~[spring-boot-3.2.0.jar:3.2.0]
+	at org.springframework.boot.SpringApplication.run(SpringApplication.java:1331) ~[spring-boot-3.2.0.jar:3.2.0]
+	at com.fusioncrew.aikiosk.AiKioskApplication.main(AiKioskApplication.java:10) ~[main/:na]
+
+2026-02-12T22:11:59.383+09:00  WARN 38648 --- [aikiosk-backend] [           main] org.hibernate.orm.deprecation            : HHH90000025: PostgreSQLDialect does not need to be specified explicitly using 'hibernate.dialect' (remove the property setting and it will be selected by default)
+2026-02-12T22:11:59.978+09:00  INFO 38648 --- [aikiosk-backend] [           main] o.h.e.t.j.p.i.JtaPlatformInitiator       : HHH000489: No JTA platform available (set 'hibernate.transaction.jta.platform' to enable JTA platform integration)
+2026-02-12T22:11:59.988+09:00  INFO 38648 --- [aikiosk-backend] [           main] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Starting...
+2026-02-12T22:12:01.004+09:00 ERROR 38648 --- [aikiosk-backend] [           main] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - Exception during pool initialization.
+
+org.postgresql.util.PSQLException: The connection attempt failed.
+	at org.postgresql.core.v3.ConnectionFactoryImpl.openConnectionImpl(ConnectionFactoryImpl.java:354) ~[postgresql-42.6.0.jar:42.6.0]
+	at org.postgresql.core.ConnectionFactory.openConnection(ConnectionFactory.java:54) ~[postgresql-42.6.0.jar:42.6.0]
+	at org.postgresql.jdbc.PgConnection.<init>(PgConnection.java:263) ~[postgresql-42.6.0.jar:42.6.0]
+	at org.postgresql.Driver.makeConnection(Driver.java:443) ~[postgresql-42.6.0.jar:42.6.0]
+	at org.postgresql.Driver.connect(Driver.java:297) ~[postgresql-42.6.0.jar:42.6.0]
+	at com.zaxxer.hikari.util.DriverDataSource.getConnection(DriverDataSource.java:138) ~[HikariCP-5.0.1.jar:na]
+	at com.zaxxer.hikari.pool.PoolBase.newConnection(PoolBase.java:359) ~[HikariCP-5.0.1.jar:na]
+	at com.zaxxer.hikari.pool.PoolBase.newPoolEntry(PoolBase.java:201) ~[HikariCP-5.0.1.jar:na]
+	at com.zaxxer.hikari.pool.HikariPool.createPoolEntry(HikariPool.java:470) ~[HikariCP-5.0.1.jar:na]
+	at com.zaxxer.hikari.pool.HikariPool.checkFailFast(HikariPool.java:561) ~[HikariCP-5.0.1.jar:na]
+	at com.zaxxer.hikari.pool.HikariPool.<init>(HikariPool.java:100) ~[HikariCP-5.0.1.jar:na]
+	at com.zaxxer.hikari.HikariDataSource.getConnection(HikariDataSource.java:112) ~[HikariCP-5.0.1.jar:na]
+	at org.hibernate.engine.jdbc.connections.internal.DatasourceConnectionProviderImpl.getConnection(DatasourceConnectionProviderImpl.java:122) ~[hibernate-core-6.3.1.Final.jar:6.3.1.Final]
+	at org.hibernate.engine.jdbc.env.internal.JdbcEnvironmentInitiator$ConnectionProviderJdbcConnectionAccess.obtainConnection(JdbcEnvironmentInitiator.java:424) ~[hibernate-core-6.3.1.Final.jar:6.3.1.Final]
+	at org.hibernate.resource.transaction.backend.jdbc.internal.DdlTransactionIsolatorNonJtaImpl.getIsolatedConnection(DdlTransactionIsolatorNonJtaImpl.java:46) ~[hibernate-core-6.3.1.Final.jar:6.3.1.Final]
+	at org.hibernate.resource.transaction.backend.jdbc.internal.DdlTransactionIsolatorNonJtaImpl.getIsolatedConnection(DdlTransactionIsolatorNonJtaImpl.java:39) ~[hibernate-core-6.3.1.Final.jar:6.3.1.Final]
+	at org.hibernate.tool.schema.internal.exec.ImprovedExtractionContextImpl.getJdbcConnection(ImprovedExtractionContextImpl.java:63) ~[hibernate-core-6.3.1.Final.jar:6.3.1.Final]
+	at org.hibernate.tool.schema.extract.spi.ExtractionContext.getQueryResults(ExtractionContext.java:43) ~[hibernate-core-6.3.1.Final.jar:6.3.1.Final]
+	at org.hibernate.tool.schema.extract.internal.SequenceInformationExtractorLegacyImpl.extractMetadata(SequenceInformationExtractorLegacyImpl.java:39) ~[hibernate-core-6.3.1.Final.jar:6.3.1.Final]
+	at org.hibernate.tool.schema.extract.internal.DatabaseInformationImpl.initializeSequences(DatabaseInformationImpl.java:66) ~[hibernate-core-6.3.1.Final.jar:6.3.1.Final]
+	at org.hibernate.tool.schema.extract.internal.DatabaseInformationImpl.<init>(DatabaseInformationImpl.java:60) ~[hibernate-core-6.3.1.Final.jar:6.3.1.Final]
+	at org.hibernate.tool.schema.internal.Helper.buildDatabaseInformation(Helper.java:185) ~[hibernate-core-6.3.1.Final.jar:6.3.1.Final]
+	at org.hibernate.tool.schema.internal.AbstractSchemaMigrator.doMigration(AbstractSchemaMigrator.java:98) ~[hibernate-core-6.3.1.Final.jar:6.3.1.Final]
+	at org.hibernate.tool.schema.spi.SchemaManagementToolCoordinator.performDatabaseAction(SchemaManagementToolCoordinator.java:286) ~[hibernate-core-6.3.1.Final.jar:6.3.1.Final]
+	at org.hibernate.tool.schema.spi.SchemaManagementToolCoordinator.lambda$process$5(SchemaManagementToolCoordinator.java:145) ~[hibernate-core-6.3.1.Final.jar:6.3.1.Final]
+	at java.base/java.util.HashMap.forEach(HashMap.java:1421) ~[na:na]
+	at org.hibernate.tool.schema.spi.SchemaManagementToolCoordinator.process(SchemaManagementToolCoordinator.java:142) ~[hibernate-core-6.3.1.Final.jar:6.3.1.Final]
+	at org.hibernate.boot.internal.SessionFactoryObserverForSchemaExport.sessionFactoryCreated(SessionFactoryObserverForSchemaExport.java:37) ~[hibernate-core-6.3.1.Final.jar:6.3.1.Final]
+	at org.hibernate.internal.SessionFactoryObserverChain.sessionFactoryCreated(SessionFactoryObserverChain.java:35) ~[hibernate-core-6.3.1.Final.jar:6.3.1.Final]
+	at org.hibernate.internal.SessionFactoryImpl.<init>(SessionFactoryImpl.java:295) ~[hibernate-core-6.3.1.Final.jar:6.3.1.Final]
+	at org.hibernate.boot.internal.SessionFactoryBuilderImpl.build(SessionFactoryBuilderImpl.java:450) ~[hibernate-core-6.3.1.Final.jar:6.3.1.Final]
+	at org.hibernate.jpa.boot.internal.EntityManagerFactoryBuilderImpl.build(EntityManagerFactoryBuilderImpl.java:1507) ~[hibernate-core-6.3.1.Final.jar:6.3.1.Final]
+	at org.springframework.orm.jpa.vendor.SpringHibernateJpaPersistenceProvider.createContainerEntityManagerFactory(SpringHibernateJpaPersistenceProvider.java:75) ~[spring-orm-6.1.1.jar:6.1.1]
+	at org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean.createNativeEntityManagerFactory(LocalContainerEntityManagerFactoryBean.java:376) ~[spring-orm-6.1.1.jar:6.1.1]
+	at org.springframework.orm.jpa.AbstractEntityManagerFactoryBean.buildNativeEntityManagerFactory(AbstractEntityManagerFactoryBean.java:409) ~[spring-orm-6.1.1.jar:6.1.1]
+	at org.springframework.orm.jpa.AbstractEntityManagerFactoryBean.afterPropertiesSet(AbstractEntityManagerFactoryBean.java:396) ~[spring-orm-6.1.1.jar:6.1.1]
+	at org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean.afterPropertiesSet(LocalContainerEntityManagerFactoryBean.java:352) ~[spring-orm-6.1.1.jar:6.1.1]
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.invokeInitMethods(AbstractAutowireCapableBeanFactory.java:1822) ~[spring-beans-6.1.1.jar:6.1.1]
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.initializeBean(AbstractAutowireCapableBeanFactory.java:1771) ~[spring-beans-6.1.1.jar:6.1.1]
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.doCreateBean(AbstractAutowireCapableBeanFactory.java:601) ~[spring-beans-6.1.1.jar:6.1.1]
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.createBean(AbstractAutowireCapableBeanFactory.java:523) ~[spring-beans-6.1.1.jar:6.1.1]
+	at org.springframework.beans.factory.support.AbstractBeanFactory.lambda$doGetBean$0(AbstractBeanFactory.java:325) ~[spring-beans-6.1.1.jar:6.1.1]
+	at org.springframework.beans.factory.support.DefaultSingletonBeanRegistry.getSingleton(DefaultSingletonBeanRegistry.java:234) ~[spring-beans-6.1.1.jar:6.1.1]
+	at org.springframework.beans.factory.support.AbstractBeanFactory.doGetBean(AbstractBeanFactory.java:323) ~[spring-beans-6.1.1.jar:6.1.1]
+	at org.springframework.beans.factory.support.AbstractBeanFactory.getBean(AbstractBeanFactory.java:199) ~[spring-beans-6.1.1.jar:6.1.1]
+	at org.springframework.context.support.AbstractApplicationContext.getBean(AbstractApplicationContext.java:1173) ~[spring-context-6.1.1.jar:6.1.1]
+	at org.springframework.context.support.AbstractApplicationContext.finishBeanFactoryInitialization(AbstractApplicationContext.java:936) ~[spring-context-6.1.1.jar:6.1.1]
+	at org.springframework.context.support.AbstractApplicationContext.refresh(AbstractApplicationContext.java:616) ~[spring-context-6.1.1.jar:6.1.1]
+	at org.springframework.boot.web.servlet.context.ServletWebServerApplicationContext.refresh(ServletWebServerApplicationContext.java:146) ~[spring-boot-3.2.0.jar:3.2.0]
+	at org.springframework.boot.SpringApplication.refresh(SpringApplication.java:753) ~[spring-boot-3.2.0.jar:3.2.0]
+	at org.springframework.boot.SpringApplication.refreshContext(SpringApplication.java:455) ~[spring-boot-3.2.0.jar:3.2.0]
+	at org.springframework.boot.SpringApplication.run(SpringApplication.java:323) ~[spring-boot-3.2.0.jar:3.2.0]
+	at org.springframework.boot.SpringApplication.run(SpringApplication.java:1342) ~[spring-boot-3.2.0.jar:3.2.0]
+	at org.springframework.boot.SpringApplication.run(SpringApplication.java:1331) ~[spring-boot-3.2.0.jar:3.2.0]
+	at com.fusioncrew.aikiosk.AiKioskApplication.main(AiKioskApplication.java:10) ~[main/:na]
+Caused by: java.net.UnknownHostException: db.rxfdeaizxpybdpffxbxq.supabase.co
+	at java.base/sun.nio.ch.NioSocketImpl.connect(NioSocketImpl.java:572) ~[na:na]
+	at java.base/java.net.SocksSocketImpl.connect(SocksSocketImpl.java:327) ~[na:na]
+	at java.base/java.net.Socket.connect(Socket.java:633) ~[na:na]
+	at org.postgresql.core.PGStream.createSocket(PGStream.java:243) ~[postgresql-42.6.0.jar:42.6.0]
+	at org.postgresql.core.PGStream.<init>(PGStream.java:98) ~[postgresql-42.6.0.jar:42.6.0]
+	at org.postgresql.core.v3.ConnectionFactoryImpl.tryConnect(ConnectionFactoryImpl.java:132) ~[postgresql-42.6.0.jar:42.6.0]
+	at org.postgresql.core.v3.ConnectionFactoryImpl.openConnectionImpl(ConnectionFactoryImpl.java:258) ~[postgresql-42.6.0.jar:42.6.0]
+	... 54 common frames omitted
+
+2026-02-12T22:12:01.005+09:00  WARN 38648 --- [aikiosk-backend] [           main] o.h.engine.jdbc.spi.SqlExceptionHelper   : SQL Error: 0, SQLState: 08001
+2026-02-12T22:12:01.005+09:00 ERROR 38648 --- [aikiosk-backend] [           main] o.h.engine.jdbc.spi.SqlExceptionHelper   : The connection attempt failed.
+2026-02-12T22:12:01.008+09:00 ERROR 38648 --- [aikiosk-backend] [           main] j.LocalContainerEntityManagerFactoryBean : Failed to initialize JPA EntityManagerFactory: [PersistenceUnit: default] Unable to build Hibernate SessionFactory; nested exception is org.hibernate.exception.JDBCConnectionException: Unable to open JDBC Connection for DDL execution [The connection attempt failed.] [n/a]
+2026-02-12T22:12:01.008+09:00  WARN 38648 --- [aikiosk-backend] [           main] ConfigServletWebServerApplicationContext : Exception encountered during context initialization - cancelling refresh attempt: org.springframework.beans.factory.BeanCreationException: Error creating bean with name 'entityManagerFactory' defined in class path resource [org/springframework/boot/autoconfigure/orm/jpa/HibernateJpaConfiguration.class]: [PersistenceUnit: default] Unable to build Hibernate SessionFactory; nested exception is org.hibernate.exception.JDBCConnectionException: Unable to open JDBC Connection for DDL execution [The connection attempt failed.] [n/a]
+2026-02-12T22:12:01.009+09:00  INFO 38648 --- [aikiosk-backend] [           main] o.apache.catalina.core.StandardService   : Stopping service [Tomcat]
+2026-02-12T22:12:01.014+09:00  INFO 38648 --- [aikiosk-backend] [           main] .s.b.a.l.ConditionEvaluationReportLogger : 
+
+Error starting ApplicationContext. To display the condition evaluation report re-run your application with 'debug' enabled.
+2026-02-12T22:12:01.021+09:00 ERROR 38648 --- [aikiosk-backend] [           main] o.s.boot.SpringApplication               : Application run failed
+
+org.springframework.beans.factory.BeanCreationException: Error creating bean with name 'entityManagerFactory' defined in class path resource [org/springframework/boot/autoconfigure/orm/jpa/HibernateJpaConfiguration.class]: [PersistenceUnit: default] Unable to build Hibernate SessionFactory; nested exception is org.hibernate.exception.JDBCConnectionException: Unable to open JDBC Connection for DDL execution [The connection attempt failed.] [n/a]
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.initializeBean(AbstractAutowireCapableBeanFactory.java:1775) ~[spring-beans-6.1.1.jar:6.1.1]
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.doCreateBean(AbstractAutowireCapableBeanFactory.java:601) ~[spring-beans-6.1.1.jar:6.1.1]
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.createBean(AbstractAutowireCapableBeanFactory.java:523) ~[spring-beans-6.1.1.jar:6.1.1]
+	at org.springframework.beans.factory.support.AbstractBeanFactory.lambda$doGetBean$0(AbstractBeanFactory.java:325) ~[spring-beans-6.1.1.jar:6.1.1]
+	at org.springframework.beans.factory.support.DefaultSingletonBeanRegistry.getSingleton(DefaultSingletonBeanRegistry.java:234) ~[spring-beans-6.1.1.jar:6.1.1]
+	at org.springframework.beans.factory.support.AbstractBeanFactory.doGetBean(AbstractBeanFactory.java:323) ~[spring-beans-6.1.1.jar:6.1.1]
+	at org.springframework.beans.factory.support.AbstractBeanFactory.getBean(AbstractBeanFactory.java:199) ~[spring-beans-6.1.1.jar:6.1.1]
+	at org.springframework.context.support.AbstractApplicationContext.getBean(AbstractApplicationContext.java:1173) ~[spring-context-6.1.1.jar:6.1.1]
+	at org.springframework.context.support.AbstractApplicationContext.finishBeanFactoryInitialization(AbstractApplicationContext.java:936) ~[spring-context-6.1.1.jar:6.1.1]
+	at org.springframework.context.support.AbstractApplicationContext.refresh(AbstractApplicationContext.java:616) ~[spring-context-6.1.1.jar:6.1.1]
+	at org.springframework.boot.web.servlet.context.ServletWebServerApplicationContext.refresh(ServletWebServerApplicationContext.java:146) ~[spring-boot-3.2.0.jar:3.2.0]
+	at org.springframework.boot.SpringApplication.refresh(SpringApplication.java:753) ~[spring-boot-3.2.0.jar:3.2.0]
+	at org.springframework.boot.SpringApplication.refreshContext(SpringApplication.java:455) ~[spring-boot-3.2.0.jar:3.2.0]
+	at org.springframework.boot.SpringApplication.run(SpringApplication.java:323) ~[spring-boot-3.2.0.jar:3.2.0]
+	at org.springframework.boot.SpringApplication.run(SpringApplication.java:1342) ~[spring-boot-3.2.0.jar:3.2.0]
+	at org.springframework.boot.SpringApplication.run(SpringApplication.java:1331) ~[spring-boot-3.2.0.jar:3.2.0]
+	at com.fusioncrew.aikiosk.AiKioskApplication.main(AiKioskApplication.java:10) ~[main/:na]
+Caused by: jakarta.persistence.PersistenceException: [PersistenceUnit: default] Unable to build Hibernate SessionFactory; nested exception is org.hibernate.exception.JDBCConnectionException: Unable to open JDBC Connection for DDL execution [The connection attempt failed.] [n/a]
+	at org.springframework.orm.jpa.AbstractEntityManagerFactoryBean.buildNativeEntityManagerFactory(AbstractEntityManagerFactoryBean.java:421) ~[spring-orm-6.1.1.jar:6.1.1]
+	at org.springframework.orm.jpa.AbstractEntityManagerFactoryBean.afterPropertiesSet(AbstractEntityManagerFactoryBean.java:396) ~[spring-orm-6.1.1.jar:6.1.1]
+	at org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean.afterPropertiesSet(LocalContainerEntityManagerFactoryBean.java:352) ~[spring-orm-6.1.1.jar:6.1.1]
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.invokeInitMethods(AbstractAutowireCapableBeanFactory.java:1822) ~[spring-beans-6.1.1.jar:6.1.1]
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.initializeBean(AbstractAutowireCapableBeanFactory.java:1771) ~[spring-beans-6.1.1.jar:6.1.1]
+	... 16 common frames omitted
+Caused by: org.hibernate.exception.JDBCConnectionException: Unable to open JDBC Connection for DDL execution [The connection attempt failed.] [n/a]
+	at org.hibernate.exception.internal.SQLStateConversionDelegate.convert(SQLStateConversionDelegate.java:100) ~[hibernate-core-6.3.1.Final.jar:6.3.1.Final]
+	at org.hibernate.exception.internal.StandardSQLExceptionConverter.convert(StandardSQLExceptionConverter.java:58) ~[hibernate-core-6.3.1.Final.jar:6.3.1.Final]
+	at org.hibernate.engine.jdbc.spi.SqlExceptionHelper.convert(SqlExceptionHelper.java:108) ~[hibernate-core-6.3.1.Final.jar:6.3.1.Final]
+	at org.hibernate.engine.jdbc.spi.SqlExceptionHelper.convert(SqlExceptionHelper.java:94) ~[hibernate-core-6.3.1.Final.jar:6.3.1.Final]
+	at org.hibernate.resource.transaction.backend.jdbc.internal.DdlTransactionIsolatorNonJtaImpl.getIsolatedConnection(DdlTransactionIsolatorNonJtaImpl.java:74) ~[hibernate-core-6.3.1.Final.jar:6.3.1.Final]
+	at org.hibernate.resource.transaction.backend.jdbc.internal.DdlTransactionIsolatorNonJtaImpl.getIsolatedConnection(DdlTransactionIsolatorNonJtaImpl.java:39) ~[hibernate-core-6.3.1.Final.jar:6.3.1.Final]
+	at org.hibernate.tool.schema.internal.exec.ImprovedExtractionContextImpl.getJdbcConnection(ImprovedExtractionContextImpl.java:63) ~[hibernate-core-6.3.1.Final.jar:6.3.1.Final]
+	at org.hibernate.tool.schema.extract.spi.ExtractionContext.getQueryResults(ExtractionContext.java:43) ~[hibernate-core-6.3.1.Final.jar:6.3.1.Final]
+	at org.hibernate.tool.schema.extract.internal.SequenceInformationExtractorLegacyImpl.extractMetadata(SequenceInformationExtractorLegacyImpl.java:39) ~[hibernate-core-6.3.1.Final.jar:6.3.1.Final]
+	at org.hibernate.tool.schema.extract.internal.DatabaseInformationImpl.initializeSequences(DatabaseInformationImpl.java:66) ~[hibernate-core-6.3.1.Final.jar:6.3.1.Final]
+	at org.hibernate.tool.schema.extract.internal.DatabaseInformationImpl.<init>(DatabaseInformationImpl.java:60) ~[hibernate-core-6.3.1.Final.jar:6.3.1.Final]
+	at org.hibernate.tool.schema.internal.Helper.buildDatabaseInformation(Helper.java:185) ~[hibernate-core-6.3.1.Final.jar:6.3.1.Final]
+	at org.hibernate.tool.schema.internal.AbstractSchemaMigrator.doMigration(AbstractSchemaMigrator.java:98) ~[hibernate-core-6.3.1.Final.jar:6.3.1.Final]
+	at org.hibernate.tool.schema.spi.SchemaManagementToolCoordinator.performDatabaseAction(SchemaManagementToolCoordinator.java:286) ~[hibernate-core-6.3.1.Final.jar:6.3.1.Final]
+	at org.hibernate.tool.schema.spi.SchemaManagementToolCoordinator.lambda$process$5(SchemaManagementToolCoordinator.java:145) ~[hibernate-core-6.3.1.Final.jar:6.3.1.Final]
+	at java.base/java.util.HashMap.forEach(HashMap.java:1421) ~[na:na]
+	at org.hibernate.tool.schema.spi.SchemaManagementToolCoordinator.process(SchemaManagementToolCoordinator.java:142) ~[hibernate-core-6.3.1.Final.jar:6.3.1.Final]
+	at org.hibernate.boot.internal.SessionFactoryObserverForSchemaExport.sessionFactoryCreated(SessionFactoryObserverForSchemaExport.java:37) ~[hibernate-core-6.3.1.Final.jar:6.3.1.Final]
+	at org.hibernate.internal.SessionFactoryObserverChain.sessionFactoryCreated(SessionFactoryObserverChain.java:35) ~[hibernate-core-6.3.1.Final.jar:6.3.1.Final]
+	at org.hibernate.internal.SessionFactoryImpl.<init>(SessionFactoryImpl.java:295) ~[hibernate-core-6.3.1.Final.jar:6.3.1.Final]
+	at org.hibernate.boot.internal.SessionFactoryBuilderImpl.build(SessionFactoryBuilderImpl.java:450) ~[hibernate-core-6.3.1.Final.jar:6.3.1.Final]
+	at org.hibernate.jpa.boot.internal.EntityManagerFactoryBuilderImpl.build(EntityManagerFactoryBuilderImpl.java:1507) ~[hibernate-core-6.3.1.Final.jar:6.3.1.Final]
+	at org.springframework.orm.jpa.vendor.SpringHibernateJpaPersistenceProvider.createContainerEntityManagerFactory(SpringHibernateJpaPersistenceProvider.java:75) ~[spring-orm-6.1.1.jar:6.1.1]
+	at org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean.createNativeEntityManagerFactory(LocalContainerEntityManagerFactoryBean.java:376) ~[spring-orm-6.1.1.jar:6.1.1]
+	at org.springframework.orm.jpa.AbstractEntityManagerFactoryBean.buildNativeEntityManagerFactory(AbstractEntityManagerFactoryBean.java:409) ~[spring-orm-6.1.1.jar:6.1.1]
+	... 20 common frames omitted
+Caused by: org.postgresql.util.PSQLException: The connection attempt failed.
+	at org.postgresql.core.v3.ConnectionFactoryImpl.openConnectionImpl(ConnectionFactoryImpl.java:354) ~[postgresql-42.6.0.jar:42.6.0]
+	at org.postgresql.core.ConnectionFactory.openConnection(ConnectionFactory.java:54) ~[postgresql-42.6.0.jar:42.6.0]
+	at org.postgresql.jdbc.PgConnection.<init>(PgConnection.java:263) ~[postgresql-42.6.0.jar:42.6.0]
+	at org.postgresql.Driver.makeConnection(Driver.java:443) ~[postgresql-42.6.0.jar:42.6.0]
+	at org.postgresql.Driver.connect(Driver.java:297) ~[postgresql-42.6.0.jar:42.6.0]
+	at com.zaxxer.hikari.util.DriverDataSource.getConnection(DriverDataSource.java:138) ~[HikariCP-5.0.1.jar:na]
+	at com.zaxxer.hikari.pool.PoolBase.newConnection(PoolBase.java:359) ~[HikariCP-5.0.1.jar:na]
+	at com.zaxxer.hikari.pool.PoolBase.newPoolEntry(PoolBase.java:201) ~[HikariCP-5.0.1.jar:na]
+	at com.zaxxer.hikari.pool.HikariPool.createPoolEntry(HikariPool.java:470) ~[HikariCP-5.0.1.jar:na]
+	at com.zaxxer.hikari.pool.HikariPool.checkFailFast(HikariPool.java:561) ~[HikariCP-5.0.1.jar:na]
+	at com.zaxxer.hikari.pool.HikariPool.<init>(HikariPool.java:100) ~[HikariCP-5.0.1.jar:na]
+	at com.zaxxer.hikari.HikariDataSource.getConnection(HikariDataSource.java:112) ~[HikariCP-5.0.1.jar:na]
+	at org.hibernate.engine.jdbc.connections.internal.DatasourceConnectionProviderImpl.getConnection(DatasourceConnectionProviderImpl.java:122) ~[hibernate-core-6.3.1.Final.jar:6.3.1.Final]
+	at org.hibernate.engine.jdbc.env.internal.JdbcEnvironmentInitiator$ConnectionProviderJdbcConnectionAccess.obtainConnection(JdbcEnvironmentInitiator.java:424) ~[hibernate-core-6.3.1.Final.jar:6.3.1.Final]
+	at org.hibernate.resource.transaction.backend.jdbc.internal.DdlTransactionIsolatorNonJtaImpl.getIsolatedConnection(DdlTransactionIsolatorNonJtaImpl.java:46) ~[hibernate-core-6.3.1.Final.jar:6.3.1.Final]
+	... 40 common frames omitted
+Caused by: java.net.UnknownHostException: db.rxfdeaizxpybdpffxbxq.supabase.co
+	at java.base/sun.nio.ch.NioSocketImpl.connect(NioSocketImpl.java:572) ~[na:na]
+	at java.base/java.net.SocksSocketImpl.connect(SocksSocketImpl.java:327) ~[na:na]
+	at java.base/java.net.Socket.connect(Socket.java:633) ~[na:na]
+	at org.postgresql.core.PGStream.createSocket(PGStream.java:243) ~[postgresql-42.6.0.jar:42.6.0]
+	at org.postgresql.core.PGStream.<init>(PGStream.java:98) ~[postgresql-42.6.0.jar:42.6.0]
+	at org.postgresql.core.v3.ConnectionFactoryImpl.tryConnect(ConnectionFactoryImpl.java:132) ~[postgresql-42.6.0.jar:42.6.0]
+	at org.postgresql.core.v3.ConnectionFactoryImpl.openConnectionImpl(ConnectionFactoryImpl.java:258) ~[postgresql-42.6.0.jar:42.6.0]
+	... 54 common frames omitted
+
+
+> Task :bootRun FAILED
+.\gradlew.bat : 
+위치 줄:1 문자:1
++ .\gradlew.bat bootRun --stacktrace 2>&1 
+| Out-File -FilePath error_ou ...
++ ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : NotSpecifie 
+   d: (:String) [], RemoteException
+    + FullyQualifiedErrorId : NativeComma 
+   ndError
+ 
+FAILURE: Build failed with an exception.
+
+* What went wrong:
+Execution failed for task ':bootRun'.
+> Process 'command 'C:\Program Files (x86)
+\Java\jdk-17.0.11\bin\java.exe'' finished 
+with non-zero exit value 1
+
+* Try:
+> Run with --info or --debug option to get
+ more log output.
+> Run with --scan to get full insights.
+> Get more help at https://help.gradle.org
+.
+
+* Exception is:
+org.gradle.api.tasks.TaskExecutionExceptio
+n: Execution failed for task ':bootRun'.
+	at org.gradle.api.internal.tasks.executio
+n.ExecuteActionsTaskExecuter.lambda$execut
+eIfValid$1(ExecuteActionsTaskExecuter.java
+:148)
+	at org.gradle.internal.Try$Failure.ifSucc
+essfulOrElse(Try.java:282)
+	at org.gradle.api.internal.tasks.executio
+n.ExecuteActionsTaskExecuter.executeIfVali
+d(ExecuteActionsTaskExecuter.java:146)
+	at org.gradle.api.internal.tasks.executio
+n.ExecuteActionsTaskExecuter.execute(Execu
+teActionsTaskExecuter.java:134)
+	at org.gradle.api.internal.tasks.executio
+n.FinalizePropertiesTaskExecuter.execute(F
+inalizePropertiesTaskExecuter.java:46)
+	at org.gradle.api.internal.tasks.executio
+n.ResolveTaskExecutionModeExecuter.execute
+(ResolveTaskExecutionModeExecuter.java:51)
+	at org.gradle.api.internal.tasks.executio
+n.SkipTaskWithNoActionsExecuter.execute(Sk
+ipTaskWithNoActionsExecuter.java:57)
+	at org.gradle.api.internal.tasks.executio
+n.SkipOnlyIfTaskExecuter.execute(SkipOnlyI
+fTaskExecuter.java:74)
+	at org.gradle.api.internal.tasks.executio
+n.CatchExceptionTaskExecuter.execute(Catch
+ExceptionTaskExecuter.java:36)
+	at org.gradle.api.internal.tasks.executio
+n.EventFiringTaskExecuter$1.executeTask(Ev
+entFiringTaskExecuter.java:77)
+	at org.gradle.api.internal.tasks.executio
+n.EventFiringTaskExecuter$1.call(EventFiri
+ngTaskExecuter.java:55)
+	at org.gradle.api.internal.tasks.executio
+n.EventFiringTaskExecuter$1.call(EventFiri
+ngTaskExecuter.java:52)
+	at org.gradle.internal.operations.Default
+BuildOperationRunner$CallableBuildOperatio
+nWorker.execute(DefaultBuildOperationRunne
+r.java:204)
+	at org.gradle.internal.operations.Default
+BuildOperationRunner$CallableBuildOperatio
+nWorker.execute(DefaultBuildOperationRunne
+r.java:199)
+	at org.gradle.internal.operations.Default
+BuildOperationRunner$2.execute(DefaultBuil
+dOperationRunner.java:66)
+	at org.gradle.internal.operations.Default
+BuildOperationRunner$2.execute(DefaultBuil
+dOperationRunner.java:59)
+	at org.gradle.internal.operations.Default
+BuildOperationRunner.execute(DefaultBuildO
+perationRunner.java:157)
+	at org.gradle.internal.operations.Default
+BuildOperationRunner.execute(DefaultBuildO
+perationRunner.java:59)
+	at org.gradle.internal.operations.Default
+BuildOperationRunner.call(DefaultBuildOper
+ationRunner.java:53)
+	at org.gradle.internal.operations.Default
+BuildOperationExecutor.call(DefaultBuildOp
+erationExecutor.java:73)
+	at org.gradle.api.internal.tasks.executio
+n.EventFiringTaskExecuter.execute(EventFir
+ingTaskExecuter.java:52)
+	at org.gradle.execution.plan.LocalTaskNod
+eExecutor.execute(LocalTaskNodeExecutor.ja
+va:42)
+	at org.gradle.execution.taskgraph.Default
+TaskExecutionGraph$InvokeNodeExecutorsActi
+on.execute(DefaultTaskExecutionGraph.java:
+331)
+	at org.gradle.execution.taskgraph.Default
+TaskExecutionGraph$InvokeNodeExecutorsActi
+on.execute(DefaultTaskExecutionGraph.java:
+318)
+	at org.gradle.execution.taskgraph.Default
+TaskExecutionGraph$BuildOperationAwareExec
+utionAction.lambda$execute$0(DefaultTaskEx
+ecutionGraph.java:314)
+	at org.gradle.internal.operations.Current
+BuildOperationRef.with(CurrentBuildOperati
+onRef.java:80)
+	at org.gradle.execution.taskgraph.Default
+TaskExecutionGraph$BuildOperationAwareExec
+utionAction.execute(DefaultTaskExecutionGr
+aph.java:314)
+	at org.gradle.execution.taskgraph.Default
+TaskExecutionGraph$BuildOperationAwareExec
+utionAction.execute(DefaultTaskExecutionGr
+aph.java:303)
+	at org.gradle.execution.plan.DefaultPlanE
+xecutor$ExecutorWorker.execute(DefaultPlan
+Executor.java:463)
+	at org.gradle.execution.plan.DefaultPlanE
+xecutor$ExecutorWorker.run(DefaultPlanExec
+utor.java:380)
+	at org.gradle.internal.concurrent.Executo
+rPolicy$CatchAndRecordFailures.onExecute(E
+xecutorPolicy.java:64)
+	at org.gradle.internal.concurrent.Abstrac
+tManagedExecutor$1.run(AbstractManagedExec
+utor.java:47)
+Caused by: org.gradle.process.internal.Exe
+cException: Process 'command 'C:\Program F
+iles (x86)\Java\jdk-17.0.11\bin\java.exe''
+ finished with non-zero exit value 1
+	at org.gradle.process.internal.DefaultExe
+cHandle$ExecResultImpl.assertNormalExitVal
+ue(DefaultExecHandle.java:431)
+	at org.gradle.process.internal.DefaultJav
+aExecAction.execute(DefaultJavaExecAction.
+java:52)
+	at org.gradle.api.tasks.JavaExec.exec(Jav
+aExec.java:165)
+	at org.springframework.boot.gradle.tasks.
+run.BootRun.exec(BootRun.java:75)
+	at java.base/jdk.internal.reflect.NativeM
+ethodAccessorImpl.invoke0(Native Method)
+	at java.base/jdk.internal.reflect.NativeM
+ethodAccessorImpl.invoke(NativeMethodAcces
+sorImpl.java:77)
+	at java.base/jdk.internal.reflect.Delegat
+ingMethodAccessorImpl.invoke(DelegatingMet
+hodAccessorImpl.java:43)
+	at org.gradle.internal.reflect.JavaMethod
+.invoke(JavaMethod.java:125)
+	at org.gradle.api.internal.project.taskfa
+ctory.StandardTaskAction.doExecute(Standar
+dTaskAction.java:58)
+	at org.gradle.api.internal.project.taskfa
+ctory.StandardTaskAction.execute(StandardT
+askAction.java:51)
+	at org.gradle.api.internal.project.taskfa
+ctory.StandardTaskAction.execute(StandardT
+askAction.java:29)
+	at org.gradle.api.internal.tasks.executio
+n.TaskExecution$3.run(TaskExecution.java:2
+48)
+	at org.gradle.internal.operations.Default
+BuildOperationRunner$1.execute(DefaultBuil
+dOperationRunner.java:29)
+	at org.gradle.internal.operations.Default
+BuildOperationRunner$1.execute(DefaultBuil
+dOperationRunner.java:26)
+	at org.gradle.internal.operations.Default
+BuildOperationRunner$2.execute(DefaultBuil
+dOperationRunner.java:66)
+	at org.gradle.internal.operations.Default
+BuildOperationRunner$2.execute(DefaultBuil
+dOperationRunner.java:59)
+	at org.gradle.internal.operations.Default
+BuildOperationRunner.execute(DefaultBuildO
+perationRunner.java:157)
+	at org.gradle.internal.operations.Default
+BuildOperationRunner.execute(DefaultBuildO
+perationRunner.java:59)
+	at org.gradle.internal.operations.Default
+BuildOperationRunner.run(DefaultBuildOpera
+tionRunner.java:47)
+	at org.gradle.internal.operations.Default
+BuildOperationExecutor.run(DefaultBuildOpe
+rationExecutor.java:68)
+	at org.gradle.api.internal.tasks.executio
+n.TaskExecution.executeAction(TaskExecutio
+n.java:233)
+	at org.gradle.api.internal.tasks.executio
+n.TaskExecution.executeActions(TaskExecuti
+on.java:216)
+	at org.gradle.api.internal.tasks.executio
+n.TaskExecution.executeWithPreviousOutputF
+iles(TaskExecution.java:199)
+	at org.gradle.api.internal.tasks.executio
+n.TaskExecution.execute(TaskExecution.java
+:166)
+	at org.gradle.internal.execution.steps.Ex
+ecuteStep.executeInternal(ExecuteStep.java
+:105)
+	at org.gradle.internal.execution.steps.Ex
+ecuteStep.access$000(ExecuteStep.java:44)
+	at org.gradle.internal.execution.steps.Ex
+ecuteStep$1.call(ExecuteStep.java:59)
+	at org.gradle.internal.execution.steps.Ex
+ecuteStep$1.call(ExecuteStep.java:56)
+	at org.gradle.internal.operations.Default
+BuildOperationRunner$CallableBuildOperatio
+nWorker.execute(DefaultBuildOperationRunne
+r.java:204)
+	at org.gradle.internal.operations.Default
+BuildOperationRunner$CallableBuildOperatio
+nWorker.execute(DefaultBuildOperationRunne
+r.java:199)
+	at org.gradle.internal.operations.Default
+BuildOperationRunner$2.execute(DefaultBuil
+dOperationRunner.java:66)
+	at org.gradle.internal.operations.Default
+BuildOperationRunner$2.execute(DefaultBuil
+dOperationRunner.java:59)
+	at org.gradle.internal.operations.Default
+BuildOperationRunner.execute(DefaultBuildO
+perationRunner.java:157)
+	at org.gradle.internal.operations.Default
+BuildOperationRunner.execute(DefaultBuildO
+perationRunner.java:59)
+	at org.gradle.internal.operations.Default
+BuildOperationRunner.call(DefaultBuildOper
+ationRunner.java:53)
+	at org.gradle.internal.operations.Default
+BuildOperationExecutor.call(DefaultBuildOp
+erationExecutor.java:73)
+	at org.gradle.internal.execution.steps.Ex
+ecuteStep.execute(ExecuteStep.java:56)
+	at org.gradle.internal.execution.steps.Ex
+ecuteStep.execute(ExecuteStep.java:44)
+	at org.gradle.internal.execution.steps.Re
+movePreviousOutputsStep.execute(RemovePrev
+iousOutputsStep.java:67)
+	at org.gradle.internal.execution.steps.Re
+movePreviousOutputsStep.execute(RemovePrev
+iousOutputsStep.java:37)
+	at org.gradle.internal.execution.steps.Ca
+ncelExecutionStep.execute(CancelExecutionS
+tep.java:41)
+	at org.gradle.internal.execution.steps.Ti
+meoutStep.executeWithoutTimeout(TimeoutSte
+p.java:74)
+	at org.gradle.internal.execution.steps.Ti
+meoutStep.execute(TimeoutStep.java:55)
+	at org.gradle.internal.execution.steps.Cr
+eateOutputsStep.execute(CreateOutputsStep.
+java:50)
+	at org.gradle.internal.execution.steps.Cr
+eateOutputsStep.execute(CreateOutputsStep.
+java:28)
+	at org.gradle.internal.execution.steps.Ca
+ptureStateAfterExecutionStep.executeDelega
+teBroadcastingChanges(CaptureStateAfterExe
+cutionStep.java:100)
+	at org.gradle.internal.execution.steps.Ca
+ptureStateAfterExecutionStep.execute(Captu
+reStateAfterExecutionStep.java:72)
+	at org.gradle.internal.execution.steps.Ca
+ptureStateAfterExecutionStep.execute(Captu
+reStateAfterExecutionStep.java:50)
+	at org.gradle.internal.execution.steps.Re
+solveInputChangesStep.execute(ResolveInput
+ChangesStep.java:40)
+	at org.gradle.internal.execution.steps.Re
+solveInputChangesStep.execute(ResolveInput
+ChangesStep.java:29)
+	at org.gradle.internal.execution.steps.Bu
+ildCacheStep.executeWithoutCache(BuildCach
+eStep.java:179)
+	at org.gradle.internal.execution.steps.Bu
+ildCacheStep.lambda$execute$1(BuildCacheSt
+ep.java:70)
+	at org.gradle.internal.Either$Right.fold(
+Either.java:175)
+	at org.gradle.internal.execution.caching.
+CachingState.fold(CachingState.java:59)
+	at org.gradle.internal.execution.steps.Bu
+ildCacheStep.execute(BuildCacheStep.java:6
+8)
+	at org.gradle.internal.execution.steps.Bu
+ildCacheStep.execute(BuildCacheStep.java:4
+6)
+	at org.gradle.internal.execution.steps.St
+oreExecutionStateStep.execute(StoreExecuti
+onStateStep.java:36)
+	at org.gradle.internal.execution.steps.St
+oreExecutionStateStep.execute(StoreExecuti
+onStateStep.java:25)
+	at org.gradle.internal.execution.steps.Re
+cordOutputsStep.execute(RecordOutputsStep.
+java:36)
+	at org.gradle.internal.execution.steps.Re
+cordOutputsStep.execute(RecordOutputsStep.
+java:22)
+	at org.gradle.internal.execution.steps.Sk
+ipUpToDateStep.executeBecause(SkipUpToDate
+Step.java:91)
+	at org.gradle.internal.execution.steps.Sk
+ipUpToDateStep.lambda$execute$2(SkipUpToDa
+teStep.java:55)
+	at org.gradle.internal.execution.steps.Sk
+ipUpToDateStep.execute(SkipUpToDateStep.ja
+va:55)
+	at org.gradle.internal.execution.steps.Sk
+ipUpToDateStep.execute(SkipUpToDateStep.ja
+va:37)
+	at org.gradle.internal.execution.steps.Re
+solveChangesStep.execute(ResolveChangesSte
+p.java:65)
+	at org.gradle.internal.execution.steps.Re
+solveChangesStep.execute(ResolveChangesSte
+p.java:36)
+	at org.gradle.internal.execution.steps.le
+gacy.MarkSnapshottingInputsFinishedStep.ex
+ecute(MarkSnapshottingInputsFinishedStep.j
+ava:37)
+	at org.gradle.internal.execution.steps.le
+gacy.MarkSnapshottingInputsFinishedStep.ex
+ecute(MarkSnapshottingInputsFinishedStep.j
+ava:27)
+	at org.gradle.internal.execution.steps.Re
+solveCachingStateStep.execute(ResolveCachi
+ngStateStep.java:76)
+	at org.gradle.internal.execution.steps.Re
+solveCachingStateStep.execute(ResolveCachi
+ngStateStep.java:37)
+	at org.gradle.internal.execution.steps.Va
+lidateStep.execute(ValidateStep.java:108)
+	at org.gradle.internal.execution.steps.Va
+lidateStep.execute(ValidateStep.java:55)
+	at org.gradle.internal.execution.steps.Ca
+ptureStateBeforeExecutionStep.execute(Capt
+ureStateBeforeExecutionStep.java:71)
+	at org.gradle.internal.execution.steps.Ca
+ptureStateBeforeExecutionStep.execute(Capt
+ureStateBeforeExecutionStep.java:45)
+	at org.gradle.internal.execution.steps.Sk
+ipEmptyWorkStep.executeWithNonEmptySources
+(SkipEmptyWorkStep.java:177)
+	at org.gradle.internal.execution.steps.Sk
+ipEmptyWorkStep.execute(SkipEmptyWorkStep.
+java:81)
+	at org.gradle.internal.execution.steps.Sk
+ipEmptyWorkStep.execute(SkipEmptyWorkStep.
+java:53)
+	at org.gradle.internal.execution.steps.Re
+moveUntrackedExecutionStateStep.execute(Re
+moveUntrackedExecutionStateStep.java:32)
+	at org.gradle.internal.execution.steps.Re
+moveUntrackedExecutionStateStep.execute(Re
+moveUntrackedExecutionStateStep.java:21)
+	at org.gradle.internal.execution.steps.le
+gacy.MarkSnapshottingInputsStartedStep.exe
+cute(MarkSnapshottingInputsStartedStep.jav
+a:38)
+	at org.gradle.internal.execution.steps.Lo
+adPreviousExecutionStateStep.execute(LoadP
+reviousExecutionStateStep.java:36)
+	at org.gradle.internal.execution.steps.Lo
+adPreviousExecutionStateStep.execute(LoadP
+reviousExecutionStateStep.java:23)
+	at org.gradle.internal.execution.steps.Cl
+eanupStaleOutputsStep.execute(CleanupStale
+OutputsStep.java:75)
+	at org.gradle.internal.execution.steps.Cl
+eanupStaleOutputsStep.execute(CleanupStale
+OutputsStep.java:41)
+	at org.gradle.internal.execution.steps.Ex
+ecuteWorkBuildOperationFiringStep.lambda$e
+xecute$2(ExecuteWorkBuildOperationFiringSt
+ep.java:66)
+	at org.gradle.internal.execution.steps.Ex
+ecuteWorkBuildOperationFiringStep.execute(
+ExecuteWorkBuildOperationFiringStep.java:6
+6)
+	at org.gradle.internal.execution.steps.Ex
+ecuteWorkBuildOperationFiringStep.execute(
+ExecuteWorkBuildOperationFiringStep.java:3
+8)
+	at org.gradle.internal.execution.steps.As
+signWorkspaceStep.lambda$execute$0(AssignW
+orkspaceStep.java:32)
+	at org.gradle.api.internal.tasks.executio
+n.TaskExecution$4.withWorkspace(TaskExecut
+ion.java:293)
+	at org.gradle.internal.execution.steps.As
+signWorkspaceStep.execute(AssignWorkspaceS
+tep.java:30)
+	at org.gradle.internal.execution.steps.As
+signWorkspaceStep.execute(AssignWorkspaceS
+tep.java:21)
+	at org.gradle.internal.execution.steps.Id
+entityCacheStep.execute(IdentityCacheStep.
+java:37)
+	at org.gradle.internal.execution.steps.Id
+entityCacheStep.execute(IdentityCacheStep.
+java:27)
+	at org.gradle.internal.execution.steps.Id
+entifyStep.execute(IdentifyStep.java:47)
+	at org.gradle.internal.execution.steps.Id
+entifyStep.execute(IdentifyStep.java:34)
+	at org.gradle.internal.execution.impl.Def
+aultExecutionEngine$1.execute(DefaultExecu
+tionEngine.java:64)
+	at org.gradle.api.internal.tasks.executio
+n.ExecuteActionsTaskExecuter.executeIfVali
+d(ExecuteActionsTaskExecuter.java:145)
+	at org.gradle.api.internal.tasks.executio
+n.ExecuteActionsTaskExecuter.execute(Execu
+teActionsTaskExecuter.java:134)
+	at org.gradle.api.internal.tasks.executio
+n.FinalizePropertiesTaskExecuter.execute(F
+inalizePropertiesTaskExecuter.java:46)
+	at org.gradle.api.internal.tasks.executio
+n.ResolveTaskExecutionModeExecuter.execute
+(ResolveTaskExecutionModeExecuter.java:51)
+	at org.gradle.api.internal.tasks.executio
+n.SkipTaskWithNoActionsExecuter.execute(Sk
+ipTaskWithNoActionsExecuter.java:57)
+	at org.gradle.api.internal.tasks.executio
+n.SkipOnlyIfTaskExecuter.execute(SkipOnlyI
+fTaskExecuter.java:74)
+	at org.gradle.api.internal.tasks.executio
+n.CatchExceptionTaskExecuter.execute(Catch
+ExceptionTaskExecuter.java:36)
+	at org.gradle.api.internal.tasks.executio
+n.EventFiringTaskExecuter$1.executeTask(Ev
+entFiringTaskExecuter.java:77)
+	at org.gradle.api.internal.tasks.executio
+n.EventFiringTaskExecuter$1.call(EventFiri
+ngTaskExecuter.java:55)
+	at org.gradle.api.internal.tasks.executio
+n.EventFiringTaskExecuter$1.call(EventFiri
+ngTaskExecuter.java:52)
+	at org.gradle.internal.operations.Default
+BuildOperationRunner$CallableBuildOperatio
+nWorker.execute(DefaultBuildOperationRunne
+r.java:204)
+	at org.gradle.internal.operations.Default
+BuildOperationRunner$CallableBuildOperatio
+nWorker.execute(DefaultBuildOperationRunne
+r.java:199)
+	at org.gradle.internal.operations.Default
+BuildOperationRunner$2.execute(DefaultBuil
+dOperationRunner.java:66)
+	at org.gradle.internal.operations.Default
+BuildOperationRunner$2.execute(DefaultBuil
+dOperationRunner.java:59)
+	at org.gradle.internal.operations.Default
+BuildOperationRunner.execute(DefaultBuildO
+perationRunner.java:157)
+	at org.gradle.internal.operations.Default
+BuildOperationRunner.execute(DefaultBuildO
+perationRunner.java:59)
+	at org.gradle.internal.operations.Default
+BuildOperationRunner.call(DefaultBuildOper
+ationRunner.java:53)
+	at org.gradle.internal.operations.Default
+BuildOperationExecutor.call(DefaultBuildOp
+erationExecutor.java:73)
+	at org.gradle.api.internal.tasks.executio
+n.EventFiringTaskExecuter.execute(EventFir
+ingTaskExecuter.java:52)
+	at org.gradle.execution.plan.LocalTaskNod
+eExecutor.execute(LocalTaskNodeExecutor.ja
+va:42)
+	at org.gradle.execution.taskgraph.Default
+TaskExecutionGraph$InvokeNodeExecutorsActi
+on.execute(DefaultTaskExecutionGraph.java:
+331)
+	at org.gradle.execution.taskgraph.Default
+TaskExecutionGraph$InvokeNodeExecutorsActi
+on.execute(DefaultTaskExecutionGraph.java:
+318)
+	at org.gradle.execution.taskgraph.Default
+TaskExecutionGraph$BuildOperationAwareExec
+utionAction.lambda$execute$0(DefaultTaskEx
+ecutionGraph.java:314)
+	at org.gradle.internal.operations.Current
+BuildOperationRef.with(CurrentBuildOperati
+onRef.java:80)
+	at org.gradle.execution.taskgraph.Default
+TaskExecutionGraph$BuildOperationAwareExec
+utionAction.execute(DefaultTaskExecutionGr
+aph.java:314)
+	at org.gradle.execution.taskgraph.Default
+TaskExecutionGraph$BuildOperationAwareExec
+utionAction.execute(DefaultTaskExecutionGr
+aph.java:303)
+	at org.gradle.execution.plan.DefaultPlanE
+xecutor$ExecutorWorker.execute(DefaultPlan
+Executor.java:463)
+	at org.gradle.execution.plan.DefaultPlanE
+xecutor$ExecutorWorker.run(DefaultPlanExec
+utor.java:380)
+	at org.gradle.internal.concurrent.Executo
+rPolicy$CatchAndRecordFailures.onExecute(E
+xecutorPolicy.java:64)
+	at org.gradle.internal.concurrent.Abstrac
+tManagedExecutor$1.run(AbstractManagedExec
+utor.java:47)
+
+
+BUILD FAILED in 5s
+4 actionable tasks: 1 executed, 3 up-to-date
