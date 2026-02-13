@@ -223,14 +223,28 @@ public class OrderService {
         }
 
         // 재고 차감 로직: 주문 아이템 -> 메뉴 -> 재료 -> 재고
+        System.out.println("[OrderService] Confirming order: " + orderId);
         for (OrderItem item : order.getItems()) {
-            menuItemRepository.findByMenuItemId(item.getMenuItemId()).ifPresent(menuItem -> {
+            System.out.println("[OrderService] Processing item: " + item.getMenuItemId() + " / " + item.getName());
+            menuItemRepository.findByMenuItemId(item.getMenuItemId()).ifPresentOrElse(menuItem -> {
+                System.out.println("[OrderService] Found MenuItem: " + menuItem.getName() + " (Ingredients: "
+                        + menuItem.getIngredients().size() + ")");
                 for (var ingredient : menuItem.getIngredients()) {
-                    stockRepository.findByIngredientId(ingredient.getIngredientId()).ifPresent(stock -> {
+                    System.out.println("[OrderService]   - Ingredient: " + ingredient.getName() + " ("
+                            + ingredient.getIngredientId() + ")");
+                    stockRepository.findByIngredientId(ingredient.getIngredientId()).ifPresentOrElse(stock -> {
+                        int oldQty = stock.getQuantity();
                         stock.applyDelta(-item.getQuantity()); // 주문 수량만큼 차감
                         stockRepository.save(stock);
+                        System.out.println("[OrderService]     -> Stock Updated: " + ingredient.getName() + " " + oldQty
+                                + " -> " + stock.getQuantity());
+                    }, () -> {
+                        System.err.println("[OrderService]     -> Stock NOT FOUND for ingredient: "
+                                + ingredient.getIngredientId());
                     });
                 }
+            }, () -> {
+                System.err.println("[OrderService] MenuItem NOT FOUND for ID: " + item.getMenuItemId());
             });
         }
 

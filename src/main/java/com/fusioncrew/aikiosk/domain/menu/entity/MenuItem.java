@@ -61,7 +61,7 @@ public class MenuItem {
     }
 
     // [New] 다대다 매핑 (중간 테이블 자동 생성: menu_ingredient_links)
-    @ManyToMany
+    @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(name = "menu_ingredient_links", joinColumns = @JoinColumn(name = "menu_id"), inverseJoinColumns = @JoinColumn(name = "ingredient_id"))
     private List<Ingredient> ingredients = new ArrayList<>();
 

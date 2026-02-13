@@ -14,4 +14,5 @@ public class AiCommonResponse<T> {
     private T data;
     private String timestamp;
     private String requestId;
+    private String message;
 }

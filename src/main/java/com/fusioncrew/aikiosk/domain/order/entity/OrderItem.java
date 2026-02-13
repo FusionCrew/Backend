@@ -2,9 +2,10 @@ package com.fusioncrew.aikiosk.domain.order.entity;
 
 import jakarta.persistence.*;
 import lombok.*;
+import java.time.LocalDateTime;
 
 @Entity
-@Table(name = "order_items")
+@Table(name = "order_items_v2")
 @Getter
 @Setter
 @NoArgsConstructor(access = AccessLevel.PUBLIC)
@@ -17,34 +18,44 @@ public class OrderItem {
     private Long id;
 
     @Column(name = "menu_item_id", nullable = false)
-    private String menuItemId; // 메뉴 ID (String)
+    private String menuItemId;
 
-    @Column(nullable = false)
+    @Column(name = "name", nullable = false)
     private String name;
 
-    @Column(nullable = false)
-    private int unitPrice; // 단가
+    @Column(name = "price", nullable = false)
+    private int unitPrice;
 
-    @Column(nullable = false)
-    private int quantity; // 수량
+    @Column(name = "quantity", nullable = false)
+    private int quantity;
 
-    @Column(nullable = false)
-    private int lineTotal; // 총 금액 (단가+옵션 * 수량)
+    @Column(name = "total_price", nullable = false)
+    private int lineTotal;
 
-    @Column(columnDefinition = "TEXT")
+    @Column(name = "options", columnDefinition = "TEXT")
     private String optionsJson;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "id_order")
+    @JoinColumn(name = "order_id", nullable = false)
     private Order order;
+
+    @Column(name = "created_at", nullable = false, updatable = false)
+    private LocalDateTime createdAt;
+
+    @Column(name = "updated_at", nullable = false)
+    private LocalDateTime updatedAt;
 
     @PrePersist
     public void prePersist() {
-        if (this.name == null) {
+        if (this.createdAt == null)
+            this.createdAt = LocalDateTime.now();
+        if (this.updatedAt == null)
+            this.updatedAt = LocalDateTime.now();
+        if (this.name == null)
             this.name = "Unknown Item";
-        }
-        if (this.menuItemId == null) {
+        if (this.menuItemId == null)
             this.menuItemId = "UNKNOWN";
-        }
+        if (this.optionsJson == null)
+            this.optionsJson = "{}";
     }
 }

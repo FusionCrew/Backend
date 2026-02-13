@@ -9,5 +9,6 @@ import lombok.Getter;
 public class TicketResponse {
     private String ticketId;
     private Integer number;
+    private String ticketNumber;
     private TicketStatus status;
 }

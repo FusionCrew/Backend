@@ -1,0 +1,32 @@
+﻿On branch dev/main
+Your branch is up to date with 'origin/dev/main'.
+
+Changes not staged for commit:
+  (use "git add/rm <file>..." to update what will be committed)
+  (use "git restore <file>..." to discard changes in working directory)
+	modified:   build.gradle
+	deleted:    build_log.txt
+	deleted:    run_log.txt
+	modified:   src/main/java/com/fusioncrew/aikiosk/domain/ai/controller/AiController.java
+	modified:   src/main/java/com/fusioncrew/aikiosk/domain/ai/dto/AiCommonResponse.java
+	modified:   src/main/java/com/fusioncrew/aikiosk/domain/ai/service/AiService.java
+	modified:   src/main/java/com/fusioncrew/aikiosk/domain/menu/entity/MenuItem.java
+	modified:   src/main/java/com/fusioncrew/aikiosk/domain/order/entity/OrderItem.java
+	modified:   src/main/java/com/fusioncrew/aikiosk/domain/order/service/OrderService.java
+	modified:   src/main/java/com/fusioncrew/aikiosk/domain/payment/entity/Payment.java
+	modified:   src/main/java/com/fusioncrew/aikiosk/domain/payment/service/PaymentService.java
+	modified:   src/main/java/com/fusioncrew/aikiosk/domain/stock/dto/StockDtos.java
+	modified:   src/main/java/com/fusioncrew/aikiosk/domain/ticket/dto/TicketDtos.java
+	modified:   src/main/java/com/fusioncrew/aikiosk/domain/ticket/dto/TicketResponse.java
+	modified:   src/main/java/com/fusioncrew/aikiosk/domain/ticket/service/TicketService.java
+	modified:   src/main/java/com/fusioncrew/aikiosk/global/entity/BaseEntity.java
+	modified:   src/main/java/com/fusioncrew/aikiosk/global/exception/GlobalExceptionHandler.java
+	modified:   src/main/resources/application.properties
+
+Untracked files:
+  (use "git add <file>..." to include in what will be committed)
+	DbCheck.class
+	DbCheck.java
+	git_status.txt
+
+no changes added to commit (use "git add" and/or "git commit -a")

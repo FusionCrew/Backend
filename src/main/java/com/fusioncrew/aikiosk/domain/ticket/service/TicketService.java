@@ -1,6 +1,5 @@
 package com.fusioncrew.aikiosk.domain.ticket.service;
 
-import com.fusioncrew.aikiosk.domain.order.entity.Order;
 import com.fusioncrew.aikiosk.domain.order.repository.OrderRepository;
 import com.fusioncrew.aikiosk.domain.payment.entity.Payment;
 import com.fusioncrew.aikiosk.domain.payment.entity.PaymentStatus;
@@ -70,6 +69,7 @@ public class TicketService {
         return new TicketDtos.TicketResponse(
                 saved.getTicketId(),
                 saved.getNumber(),
+                "#" + saved.getOrderId(),
                 saved.getStatus());
     }
 
@@ -84,6 +84,7 @@ public class TicketService {
         return new TicketDtos.TicketDetailResponse(
                 ticket.getTicketId(),
                 ticket.getNumber(),
+                "#" + ticket.getOrderId(),
                 ticket.getStatus(),
                 estimatedWaitMin);
     }

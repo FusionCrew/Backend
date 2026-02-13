@@ -34,7 +34,7 @@ public class PaymentService {
                 .currency(request.getCurrency())
                 .method(request.getMethod())
                 .mock(request.isMock())
-                .returnUrl(request.getReturnUrl())
+                .returnUrl(request.getReturnUrl() != null ? request.getReturnUrl() : "http://localhost:8080/return")
                 .status(PaymentStatus.APPROVED)
                 .build();
 
