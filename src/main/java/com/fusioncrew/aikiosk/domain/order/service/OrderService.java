@@ -11,11 +11,16 @@ import com.fusioncrew.aikiosk.domain.order.entity.OrderItem;
 import com.fusioncrew.aikiosk.domain.order.entity.OrderStatus;
 import com.fusioncrew.aikiosk.domain.order.entity.OrderType;
 import com.fusioncrew.aikiosk.domain.order.repository.OrderRepository;
+import com.fusioncrew.aikiosk.domain.kiosk.repository.SessionRepository;
 import com.fusioncrew.aikiosk.domain.menu.repository.MenuItemRepository;
 import com.fusioncrew.aikiosk.domain.stock.repository.StockRepository;
 import jakarta.transaction.Transactional;
+import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDate;
+import java.time.ZoneId;
+import java.util.UUID;
 import java.util.Comparator;
 import java.util.List;
 
@@ -27,15 +32,41 @@ public class OrderService {
     private final MenuItemRepository menuItemRepository;
     private final StockRepository stockRepository;
     private final com.fusioncrew.aikiosk.domain.payment.repository.PaymentRepository paymentRepository;
+    private final SessionRepository sessionRepository;
+    private final JdbcTemplate jdbcTemplate;
 
     public OrderService(OrderRepository orderRepository, CartRepository cartRepository,
             MenuItemRepository menuItemRepository, StockRepository stockRepository,
-            com.fusioncrew.aikiosk.domain.payment.repository.PaymentRepository paymentRepository) {
+            com.fusioncrew.aikiosk.domain.payment.repository.PaymentRepository paymentRepository,
+            SessionRepository sessionRepository,
+            JdbcTemplate jdbcTemplate) {
         this.orderRepository = orderRepository;
         this.cartRepository = cartRepository;
         this.menuItemRepository = menuItemRepository;
         this.stockRepository = stockRepository;
         this.paymentRepository = paymentRepository;
+        this.sessionRepository = sessionRepository;
+        this.jdbcTemplate = jdbcTemplate;
+    }
+
+    private int allocateDailyOrderNumber(String sessionId) {
+        // Daily per kiosk counter: (date + storeId + kioskId) -> 1,2,3...
+        final String storeId = "STORE_001";
+        final String kioskId = sessionRepository.findBySessionId(sessionId)
+                .map(s -> s.getKioskId())
+                .orElse("KIOSK_001");
+
+        final LocalDate todayKst = LocalDate.now(ZoneId.of("Asia/Seoul"));
+
+        Integer next = jdbcTemplate.queryForObject("""
+                INSERT INTO order_counters(counter_date, store_id, kiosk_id, current_value)
+                VALUES (?, ?, ?, 1)
+                ON CONFLICT (counter_date, store_id, kiosk_id)
+                DO UPDATE SET current_value = order_counters.current_value + 1
+                RETURNING current_value;
+                """, Integer.class, todayKst, storeId, kioskId);
+
+        return next != null ? next : 0;
     }
 
     @Transactional
@@ -70,6 +101,12 @@ public class OrderService {
         order.setStatus(OrderStatus.CREATED);
         order.setOrderType(orderType);
         order.setMemo(req.memo());
+        order.setOrderNumber(allocateDailyOrderNumber(req.sessionId()));
+        if (order.getOrderId() == null || order.getOrderId().isBlank()) {
+            String base = "ord_" + UUID.randomUUID().toString().substring(0, 8);
+            Integer on = order.getOrderNumber();
+            order.setOrderId((on != null && on > 0) ? (base + "_" + on) : base);
+        }
 
         int totalPrice = 0;
         com.fasterxml.jackson.databind.ObjectMapper objectMapper = new com.fasterxml.jackson.databind.ObjectMapper();
@@ -146,6 +183,7 @@ public class OrderService {
 
         return new OrderDtos.OrderCreateResponse(
                 saved.getOrderId(),
+                saved.getOrderNumber(),
                 saved.getStatus().name(),
                 new OrderDtos.Amount(saved.getTotalPrice(), "KRW"));
     }

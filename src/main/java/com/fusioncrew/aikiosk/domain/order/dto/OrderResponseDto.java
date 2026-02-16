@@ -7,6 +7,7 @@ import java.time.LocalDateTime;
 
 public record OrderResponseDto(
         String orderId,
+        Integer orderNumber,
         String sessionId,
         OrderStatus status,
         int totalPrice,
@@ -14,6 +15,7 @@ public record OrderResponseDto(
     public static OrderResponseDto from(Order order) {
         return new OrderResponseDto(
                 order.getOrderId(),
+                order.getOrderNumber(),
                 order.getSessionId(),
                 order.getStatus(),
                 order.getTotalPrice(),

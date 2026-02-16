@@ -53,9 +53,19 @@ public class TicketService {
             throw new CustomException(HttpStatus.BAD_REQUEST, "주문/결제 정보 불일치");
         }
 
-        LocalDateTime start = LocalDateTime.of(LocalDate.now(), LocalTime.MIN);
-        LocalDateTime end = LocalDateTime.of(LocalDate.now(), LocalTime.MAX);
-        int number = (int) ticketRepository.countByCreatedAtBetween(start, end) + 1;
+        // Prefer the customer-facing order number (daily, per kiosk) if present.
+        Integer orderNumber = orderRepository.findByOrderId(req.orderId())
+                .map(o -> o.getOrderNumber())
+                .orElse(null);
+
+        int number;
+        if (orderNumber != null && orderNumber > 0) {
+            number = orderNumber;
+        } else {
+            LocalDateTime start = LocalDateTime.of(LocalDate.now(), LocalTime.MIN);
+            LocalDateTime end = LocalDateTime.of(LocalDate.now(), LocalTime.MAX);
+            number = (int) ticketRepository.countByCreatedAtBetween(start, end) + 1;
+        }
 
         Ticket ticket = Ticket.builder()
                 .orderId(req.orderId())

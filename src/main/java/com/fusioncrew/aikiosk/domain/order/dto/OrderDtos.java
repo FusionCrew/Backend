@@ -18,6 +18,7 @@ public class OrderDtos {
 
         public record OrderCreateResponse(
                         String orderId,
+                        Integer orderNumber,
                         String status,
                         Amount amount) {
         }

@@ -81,7 +81,9 @@ public class KioskMenuService {
                                                         .isAvailable(isAvailable)
                                                         .categoryId(item.getCategoryId())
                                                         .ingredients(item.getIngredients().stream()
-                                                                        .map(ing -> ing.getName())
+                                                                        // Filter out system markers like "__ALLERGEN__" / "__NUTRITION__"
+                                                                        .map(ing -> ing.getName() == null ? null : ing.getName().trim())
+                                                                        .filter(n -> n != null && !n.startsWith("__"))
                                                                         .collect(Collectors.toList()))
                                                         .optionGroups(item.getOptionGroups().stream()
                                                                         .map(og -> KioskMenuListResponse.KioskOptionGroupDto.builder()
@@ -120,8 +122,16 @@ public class KioskMenuService {
                 // Mock mapping since we don't have a Category entity yet
                 List<KioskCategoryResponse.CategoryDto> categories = List.of(
                                 KioskCategoryResponse.CategoryDto.builder()
+                                                .categoryId("cat_set")
+                                                .name("세트")
+                                                .build(),
+                                KioskCategoryResponse.CategoryDto.builder()
                                                 .categoryId("cat_burger")
-                                                .name("버거")
+                                                .name("단품")
+                                                .build(),
+                                KioskCategoryResponse.CategoryDto.builder()
+                                                .categoryId("cat_chicken")
+                                                .name("치킨")
                                                 .build(),
                                 KioskCategoryResponse.CategoryDto.builder()
                                                 .categoryId("cat_side")
@@ -170,18 +180,18 @@ public class KioskMenuService {
                 List<KioskRecommendationResponse.RecommendationItemDto> items = List.of(
                                 KioskRecommendationResponse.RecommendationItemDto.builder()
                                                 .menuItemId("menu_010")
-                                                .name("바질 치킨버거")
-                                                .reason("처음 방문하신 손님께 가장 무난하고 만족도가 높은 메뉴라 추천드려요")
+                                                .name("바비큐치킨버거")
+                                                .reason("처음 방문하신 분들이 무난하게 선택하기 좋은 메뉴입니다.")
                                                 .build(),
                                 KioskRecommendationResponse.RecommendationItemDto.builder()
                                                 .menuItemId("menu_004")
-                                                .name("트러플 더블치즈버거")
-                                                .reason("치즈 풍미를 좋아하시는 분들께 매장에서 가장 반응이 좋은 메뉴예요")
+                                                .name("더블치즈타워버거")
+                                                .reason("치즈 풍미를 좋아하는 분들께 추천합니다.")
                                                 .build(),
                                 KioskRecommendationResponse.RecommendationItemDto.builder()
                                                 .menuItemId("menu_007")
-                                                .name("스파이시 할라피뇨버거")
-                                                .reason("살짝 매콤한 맛을 찾으시는 손님들이 많이 선택하는 인기 메뉴예요")
+                                                .name("핫크리스피버거")
+                                                .reason("매콤한 맛을 찾는 분들에게 인기 있는 메뉴입니다.")
                                                 .build());
 
                 return KioskRecommendationResponse.builder()

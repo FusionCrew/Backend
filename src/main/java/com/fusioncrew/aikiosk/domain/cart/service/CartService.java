@@ -112,6 +112,20 @@ public class CartService {
             optionPrice += 500;
         }
 
+        // v2 kiosk sends selectedOptions with explicit extraPrice numbers.
+        // Keep this aligned with OrderService's option parsing so cart totals match order totals.
+        Object selectedOptionsObj = options.get("selectedOptions");
+        if (selectedOptionsObj instanceof List<?> selectedOptions) {
+            for (Object optObj : selectedOptions) {
+                if (optObj instanceof Map<?, ?> optMap) {
+                    Object extraPriceObj = optMap.get("extraPrice");
+                    if (extraPriceObj instanceof Number num) {
+                        optionPrice += num.intValue();
+                    }
+                }
+            }
+        }
+
         return optionPrice;
     }
 

@@ -25,6 +25,11 @@ public class Order extends BaseEntity {
     @Column(nullable = false, unique = true)
     private String orderId; // 주문 고유 식별자
 
+    // Customer-facing sequential number (daily, per kiosk).
+    // Keep nullable for existing rows; new orders should set this.
+    @Column(name = "order_number")
+    private Integer orderNumber;
+
     @Enumerated(EnumType.STRING)
     @Column(nullable = false)
     @Builder.Default
@@ -56,7 +61,10 @@ public class Order extends BaseEntity {
     @PrePersist
     public void prePersist() {
         if (this.orderId == null) {
-            this.orderId = "ord_" + java.util.UUID.randomUUID().toString().substring(0, 8);
+            String base = "ord_" + java.util.UUID.randomUUID().toString().substring(0, 8);
+            // Include the customer-facing sequence in the stored id when available.
+            // Keep it ASCII-only to avoid URL/encoding issues across clients.
+            this.orderId = (this.orderNumber != null && this.orderNumber > 0) ? (base + "_" + this.orderNumber) : base;
         }
         if (this.sessionId == null) {
             this.sessionId = "sess_unknown";

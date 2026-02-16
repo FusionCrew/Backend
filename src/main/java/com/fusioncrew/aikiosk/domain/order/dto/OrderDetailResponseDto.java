@@ -9,6 +9,7 @@ import java.util.List;
 
 public record OrderDetailResponseDto(
         String orderId,
+        Integer orderNumber,
         String sessionId,
         OrderStatus status,
         int totalPrice,
@@ -34,12 +35,13 @@ public record OrderDetailResponseDto(
     public static OrderDetailResponseDto from(Order order) {
         return new OrderDetailResponseDto(
                 order.getOrderId(),
+                order.getOrderNumber(),
                 order.getSessionId(),
                 order.getStatus(),
                 order.getTotalPrice(),
                 order.getCreatedAt(),
                 order.getStatusUpdateNote(),
-                new PaymentDto("MOCK", "PAID"), // 현재는 Mock 데이터 반환
+                new PaymentDto("MOCK", "PAID"), // ?꾩옱??Mock ?곗씠??諛섑솚
                 order.getItems().stream().map(Item::from).toList());
     }
 }
