@@ -79,12 +79,7 @@ public class OrderService {
         if (req.orderType() == null)
             throw new IllegalArgumentException("orderType is required");
 
-        OrderType orderType;
-        try {
-            orderType = OrderType.valueOf(req.orderType());
-        } catch (IllegalArgumentException e) {
-            throw new IllegalArgumentException("Invalid orderType: " + req.orderType());
-        }
+        OrderType orderType = parseOrderType(req.orderType());
 
         Long cartId = CartDtos.parseCartId(req.cartId());
 
@@ -186,6 +181,25 @@ public class OrderService {
                 saved.getOrderNumber(),
                 saved.getStatus().name(),
                 new OrderDtos.Amount(saved.getTotalPrice(), "KRW"));
+    }
+
+    private OrderType parseOrderType(String raw) {
+        if (raw == null || raw.isBlank()) {
+            throw new IllegalArgumentException("orderType is required");
+        }
+        String norm = raw.trim().toUpperCase().replace("-", "_").replace(" ", "_");
+        // Backward/compat aliases from legacy/front clients.
+        if ("TAKE_OUT".equals(norm) || "TAKEOUT".equals(norm) || "TO_GO".equals(norm) || "TAKEAWAY".equals(norm)) {
+            return OrderType.TAKEOUT;
+        }
+        if ("DINE_IN".equals(norm) || "DINEIN".equals(norm) || "EAT_IN".equals(norm) || "FOR_HERE".equals(norm)) {
+            return OrderType.DINE_IN;
+        }
+        try {
+            return OrderType.valueOf(norm);
+        } catch (IllegalArgumentException e) {
+            throw new IllegalArgumentException("Invalid orderType: " + raw);
+        }
     }
 
     public OrderDtos.OrderGetResponse getWithDetails(String orderId) {
