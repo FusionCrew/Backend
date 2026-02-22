@@ -5,6 +5,7 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import java.util.List;
+import java.util.Map;
 
 public class LlmChatDto {
 
@@ -14,6 +15,8 @@ public class LlmChatDto {
     @NoArgsConstructor
     public static class Request {
         private List<Message> messages;
+        private String sessionId;
+        private String orderType;
         private Context context;
     }
 
@@ -33,6 +36,7 @@ public class LlmChatDto {
     public static class Context {
         private String sessionId;
         private String kioskState;
+        private Map<String, Object> state;
     }
 
     @Data
@@ -40,6 +44,18 @@ public class LlmChatDto {
     @AllArgsConstructor
     @NoArgsConstructor
     public static class Result {
+        private String reply;
+        private String text;
+        private String intent;
+        private String action;
+        private Map<String, Object> actionData;
+        private String orchestrator;
+        private String generatedAt;
+        private Map<String, Object> live2d;
+        private Map<String, Object> parallel;
+        private String stage;
+
+        // Backward-compatible fields
         private String assistantMessage;
         private String intentHint;
     }
