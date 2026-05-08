@@ -15,7 +15,7 @@ public class DashboardSummaryDto {
     private Double revenueChange;
     private Integer activeOrders;
     private List<LowStockIngredientDto> lowStockIngredients;
-    private List<Integer> hourlySales;
+    private List<Long> hourlySales;
     private List<ActivityLogDto> aiActivityLogs;
 
     @Data
